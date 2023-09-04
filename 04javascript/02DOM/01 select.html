@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box1">박스1입니다.</div>
+    <div id="box2">박스2입니다.</div>
+    <p id="p1">p입니다.</p>
+    <ul>
+        <li>list1</li>
+        <li>list2</li>
+        <li>list3</li>
+    </ul>
+    <div id="contents">
+
+    </div>
+
+    <script>
+        let str = document.getElementById("box1").innerHTML;
+        document.getElementById("box2").innerHTML = "금요일입니다.";
+
+        document.querySelector("#p1").innerHTML = "하하하하하하";
+
+        // 복수선택은 유사배열형태로 선택됨 
+        let divs = document.getElementsByTagName("div"); 
+        // 만들 때 컬렉션 생성, 그 안에 해당 값을 넣어줌 -> 클래스가 아니라 배열이어서 인덱스 접근 필요 
+        console.log(divs[1].innerHTML);
+
+        let ps = document.getElementsByTagName("p");
+        console.log(ps[0].innerHTML); // p 가 하나밖에 없어도 복수개로 선택, 배열 0번째로 지정해서 출력 or 값 수정해야함 
+
+        let lis = document.getElementsByTagName("li");
+        lis[0].innerHTML = "aaa";
+        lis[1].innerHTML = "bbb";
+        lis[2].innerHTML = "ccc";
+
+        let str2 = "";
+        for(let i=0; i<3; i++) {
+            str2 = str2 + "<p>p입니다.</p>";
+        }
+        document.querySelector("#contents").innerHTML = str2;
+
+
+    </script>
+</body>
+</html>

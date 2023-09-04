@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body { height: 3000px; }
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        div {
+            width: 200px; height: 200px; background-color: bisque; 
+            border: 3px solid #333; color: #fff;
+        }
+        div:nth-child(2) {
+            position: fixed;
+            bottom: 0; right: 0;
+            /* transition: 0.5s; */
+        }
+        /* div:nth-child(2):hover {left: 100px;} */
+
+    </style>
+</head>
+<body>
+    <div>box1</div>
+    <div>box2</div>
+    <div>box3</div>
+    <div>box4</div>
+</body>
+</html>

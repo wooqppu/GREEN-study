@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        함수 선언문 
+        function 함수명(매개변수) {
+            실행문 
+            return 반환값;
+        } 
+
+        함수 표현식 
+        let 변수명 = function(매개변수) {
+            실행문 
+            return 반환값;
+        }
+        */
+
+        //let num = add(10, 20);
+        //console.log(num); ---> 위에 있어도 작동 가능 (호이스팅)
+
+
+        // function add(a,b) {
+        //     return a+b;
+        // }
+        // let num = add(10, 20);
+        // console.log(num);
+
+        let num = add(10, 20);
+        console.log(num);
+        function add(a,b) {
+            return a+b;
+        }
+
+
+        // 매개변수 default값 지정
+        function showMessage(message, from) {
+            // 콘솔에 출력 
+            console.log("메세지는 " + message + "이고 보낸 사람은 " + from + "이다.");
+        }
+        showMessage("목요일", "블루"); // "블루" 라고 값을 안주면 디폴트로 "그린"이 값에 들어가있음
+
+        function showMessage(message, from = "그린" ) {     // 매개변수에 default값 "그린"으로 지정 
+            // 콘솔에 출력 
+            console.log("메세지는 " + message + "이고 보낸 사람은 " + from + "이다.");
+        }
+        showMessage("안녕");
+
+        // 나머지 매개변수
+        function addnums(...arr) {
+            let sum = 0;
+            for(let i=0; i<arr.length; i++) {
+                console.log(arr[i]);
+                sum += arr[i]; 
+            }
+            console.log("합계 : " + sum);
+        }
+
+        addnums(1,2,3,4,5);
+        addnums(1,2,3);
+
+        // 함수표현식 
+        let myFun = function() {
+            console.log("함수표현식");
+        }
+        myFun();
+        // 변수명으로 호출 
+
+
+    </script>
+</body>
+</html>

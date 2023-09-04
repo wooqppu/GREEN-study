@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="div"></div>
+    <script>
+        let userHTML = [];
+        let burgersList = [
+            {name:"새우버거", price: 5000, size: "big"},
+            {name:"불고기버거", price: 4500, size: "regular"},
+            {name:"주니어불고기버거", price: 3500, size: "small"},
+            {name:"치즈버거", price: 5500, size: "regular"},
+            {name:"스테이크버거", price: 7000, size: "big"},
+            {name:"치킨버거", price: 5500, size: "regular"},
+            {name:"야채버거", price: 4500, size: "regular"},
+            {name:"주니어새우버거", price: 3000, size: "small"},
+        ];
+
+        for(let burger of burgersList) {
+            userHTML.push("<ul>");
+            userHTML.push("<li>" + burger.name + ", " 
+                + burger.price + "원, " + burger.size + "</li>");
+            userHTML.push("</ul>");
+        }
+
+        document.querySelector("#div").innerHTML = userHTML.join("");
+
+
+    </script>
+</body>
+</html>

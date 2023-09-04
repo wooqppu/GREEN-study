@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li>list1</li>
+        <li>list2</li>
+        <li>list3</li>
+        <li>list4</li>
+    </ul>
+    <script>
+        // 유사배열 - 노드리스트
+        let lis = document.querySelectorAll("li");
+        /* for문
+        for(let i=0; i<lis.length; i++) {
+            lis[i].style.background = "lightblue";
+            console.log(i)
+        } */
+
+        lis.forEach((li, index)=>{
+            li.style.background = "lightblue";
+            console.log(index);
+        })
+
+        // 요소 노드 생성 
+        let li = document.createElement("li"); // li 생성
+        let textnode = document.createTextNode("list5"); // 내용
+        li.append(textnode); // 텍스트를 li에 넣기
+        document.querySelector("ul").append(li); // ul에 만들어준 li를 추가 
+
+        let ul = document.querySelector("ul");
+        ul.children[2].style.color = "lime";
+        ul.firstElementChild.style.color = "purple";
+        ul.lastElementChild.style.color = "red";
+        ul.querySelector("li:nth-child(3)").style.fontSize = "40px";
+
+
+
+        let li2 = document.querySelector("li:nth-child(2)");
+        let prev = li2.previousElementSibling
+        console.log(prev);
+
+        let next = li2.nextElementSibling
+        console.log(next);
+
+        li2.parentElement.style.backgroundColor = "pink";
+
+
+    </script>
+</body>
+</html>

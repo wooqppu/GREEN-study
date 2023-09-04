@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        li { list-style: none; }
+
+        body > div {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header {
+            background-color: #eec0c6;
+            background-image: linear-gradient(315deg, #eec0c6 0%, #7ee8fa 74%);
+            padding: 40px;
+        }
+
+        header h1 {
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        header div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header input {
+            width: 80%;
+            line-height: 36px;
+            border-radius: 18px;
+            outline: none;
+            border: none;
+            padding-left: 20px;
+            margin-top: 10px
+        }
+
+        header button {
+            width: 36px;
+            line-height: 36px;
+            border-radius: 50%;
+            outline: none;
+            border: none;
+            background-color:#7ee8fa;
+            color: #fff;
+            font-size: 32px;
+            margin-left: 15px;
+            
+        }
+
+        ul li {
+            padding: 10px 20px;
+            background-color: #eee;
+            border-bottom: 1px solid #ccc;
+        }
+
+        ul li span { float: right; }
+
+
+    </style>
+</head>
+<body>
+    <div>
+        <header>
+            <h1>To Do List</h1>
+            <div>
+                <input type="text" id="input_text">
+                <button>+</button>
+            </div>
+        </header>
+        <ul id="todos"></ul>
+    </div>
+
+    <script>
+         
+        
+        // 변수 준비 - btn, input, ul
+
+        const btn = document.querySelector("button");
+        const input = document.querySelector("input");
+        const ul = document.querySelector("#todos");
+
+        btn.addEventListener("click", function() {
+          inputEvent();  
+        })
+
+        window.addEventListener("keydown", function(btn) {
+            if(btn.key == "Enter") {
+            inputEvent(); }
+        }) 
+        
+        // 클릭 이벤트, 키 이벤트 동작이 똑같기 때문에 동작을 하나의 함수로 만들고
+        // 각각의 이벤트에 그 함수 호출해주면 더 깨끗한 코드가 될 수 있음 
+        function inputEvent() {
+            if(!input.value) {
+                return; 
+                }
+
+                let li = document.createElement("li");
+                li.innerHTML = input.value + "<span>X</span>";  
+                ul.append(li);  
+                spanEvent();  
+                input.value=""; 
+            }
+
+        function spanEvent() {
+            let spans = document.querySelectorAll("li span"); 
+            // span 여러개를 spans 변수에 한 번에 담아줌 
+            if (!spans) { return; } // span 내용이 아무것도 없으면 X 실행하지 않음 
+            spans.forEach(span => { 
+                span.addEventListener("click", function() {
+                    this.parentElement.remove(); 
+                    // 클릭 이벤트 발생하면 span 내용을 삭제
+                })
+            })
+        }
+
+
+
+
+    </script>
+</body>
+</html>

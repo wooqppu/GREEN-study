@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       let x = prompt("x?", '');
+       let y = prompt("y?", '');
+       let result = add(Number(x), Number(y)); 
+       // 덧셈은 숫자보다 문자열을 우선으로 하기 때문에 Number로 형변환 지정해줘야 숫자 연산 가능
+
+       if(result > 0) {
+            alert(result)
+       }
+       else {
+        alert("양수를 입력하세요.")
+       }
+
+       function add(v1,v2) {
+        return v1 + v2;
+       }
+
+       function min(a,b) {
+        return a<b ? a : b;
+       }
+       let result2 = min(10,6);
+       console.log(result2);
+
+
+
+    </script>
+</body>
+</html>

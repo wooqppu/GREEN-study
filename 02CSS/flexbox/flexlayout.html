@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        a { text-decoration: none; color: inherit; }
+        li { list-style-position: inside; list-style: none; }
+        body { font-size: 14px; color: #222; font-family: "맑은고딕",sans-serif; line-height: 1.6; }
+        #wrap { width: 100%; max-width: 1200px; margin: 0 auto; }
+
+        #header { display: flex; justify-content: space-between; align-items: center; }
+        #header ul { display: flex; }
+        #header ul li { padding: 15px; }
+        #header ul li:not(:last-child) { border-right: 1px solid #ccc; }
+
+        #contents h2 { display: flex; justify-content: center; 
+            border-bottom: 1px solid #333; padding: 30px; margin-bottom: 30px; }
+        #content1 ul { display: flex; justify-content: space-around; }
+        #content1 li {
+            border: 1px solid #ccc; width: 30%; padding: 20px; text-align: center; }
+        
+
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header">
+            <h1>Green</h1>
+            <ul>
+                <li><a href="#">menu1</a></li>
+                <li><a href="#">menu2</a></li>
+                <li><a href="#">menu3</a></li>
+                <li><a href="#">menu4</a></li>
+            </ul>
+        </div>
+        <div id="contents">
+            <div id="content1">
+                <h2>메인컨텐츠 01</h2>
+                <ul>
+                    <li>
+                        <h3>작은 제목 입니다.</h3>
+                        <p>글 적는 부분입니다.</p>
+                        <span>2023.04.06</span>
+                    </li>
+                    <li>
+                        <h3>작은 제목 입니다.</h3>
+                        <p>글 적는 부분입니다.</p>
+                        <span>2023.04.06</span>
+                    </li>
+                    <li>
+                        <h3>작은 제목 입니다.</h3>
+                        <p>글 적는 부분입니다.</p>
+                        <span>2023.04.06</span>
+                    </li>
+                </ul>
+            </div>
+            <div id="content2">
+                <h2>공지사항</h2>
+                <ul>
+                    <li>그린컴퓨터 아카데미 소식</li>
+                    <li>그린컴퓨터 아카데미 소식</li>
+                    <li>그린컴퓨터 아카데미 소식</li>
+                    <li>그린컴퓨터 아카데미 소식</li>
+                </ul>
+            </div>
+        </div>
+        <div id="footer">
+            <address>주소 : 주소 대표이사 : 그린</address>
+            <h1>Green</h1>
+        </div>
+    </div>
+</body>
+</html>

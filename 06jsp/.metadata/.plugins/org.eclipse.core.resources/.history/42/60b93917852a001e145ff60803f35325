@@ -1,0 +1,13 @@
+package common;
+
+import java.util.Date;
+
+public class GreenBookDTO {
+
+	private String title;
+	private String writer;
+	private String company;
+	private String price;
+	private Date regidate;
+	
+}

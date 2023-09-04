@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body > div { width: 100%; max-width: 1200px; margin: 0 auto; }
+        li { list-style: none; } h1,h2,h3,h4,h5,h6 { font-weight: normal; }
+        ul { height: 400px; position: relative; }
+        ul > li { float: left; padding: 0 20px; }
+        .clearboth::after { content: ""; display: block; clear: both; }
+        h2 { padding: 20px; font-weight: bold; color:cornflowerblue;}
+
+        #img1 h3 { position: absolute; color: #fff; top: 35%; left: 18%; font-size: 25px; }
+        #img1 h4 { position: absolute; color: #fff; top: 43%; left: 20%; font-weight: normal; }
+        #img2 h3 { position: absolute; color: #fff; top: 35%; right: 30%; font-size: 25px; }
+
+        ul li::after { content: ""; display: block; position: absolute;
+        top: 50px; left: 50px; right: 50px; bottom: 50px;  
+        border-top: 1px solid #fff; border-bottom: 1px solid #fff;
+        transform: scale(1,1); transition: 0.5s; }
+
+        ul li::before { content: ""; display: block; position: absolute;
+        top: 50px; left: 50px; right: 50px; bottom: 50px; 
+        border-left: 1px solid #fff; border-right: 1px solid #fff;
+        transform: scale(1,1); transition: 0.5s; }
+
+        ul li:hover::after { transform: scale(0,1); }
+        ul li:hover::before { transform: scale(1,0); }
+
+    
+
+    </style>
+</head>
+<body>
+    <div>
+        <h2>hover01</h2>
+        <ul class="clearboth">
+            <li id="img1">
+                <img src="../hover image/1.jpg" alt="">
+                <h3>hover effect</h3>
+                <h4>green web</h4>
+                
+            </li>
+            <li id="img2">
+                <img src="../hover image/4.jpg" alt="">
+                <h3>hover effect</h3>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

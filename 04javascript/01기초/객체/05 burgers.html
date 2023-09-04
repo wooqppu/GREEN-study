@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 생성자 함수 
+        function Burger(name, price, size) {
+            this.name = name;
+            this.price = price;
+            this.size = size;
+        }
+        let burgers = [
+            new Burger("새우버거", 5000, "big"),
+            new Burger("불고기버거", 4500, "regular"),
+            new Burger("주니어불고기버거", 3500, "small"),
+            new Burger("치즈버거", 5500, "regular"),
+            new Burger("스테이크버거", 7000, "big"),
+            new Burger("치킨버거", 5500, "regular"),
+            new Burger("야채버거", 4500, "regular"),
+            new Burger("주니어새우버거", 3000, "small"),
+        ];
+
+        // regular인 햄버거만 배열 
+        let regularBurgers = burgers.filter(b => b.size == "regular");
+
+        // 햄버거 이름만 배열로 
+        let burgerNames = burgers.map(b => b.name);
+
+        // 가격이 5000원 이상인 햄버거만 배열로 
+        let burgers2 = burgers.filter(b => b.price >= 5000);
+
+        // 이름이 스테이크 버거인 햄버거 찾기
+        let burger = burgers.find(b => b.name == "스테이크버거");
+
+        console.log(regularBurgers);
+        console.log(burgerNames);
+        console.log(burgers2);
+        console.log(burger);
+
+
+    </script>
+</body>
+</html>

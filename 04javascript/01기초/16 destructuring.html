@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let foods = ["🍕", "🍔", "🌭", "🍟", "🍗"];
+        let [aa, bb, ...cc] = foods;
+
+        console.log(aa);
+        console.log(bb); 
+        console.log(cc); 
+
+        let str1 = "green";
+        let str2 = "blue";
+        [str1, str2] = [str2, str1];
+        console.log("str1에 담긴 값은 : " + str1);
+        console.log("str2에 담긴 값은 : " + str2);
+
+        let user = { name: "green", age: 20 };
+        /*
+        let name = user.name;
+        let age = user.age;
+        */
+        let { name, age } = user;
+        console.log(name);
+        console.log(age);
+
+        // 구조분해할당
+        // name키의 value값을 변수 n에 할당
+        // age키의 value값을 변수 a에 할당
+        let {name: n, age: a} = user;
+        console.log("n에 담긴 값은 : " + n);
+        console.log("a에 담긴 값은 : " + a);
+
+        // 함수에서 구조분해할당
+        let dog1 = { name: "구름", age: 4, color: "흰색" }
+        
+        // 구조분해할당 이전
+        function dogPrint(obj) {
+            let name = obj.name;
+	        let age = obj.age;
+	        let color = obj.color;
+	
+	        console.log(name);
+	        console.log(age);
+	        console.log(color);
+        }
+        dogPrint(dog1);
+
+        // 구조분해할당 이후 
+        function dogPrint({name, age, color}) {
+	
+	        console.log(name);
+	        console.log(age);
+	        console.log(color);
+        }
+        dogPrint(dog1);
+
+
+        function getPerson() {
+            return {
+                firstName: "John",
+                lastName: "Doan",
+                age: 37,
+                email: "John@gmail.com"
+            }
+        }
+
+        let { firstName, lastName } = getPerson();
+        console.log(firstName);
+        console.log(lastName);
+
+    </script>
+</body>
+</html>

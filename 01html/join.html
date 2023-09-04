@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form 예제</title>
+</head>
+<body>
+    <p>클릭앤퍼니는 고객님의 소중한 개인정보를 보호하기 위해, 주민등록번호를 수집하지 않습니다.</p>
+    <h2>클릭앤퍼니 고객 개인정보</h2>
+    <form action="">
+        <table border="1" cellpadding="20" cellspacing="0" width="1000">
+            <tr>
+                <td>이름</td>
+                <td><p><input type="text" name="userName" required /></p></td>
+            </tr>
+            <tr>
+                <td>아이디</td>
+                <td><p><input type="text" name="userId" required /></p></td>
+            </tr>
+            <tr>
+                <td>비밀번호</td>
+                <td><p><input type="password" name="userPass" required /></p></td>
+            </tr>
+            <tr>
+                <td>비밀번호 확인</td>
+                <td><p><input type="password" name="userPassCheck" required /></p></td>
+            </tr>
+            <tr>
+                <td>이메일</td>
+                <td><p><input type="text" name="userEmail" required /> @ 
+                <select id="" name="userEmailAdd">
+                    <option value="">선택</option>
+                    <option value="naver.com">naver.com</option>
+                    <option value="gmail.com">gmail.com</option>
+                </select></p></td>
+            </tr>
+            <tr>
+                <td>생년월일</td>
+                <td><p>
+                    <select name="year" id="year">  
+                        <option value="1988">1988</option> 
+                        <option value="1989">1989</option>
+                        <option value="1990">1990</option>
+                    </select>
+                    <select name="month" id="month">
+                        <option value="">월</option>
+                        <option value="1월">1월</option>
+                        <option value="2월">2월</option>
+                        <option value="3월">3월</option>
+                    </select>
+                    <select name="date" id="date">
+                        <option value="">일</option>
+                        <option value="1일">1일</option>
+                        <option value="2일">2일</option>
+                        <option value="3일">3일</option>
+                    </select>
+                </p></td>
+            </tr>
+            <tr>
+                <td>휴대폰 번호</td>
+                <td><p> 
+                    <select name="phone1" id="phone1"> 
+                        <option value="">선택</option>
+                        <option value="010">010</option>
+                        <option value="011">011</option>
+                        <option value="012">012</option>
+                    </select> 
+                    - 
+                    <input type="text" name="phone2" required /> 
+                    -
+                    <input type="text" name="phone3" required />
+                    <button type="send">인증번호 발송</button>
+                    <button type="resend">인증번호 재발송</button>
+                    </p>
+                </p></td>
+            </tr>
+            <tr>
+                <td>인증번호 입력</td>
+                <td>
+                    <p><input type="number" name="required_num" required />
+                    <button type="send">확인</button></p>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

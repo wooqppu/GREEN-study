@@ -1,0 +1,11 @@
+1687915233147	Delete element
+1687915634412	Rename resource 'main.jsp'
+1687915652538	Delete element
+1687916432003	Move 'writer.jsp' to 'books'
+1687921740638	Move 'writer_process.jsp' to 'books'
+1687923476006	Move 'booksDAO.java' to 'java'
+1687923478067	Move 'booksDTO.java' to 'java'
+1687923483367	Move 'books' to 'webapp'
+1687923546045	Move 2 resources to 'common'
+1687923616304	Move 'header.jsp' to 'include'
+1687923618213	Move 'footer.jsp' to 'include'

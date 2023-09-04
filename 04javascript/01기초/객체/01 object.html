@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let user = {
+            name: "green",
+            age: 30, // 프로퍼티는 키와 벨류까지 한 쌍 묶어서 칭함  
+            // 세미콜론 사용 불가능, 컴마 사용해서 프로퍼티 구분하는게 규칙
+           
+            sayHi: function() {
+                console.log("Hi");
+
+                // console.log(this.name);
+                // 나 자신의 기능을 사용하니까 user가 아니라 this를 사용 
+                // 하지만 자바스크립트에서 this는 전역객체를 바라봄 -> window
+                // 하지만 객체의 메소드를 호출할 때는 바인딩되서 user를 바라봄
+
+            }
+        }
+        console.log(user.name);
+        console.log(user["age"]);
+
+        user.isAdmin = true;
+        console.log(user);
+
+        delete user.age;
+        console.log(user);
+
+        // 메소드 호출 
+        user.sayHi(); // 객체.함수 ---> 메소드
+
+        // 함수 - 실행문 (서브 프로그램)
+        function myFun() {
+            console.log("aaaa");
+        }
+        myFun(); // 함수 호출 
+
+        // 전역 객체 
+        // window.alert("AAA"); ---> window는 최상위 전역 객체라서 생략 가능
+        alert("AAA");
+
+
+        // 생성자 함수
+        function User(name, age, phone) {
+            this.name = name;
+            this.age = age;
+            this.phone = phone;
+            this.sayHi = function() {
+                console.log("내 이름은 " + this.name);
+                // 콘솔창에서 f 라고 뜨는건 함수를 갖고있다는 의미
+            }
+
+        }
+
+        let user1 = new User("강백호", 20, "010-1234-5678");
+        let user2 = new User("서태웅", 21, "010-1234-5678");
+        let user3 = new User("송태섭", 22, "010-1234-5678");
+
+        console.log(user1);
+        console.log(user2);
+        console.log(user3);
+
+
+        // 리터럴 방식으로 만들기 
+        // let user4 = {
+        //     name : "정대만",
+        //     age: 23,
+        //     phone: "010-1234-5678",
+        //     sayHi: function() {
+        //         console.log("내 이름은 " + this.name);
+        //     }
+        // }
+
+        // let user5 = {
+        //     name : "권준호",
+        //     age: 24,
+        //     phone: "010-1234-5678",
+        //     sayHi: function() {
+        //         console.log("내 이름은 " + this.name);
+        //     }
+        // }
+        
+    </script>
+</body>
+</html>

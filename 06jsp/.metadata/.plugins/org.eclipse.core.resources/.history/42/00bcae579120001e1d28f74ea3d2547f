@@ -1,0 +1,152 @@
+* { margin: 0; padding: 0; box-sizing: border-box;}
+a { text-decoration: none; color: inherit;}
+address { font-style: normal;}
+img { vertical-align: middle;}
+h1,h2,h3,h4,h5,h6 {font-weight:  normal;}
+li { list-style: none;}
+.inner {
+    width: 1280px;
+    margin: auto;
+}
+body {
+    width: 100%;
+    margin: auto;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* header 시작 */
+
+#head1 {
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    
+    border-bottom: 3px solid;
+    border-image: linear-gradient(120deg, rgba(140,82,255,1) 0%, rgba(92,225,230,1) 50%, 
+    	rgba(193,255,114,1) 100%);
+    border-image-slice: 1;
+}
+
+#logo1 img {
+	padding: 5px 0;
+	width: 180px;
+	height: 70px;	
+}
+
+#login {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#login li {
+    padding-left: 20px;
+}
+#head2 {
+    height: 50px;
+    line-height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#hmenu {
+    display: flex;
+}
+#hmenu li {
+    padding-right: 20px;
+}
+
+/* header 끝 */
+
+
+/* section 시작 */
+
+h2 {
+	padding: 10px 0;
+}
+
+section.inner > div {
+    position: relative;
+}
+
+p {
+	padding: 10px 0;
+	font-size: 16px;
+}
+
+.btn {
+	position: absolute;
+	width: 80px;
+	height: 80px;
+	background-color: aqua;
+	text-align: center;
+	opacity: 0;
+}
+
+.btn:hover {
+	opacity: 1;
+}
+
+#movieDivs {
+    display: flex;
+    overflow: hidden;
+}
+
+#prevbtn1 {
+	top: 230px;
+	left: 10px;
+}
+
+#nextbtn1 {
+	top: 230px;
+	right: 10px;
+}
+
+#dramaDivs {
+    display: flex;
+    overflow: hidden;
+}
+
+#prevbtn2 {
+	top: 800px;
+	left: 10px;
+}
+
+#nextbtn2 {
+	top: 800px;
+	right: 10px;
+}
+
+#musicDivs {
+    display: flex;
+    overflow: hidden;
+}
+
+#prevbtn3 {
+	bottom: 120px;
+	left: 10px;
+}
+
+#nextbtn3 {
+	bottom: 120px;
+	right: 10px;
+}
+
+/* section 끝 */
+
+/* footer 시작 */
+#footerdiv {
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logo2 img {
+	padding: 5px 0;
+	width: 180px;
+	height: 80px;
+	
+}

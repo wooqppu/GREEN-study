@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #wrap {
+            width: 80%;
+            max-width: 1000px;
+            border: 5px solid #f5e3e6;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        #title {
+            border-top-right-radius: 10px;
+            background-color: #d9e4f5;
+            background-image: linear-gradient(315deg, #d9e4f5 0%, #f5e3e6 74%);
+            padding: 30px;
+            color: #fff;
+        }
+
+        #title h2 {
+            font-size: 27px;
+            padding-bottom: 10px;
+        }
+
+        #title p { font-size: 20px; }
+
+        #main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #inputs, #buttons {
+            text-align: center;
+            padding: 30px;
+        }
+
+        #inputs input {
+            /* border-style: none; */
+            border: none;
+            outline: none;
+
+            border-bottom: 2px solid #d9e4f5;
+            margin: 15px 10px;
+            line-height: 40px;
+        }
+
+        #buttons {
+            width: 100%;
+
+        }
+
+        button { 
+            appearance: none;
+            border: 0;
+            /* border: none;
+            outline: none; */
+
+
+            background-color: #d9e4f5;
+            background-image: linear-gradient(315deg, #d9e4f5 0%, #f5e3e6 74%);
+
+            font-size: 16px;
+            color: #fff;
+            text-align: center;
+
+            width: 20%;
+            height: 35px;
+            border-radius: 10px;
+            margin: 0 20px;
+         }
+
+         #text {
+            padding: 20px;
+            margin-bottom: 10px;
+            text-align: center;
+         }
+
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="title">
+            <h2>기념일 계산기</h2>
+            <p>사귄 날짜를 입력하세요~</p>
+        </div>
+        <div id="main">
+            <div id="inputs">
+                <input type="text" id="year" name="year">년
+                <input type="text" id="month" name="month">월
+                <input type="text" id="date" name="date">일
+            </div>
+
+            <div id="buttons">
+                <!-- dataset 객체 생성 { key: "date", value: "50" } 
+                    dataset.key : date / dataset.value : 50 -->
+                <button id="btn" data-key="date" data-value="50">50일?</button>
+                <button data-key="date" data-value="100">100일?</button>
+                <button data-key="date" data-value="today">Today?</button>
+            </div>
+            <div id="text">
+                
+            </div>
+        </div>        
+    </div>
+
+
+    <script>
+        // let firstDate = new Date(2023, 4, 5);
+        // let today = new Date();
+        // // 밀리초로 변환 후 현재 밀리초에서 firstDate의 밀리초를 빼주고 
+        // // 하루 단위로 변환 
+        // let startTime = firstDate.getTime();
+        // let todayTime = today.getTime();
+        // let day = Math.floor((todayTime - startTime) / (1000*60*60*24));
+        // console.log(`우리가 만난지 ${day}일 입니다.`);
+
+        // console.dir(document.querySelector("#year"));
+        // console.log(document.querySelector("#btn").dataset);
+
+        // 변수 선언 
+        const yearInput = document.querySelector("#year");
+        const monthInput = document.querySelector("#month");
+        const dateInput = document.querySelector("#date");
+        const text = document.querySelector("#text");
+        const btns = document.querySelector("#buttons");
+
+
+        btns.addEventListener("click", function(e){
+            // console.log(e.target.dataset.value);
+            let btnValue = e.target.dataset.value;
+            if (!getInputValue()) {
+                return;
+            } else {
+                // 입력한 날짜의 데이트 객체 생성
+                let eventObj = getInputValue(); 
+                let eventDate = new Date(eventObj.year, eventObj.month-1, eventObj.date);
+                // 사람들이 입력한 월(실제 월)에서 -1 해야 컴퓨터가 올바른 월로 인식 (0~11로 월을 표시함)
+
+                if(btnValue === "today") {
+                    // 현재 날짜의 값을 가진 객체를 생성 
+                    let toDay = new Date();
+                    // 밀리초 단위로 변경
+                    let toDayTime = toDay.getTime();
+                    let eventTime = eventDate.getTime();
+                    let re = Math.floor((toDayTime - eventTime) / (1000*60*60*24));
+
+                    text.innerHTML = `우리가 만난지 ${re}일째 입니다.`; 
+
+                } 
+                else {
+                    eventDate.setDate(eventDate.getDate() + Number(btnValue)) // +50, +100을 해주는 코드 
+                    text.innerHTML = `${btnValue}일은 ${eventDate.getFullYear()}년 
+                    ${eventDate.getMonth()+1}월 ${eventDate.getDate()}일 입니다.`
+
+                }
+            }
+        })
+
+        // 인풋값을 체크하여 인풋값이 유효하면 인풋값을 객체 형태로 반환하는 함수
+        function getInputValue() {
+            // input값이 빈칸이면 종료 
+            if (!yearInput.value || !monthInput.value || !dateInput.value) {
+                alert("날짜(년도, 월, 일)를 전부 입력하세요");
+                return;
+            }
+
+            // 입력한 내용에 문자도 포함했을 때
+            // isNaN(값) - 값이 NaN 이면 true 아니면 false
+            // NaN == num or NaN === num 형식으로는 비교 불가능 
+            // isNaN(num) 형식의 메소드로만 비교 가능
+            if (isNaN(Number(yearInput.value)) || isNaN(Number(monthInput.value))
+            || isNaN(Number(dateInput.value))) {
+                alert("숫자만 입력하세요");
+                // 입력 값을 초기화 
+                yearInput.value = "";
+                monthInput.value = "";
+                dateInput.value = "";
+                return;
+            }
+
+            let eventDay = {
+                year: Number(yearInput.value),
+                month: Number(monthInput.value),
+                date: Number(dateInput.value),
+            }
+            return eventDay;
+
+        } 
+
+    </script>
+</body>
+</html>

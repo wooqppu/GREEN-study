@@ -1,0 +1,144 @@
+.inner_wrap { width: 100%; max-width: 1200px; margin: 0 auto; }
+
+/* 상단영역 */
+#header { border-bottom: 1px solid #ccc; }
+#header .inner_wrap { display: flex; flex-direction: row; 
+    justify-content: space-between; height: 100px; align-items: center; }
+
+.logo_area { display: flex; align-items: center; }
+.logo_area ul { display: flex; align-items: center; }
+.logo_area h1 { width: 300px; font-size: 0; height: 80px;
+    background: url(../images/logo.png) center center no-repeat; }
+.logo_area li { border: 1px solid #ccc; padding: 10px; }
+.logo_area li:nth-child(2) { background-color: #ddd; }
+
+.nav { display: flex; align-items: center; }
+.nav ul { display: flex; padding: 0 20px; }
+.nav div { height: 30px; position: relative; width: 120px; 
+    text-align: center; line-height: 30px; }
+.nav div ul { flex-direction: column; position: absolute; 
+    top: 0; left: 0; width: 100px; padding: 0; border: 1px solid #ccc; }
+.nav div ul li:nth-child(2) { display: none; }
+.nav div ul:hover { border: 1px solid #0000ff; }
+.nav div ul:hover li:nth-child(2) { display: block; }
+.nav div ul:hover li { color: #0000ff; }
+.nav div ul li:hover { background-color: #0000ff; color: #fff; }
+.nav > ul li { padding: 0 20px; }
+.nav button { background-color: transparent; padding: 10px; 
+    border: 1px solid #ccc; margin-left: 6px; }
+/* 상단영역 */
+/* 메인영역 */
+#visual { display: flex; }
+#itemlist { width: 40%; padding-right: 50px; }
+#mainbanner { width: 60%; }
+#main_content > div { padding: 60px 0; }
+/* 왼쪽 로그인 */
+#login { background-color: #eaf4fe; border-radius: 16px; 
+    margin-bottom: 20px; padding: 16px; }
+#login > a { display: block; width: 100%; line-height: 60px; 
+    text-align: center; color: #fff; border-radius: 16px; 
+    background-color: #007aff; margin-bottom: 16px; font-size: 22px; }
+
+.btn_group { border-radius: 16px; border: 1px solid #007aff; 
+    background-color: #fff; display: flex; line-height: 50px; }
+.btn_group li { width: 50%; text-align: center; color: #007aff;}
+.btn_group li:first-child { border-right: 1px solid #007aff; }
+
+#iconul { display: flex; flex-wrap: wrap; }
+#iconul li { width: 25%; padding: 10px; text-align: center; }
+#iconul li img { width: 70%; }
+#iconul span { display: block; font-size: 14px; }
+/* 왼쪽 로그인 */
+/* 오른쪽 이미지 */
+#mainbanner { text-align: center; }
+#mainbanner img { width: 100%; }
+#mainbanner h2 { padding-top: 20px; padding-bottom: 10px; }
+#mainbanner p { font-size: 15px; }
+/* 오른쪽 이미지 */
+/* 보험상품 부분 */
+#main_content #insurance_story { background-color: #dfe6f9; position: relative; 
+    padding-bottom: 120px; margin-bottom: 80px; }
+.main_tit { text-align: center; font-size: 34px; padding-bottom: 30px; }
+.main_tit span { font-size: 42px; font-weight: bold; }
+
+.text-box { display: flex; justify-content: space-between; 
+    align-items: start; height: 200px; }
+.text-box li { width: 22%; border-radius: 40px 40px 0 40px; background-color: #fff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); padding: 40px; font-size: 17px; }
+.text-box li:nth-child(even) { align-self: flex-end; }
+
+.link_div { width: 1200px; height: 120px; border-radius: 20px; 
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); background-color: #fff;
+    position: absolute; left: 50%; bottom: -60px; transform: translate(-50%,0); }
+.link_div ul { display: flex; justify-content: space-around; 
+    align-items: center; height: 120px; }
+.link_div ul li { width: 18%; text-align: center; }
+.link_div ul li span { display: block; width: 50px; height: 50px;
+    border-radius: 50%; text-align: center; line-height: 50px; 
+    color: #fff; margin: 0 auto; }
+.link_div ul li:nth-child(1) span { background-color: #6175ba; }
+.link_div ul li:nth-child(2) span { background-color: #439f88; }
+.link_div ul li:nth-child(3) span { background-color: #8a6eb8; }
+.link_div ul li:nth-child(4) span { background-color: #6f9c47; }
+.link_div ul li:nth-child(5) span { background-color: #508ed9; }
+.link_div ul li p { margin-top: 5px; font-size: 14px; }
+/* 보험상품 부분 */
+/* 라이프매거진 */
+#life ul { display: flex; justify-content: space-between; }
+#life ul li { width: 22%; border: 1px solid #ccc;
+    border-radius: 24px; overflow: hidden; }
+#life ul li img { width: 100%; vertical-align: top; }
+#life ul li p { padding: 30px 50px; text-align: center; }
+/* 라이프매거진 */
+/* 광고 */
+#main_banner { background-color: #f2f8ff; }
+#main_banner ul { display: flex; }
+#main_banner ul li { width: 50%; display: flex; padding: 0 40px;
+    justify-content: space-between; align-items: center; }
+#main_banner ul li h3 { font-size: 24px; padding-bottom: 20px; }
+#main_banner ul li span { width: 130px; height: 130px; background-color: #fff;
+    border-radius: 50%; text-align: center; display: flex; 
+    align-items: center; justify-content: center; }
+#main_banner ul li span img { width: 80%; vertical-align: top; }
+/* 광고 */
+/* 커뮤니티 */
+#main_community { display: flex; justify-content: space-between; }
+/* 커뮤니티 왼쪽 */
+#main_community > div { width: 46%; }
+#main_community .main_tit { text-align: left; }
+#main_community > div:nth-child(1) li { background-color: #eee; padding: 16px;
+    line-height: 20px; border-radius: 8px; margin-bottom: 10px; }
+#main_community li strong { color: #007aff; padding-right: 10px; }
+#main_community li span { font-size: 15px; }
+/* 커뮤니티 왼쪽 */
+/* 커뮤니티 오른쪽 */
+.event div { background: url(../images/banner01.png) right center no-repeat rgb(224, 227, 241);
+    background-size: auto 100%; height: 200px; border-radius: 30px; padding: 30px; }
+.event div h3 { padding-bottom: 20px; font-size: 25px; font-weight: bold; width: 40%; }
+
+.notice { padding-top: 30px; }
+.notice li { line-height: 30px; }
+.notice li span { padding-right: 30px; }
+/* 커뮤니티 오른쪽 */
+/* 추천상품 */
+#recommend .main_tit { text-align: left; }
+#recommend ul { display: flex; justify-content: space-between; }
+#recommend ul li { width: 22%; background-color: #508ed9; color: #fff;
+    border-radius: 24px; padding: 30px; font-size: 15px; }
+#recommend ul li strong { font-size: 26px; display: block; padding-top: 16px; }
+/* 추천상품 */
+/* 메인영역 */
+/* 하단영역 */
+#footer_menu { background-color: #eee; }
+#footer_menu ul { display: flex; border-left: 1px solid #ccc; }
+#footer_menu ul li { width: 20%; line-height: 60px; font-size: 14px;
+    border-right: 1px solid #ccc; padding-left: 20px; }
+
+#footer_copy { text-align: center; padding: 40px 0; }
+#footer_copy > div { display: flex; justify-content: center; align-items: center; }
+#footer_copy > div img { vertical-align: top; }
+#footer_copy > div ul { display: flex; }
+#footer_copy > div ul li { padding: 0 20px; font-size: 14px; }
+
+address { padding-top: 20px; font-style: normal; font-size: 14px; }
+/* 하단영역 */

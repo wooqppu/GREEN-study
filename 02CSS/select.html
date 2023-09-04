@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       * { margin: 0; padding: 0;}
+       div > p {
+            background-color: chartreuse;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <p>div 옆에 있는 p요소 입니다.</p>
+    <div>
+        <p> div 자식요소 p입니다.(하위요소에 포함됨)
+            <ul>
+                <li>
+                    <p> div 하위요소 p입니다. </p>
+                </li>
+                <li>
+                    <p> div 하위요소 p입니다. </p>
+                </li>
+            </ul>
+        </p>
+    </div>
+</body>
+</html>

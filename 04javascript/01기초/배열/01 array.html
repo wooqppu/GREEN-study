@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let fruit = "🍒";
+        let fruits = ["🍑","🍉","🍓","🍋","🍈"];
+
+        // console.log(fruits[0]);
+        // console.log(fruits.length);
+
+        for(let i=0; i < fruits.length; i++) {
+            console.log(fruits[i]);
+        }
+
+        for(let f of fruits) {
+            console.log(f);
+        }
+
+        fruits[0] = "🍊";
+        console.log(fruits[0]);
+
+        fruits.splice(1, 2, "🍇");
+        console.log(fruits);
+
+        console.log(fruits.indexOf("❤💕💖"));
+        console.log(fruits.includes("🍇"));
+
+        let fruitstr = fruits.join("💕");
+        console.log(fruitstr);
+
+        fruits.reverse();
+        console.log(fruits);
+
+        let newfruits = fruits.slice(1, 4);
+        console.log(newfruits);
+
+    </script>
+</body>
+</html>

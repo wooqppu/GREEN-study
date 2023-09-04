@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	let webSocket = new WebSocket("ws://localhost:8010/websocket/ChatingServer");
+	
+	// 변수 선언
+	let chatWindow, chatMessage, chatId;
+	
+	// 창이 열리면 
+	window.onload = function() {
+		chatWindow = document.getElementById("chatWindow");
+		chatMessage = document.getElementById("chatMessage");
+		chatId = document.getElementById("chatId").value;
+	}
+</script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        li { list-style: none; }
+
+        body > div {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            background-color: #bfe299;
+            background-image: linear-gradient(315deg, #bfe299 0%, #66b5f6 74%); 
+        }
+
+        header h1 {
+            color: #fff;
+            text-align: center;
+            padding: 30px;
+        }
+
+        div div {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #text_box {
+            margin: 50px;
+            font-size: 40px;
+            color: #bfe299;
+        }
+
+        #input_text {
+            margin-bottom: 30px;
+            width: 35%;
+            height: 30px;
+        }
+
+        #score_box {
+            display: flex;
+            flex-direction: row; 
+        }
+
+        #score_box span {
+            padding: 0 30px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        #end_box {
+            display: flex;
+            flex-direction: row;
+            width: 40%;
+            margin-top: 20px;
+        }
+
+        #end_box button {
+            width: 85%;
+            height: 60px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div>
+        <header>
+            <h1>타자게임</h1>
+        </header>
+        <div>
+            <div id="text_box">
+                <div id="text_example">
+                    <p>class</p>
+                    <p>object</p>
+                    <p>javascript</p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                </div>
+            </div>
+            <input type="text" id="input_text">
+            <div id="score_box">
+                <span>남은 시간 : 0초</span> 
+                <span>점수 30점</span>
+            </div>
+            <div id="end_box">
+                <button>게임종료</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+    </script>
+</body>
+</html>

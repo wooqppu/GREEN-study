@@ -1,0 +1,55 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	let webSocket = new WebSocket("ws://localhost:8010/websocket/ChatingServer");
+	
+	// 변수 선언
+	let chatWindow, chatMessage, chatId;
+	
+	// 창이 열리면 
+	window.onload = function() {
+		chatWindow = document.getElementById("chatWindow");
+		chatMessage = document.getElementById("chatMessage");
+		chatId = document.getElementById("chatId").value;
+	}
+	
+	// 메세지 전송 
+	function sendMessage() {
+		chatWindow.innerHTML += "<div class='myMsg'>"+ chatMessage.value + "</div>";
+		
+		// 서버로 메세지 전송 (아이디 | 내용)
+		webSocket.send(chatId + " | " + chatMessage.value);
+		chatMessage.value = "";
+	}
+	
+	// 채팅종료
+	function disconnect() {
+		webSocket.close();
+	}
+	
+	// 엔터키 입력 처리 
+	function enterKey() {
+		if(window.event.keyCode == 13) {	// Enter키의 코드값 : 13
+			sendMessage();
+		}
+	}
+	
+	
+</script>
+</head>
+<body>
+	아이디 : 
+	<input type="text" id="chatId" value="${param.chatId}" readonly />
+	<button id="closeBtn" onclick="disconnect();">채팅종료</button>
+	<div id="chatWindow"></div>
+	<div>
+		<input type="text" id="chatMessage" onkeyup="enterKey();" />
+		<button id="sendBtn" onclick="sendMessage();">전송</button>
+	</div>
+</body>
+</html>

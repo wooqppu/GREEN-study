@@ -1,0 +1,106 @@
+
+* { margin: 0; padding: 0; box-sizing: border-box; } 
+img { vertical-align: middle; width: 100%; }
+a { text-decoration: none; color: inherit; }
+li { list-style: none; }
+table { border-collapse: collapse; }
+h1,h2,h3,h4,h5,h6 { font-weight: normal; }
+
+body { font-family: Arial, Helvetica, "맑은고딕", sans-serif; font-size: 14px; 
+    line-height: 1.6; color: #222; }
+
+.clearboth::after { content: ""; display: block; clear: both; } 
+
+.inner_con { width: 100%; max-width: 1200px; margin: 0 auto; }
+
+/* 상단영역 시작 */
+header { padding: 20px; }
+header h1 { float: left; font-size: 34px; }
+header ul { float: right; }
+header ul li { float: left; padding: 20px; font-size: 18px; }
+
+.mobileMenu { position: absolute; width: 60px; height: 100px;
+    right: 0; top: 0; padding-top: 30px; display: none; }
+.mobileMenu span { display: block; width: 60%; height: 5px;
+    background-color: #3f51b5; margin: 6px auto;}
+/* 상단영역 끝 */
+/* 본문영역 시작 */
+main > section:not(:first-child) { padding: 60px 0; }
+
+.tit { padding-bottom: 60px; }
+.tit h2 { color: #3f51b5; font-size: 34px; font-weight: bold;}
+
+#weare .tit h2 { float: left; width: 32%; border-right: 8px solid #ddd; }
+#weare .tit p { float: left; width: 65%; padding-left: 40px; }
+
+#weare li { float: left; width: 25%; text-align: center;
+    padding: 30px 50px; }
+#weare li img { height: 100px; width: auto; }
+#weare li h3 { padding: 20px 0; color: #3f51b5; }
+#weare li span { line-height: 1.2; color: #888; }
+
+
+#work li { float: left; width: 25%; position: relative; overflow: hidden; }
+#work li .bluebg { position: absolute; top: 0; left: 0; transition: 0.5s;
+    width: 100%; height: 100%; background-color: rgba(63,51,181,0); }
+#work li .bluebg div { position: absolute; left: 50px; top: -200px; 
+    color: #fff; transition: 0.5s; }
+#work li:hover .bluebg { background-color: rgba(63,51,181,0.5); }
+#work li:hover .bluebg div { top: 50px; }
+
+
+#blog .tit { float: left; width: 30%; }
+#blog > ul { float: left; width: 70%; }
+#blog > ul li { float: left; width: 32%; }
+#blog > ul li:not(:last-child) { margin-right: 2%; }
+
+
+#contact .tit { width: 30%; float: left; }
+#contact #messages { width: 70%; float: left; }
+#contact #inputs { width: 50%; float: left;}
+#contact #textMessages { width: 50%; float: left;}
+
+#contact input { width: 100%; border: none; 
+    border-bottom: 1px solid #ddd; line-height: 48px;}
+#contact textarea { width: 96%; border: none; margin-left: 4%;
+    border-bottom: 1px solid #ddd; height: 148px; }
+ 
+#contact #button { text-align: right; clear: left; padding-top: 10px; }
+#contact #button input { width: 200px; background-color: #3f51b5; 
+    color: #fff; text-align: center; line-height: 40px; }
+/* 본문영역 끝 */
+/* 하단영역 시작 */
+footer { text-align: center; padding: 30px; }
+footer h1 { font-size: 14px; }
+/* 하단영역 끝*/
+/* 반응형 웹 추가 */
+/* 1024 이하일 때 */
+@media screen and (max-width: 1024px) {
+    .tit { text-align: center; }
+    #weare .tit h2 { width: 100%; border-right: none; }
+    #weare .tit p { width: 100%; padding-left: 40px; }
+    #weare li { width: 50%; } 
+
+    #work li { width: 50%; }
+
+    #blog .tit { width: 100%; }
+    #blog > ul { width: 100%; }
+
+    #contact .tit { width: 100%; }
+    #contact #messages { width: 100%; }
+}
+/* 768 이하일 때 */
+@media screen and (max-width:768px) {
+    nav { display: none; }
+    .mobileMenu { display: block; }
+
+    #weare li { width: 100%; }
+    #work li { width: 100%; }
+
+    #contact #inputs { width: 100%; padding: 20px; }
+    #contact #textMessages { width: 100%; padding: 20px; }
+
+    #blog > ul li { width: 100%; }
+    #blog > ul li:not(:last-child) { margin-right: 0%; }
+
+}

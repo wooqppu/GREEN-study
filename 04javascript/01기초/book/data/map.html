@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+    객체 - 키가 있는 컬렉션을 저장함
+    배열 - 순서가 있는 컬렉션을 저장함 
+    맵은 객체와 비슷하나 키에 다양한 자료형을 허용함
+    new Map() 맵을 만듭니다
+    map.set(key, value) - key,value를 저장 
+    map.get(key) - key에 해당하는 값을 반환 key가 존재하지 않으면 undefined를 반환
+    map.has(key) - key가 존재하면 true 존재하지 않으면 false를 반환
+    map.delete(key) - key에 해당하는 값을 삭제합니다.
+    map.clear() - 맵안에 모든 요소를 제거 합니다.   
+    -->
+    <script>
+        let map = new Map();
+        // map을 사용할 땐 map전용 메서드 set, get 등을 사용해야만 합니다.
+    map.set('1', 'str1');
+    map.set(1,'num1');
+    map.set(true, 'bool1');
+        let obj = {
+            '1': 'str1',
+            true: 'bool1',
+            12: 'num1',
+        }
+    let arr1 = Object.keys(obj);
+    let mapdata1 = map.delete('1');
+    console.log(map);
+    console.log(arr1);
+    console.log(mapdata1);
+    // 맵은 키로 객체를 허용합니다.
+    let john = { name: "john"}
+    let visitsC = new Map();
+    visitsC.set(john,1234);
+    let aa = visitsC.get(john);
+    console.log(aa);
+
+    // 객체의 키로 객체를 사용할때
+    let visitsO = {};
+    visitsO[john] = 1234;
+    console.log(visitsO);
+
+
+    //맵의 요소에 반복 작업하기
+    let mapkeys = map.keys();
+    let mapvalues = map.values();
+    let mapEntries = map.entries();
+    console.log(mapEntries);
+    
+    for (let a of map.keys()){
+        console.log(a);
+    }
+
+    for (let a of map.values()){
+        console.log(a);
+    }
+
+    for (let a of map.entries()){
+        console.log(a);
+    }
+    </script>
+
+    
+</body>
+</html>

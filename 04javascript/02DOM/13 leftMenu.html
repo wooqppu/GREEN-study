@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        li { list-style: none; }
+
+
+        header { 
+            background-color: pink;
+            line-height: 80px;
+            text-align: center;
+            color: #fff;
+        }
+
+        header div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        header div span {
+            width: 50%;
+            height: 3px;
+            background-color: #fff;
+            margin: 3px 0;
+        }
+
+
+        #blackbg {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        #blackbg.on { opacity: 1; }
+
+
+        #leftmenu {
+            position: absolute;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100vh;
+            background-color: #fff;
+            z-index: 3;
+        }
+
+        #leftmenu.on {
+            left: 0;
+        }
+
+        #leftmenu div {
+            display: flex;
+            justify-content: flex-end;
+            height: 80px;
+            text-align: right;
+            line-height: 80px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        #leftmenu div span {
+            background-color: red;
+            color: #fff;
+            padding: 0 20px;
+        }
+
+        #leftmenu > ul > li {
+            line-height: 34px;
+            font-size: 14px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        #leftmenu ul ul {
+            height: 0;
+            overflow: hidden;
+            transition: 0.5s;
+        }
+
+        #leftmenu ul ul.on {
+            height: 120px;
+        }
+
+        #leftmenu > ul > li li {
+            line-height: 24px;
+            border-top: 1px solid #ccc;
+            background-color: #eee;
+            text-align: right;
+            padding: 3px 30px 3px 0;
+
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <h1>Logo</h1>
+    </header>
+    <div id="leftmenu">
+        <div>
+            <span id="close">메뉴닫기</span>
+        </div>
+        <ul>
+            <li>대메뉴1
+                <ul>
+                    <li>서브메뉴1</li>
+                    <li>서브메뉴2</li>
+                    <li>서브메뉴3</li>
+                    <li>서브메뉴4</li>
+                </ul>
+            </li>
+            <li>대메뉴2
+                <ul>
+                    <li>서브메뉴1</li>
+                    <li>서브메뉴2</li>
+                    <li>서브메뉴3</li>
+                    <li>서브메뉴4</li>
+                </ul>
+            </li>
+            <li>대메뉴3
+                <ul>
+                    <li>서브메뉴1</li>
+                    <li>서브메뉴2</li>
+                    <li>서브메뉴3</li>
+                    <li>서브메뉴4</li>
+                </ul>
+            </li>
+            <li>대메뉴4
+                <ul>
+                    <li>서브메뉴1</li>
+                    <li>서브메뉴2</li>
+                    <li>서브메뉴3</li>
+                    <li>서브메뉴4</li>
+                </ul>
+            </li>
+            <li>대메뉴5
+                <ul>
+                    <li>서브메뉴1</li>
+                    <li>서브메뉴2</li>
+                    <li>서브메뉴3</li>
+                    <li>서브메뉴4</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id="blackbg"></div>
+
+    <script>
+        // 1. 왼쪽 div를 클릭하면 leftmenu 요소에 on클래스를 붙여라 
+        // 2. blackbg 요소에도 on클래스를 붙여라
+        let div = document.querySelector("header div");
+        let leftmenu = document.querySelector("#leftmenu");
+        let blackbg = document.querySelector("#blackbg");
+       
+        div.addEventListener("click", function(){
+            leftmenu.classList.add("on");
+            blackbg.classList.add("on");
+        }) 
+        // 3. #close를 클릭하면 leftmenu 요소에 on클래스를 떼라 
+        // 4. blackbg 요소에도 on클래스를 떼라
+        let close = document.querySelector("#close");
+
+        close.addEventListener("click", function(){
+            leftmenu.classList.remove("on");
+            blackbg.classList.remove("on");
+
+            lis.forEach((li, index)=> {
+                li.querySelector("ul").classList.remove("on");
+            }) // 닫기를 누르면 서브메뉴 열린 것들도 같이 닫아라
+        })
+        // 5. 대메뉴나 서브메뉴들을 클릭하면 on클래스를 붙이고 떼라
+        // (toggle을 이용해서 열거나 닫아라) 
+        let lis = document.querySelectorAll("#leftmenu>ul>li")
+
+        lis.forEach((li, index)=>{
+            li.addEventListener("click", function(){
+                li.querySelector("ul").classList.toggle("on");
+            });
+        })
+       
+        
+    </script>
+</body>
+</html>

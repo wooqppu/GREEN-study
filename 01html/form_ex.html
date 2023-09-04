@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form태그 연습</title>
+</head>
+<body>
+    <h2>다양한 폼 컨트롤</h2>
+    <form action="">
+        <table border="1" cellpadding="10" cellspacing="0">
+            <tr>
+                <td>아이디</td>
+                <td><p><input type="text" name="userId" required /></p></td>
+            </tr>
+            <tr>
+                <td>패스워드</td>
+                <td><p><input type="text" name="userPass" required /></p></td>
+            </tr>
+            <tr>
+                <td>성별</td>
+                <td><p><input type="radio" name="gender" value="여자"/>여자
+                <input type="radio" name="gender" value="남자"/>남자</p></td>
+            </tr>
+            <tr>
+                <td>사진등록</td>
+                <td><p><input type="file" name="userPhoto"></p></td>
+            </tr>
+            <tr>
+                <td>수신설정</td>
+                <td><p><input type="checkbox" name="emailaccess" value="메일수신허용">메일수신허용
+                <input type="checkbox" name="emailaccess" value="sms수신허용">sms수신허용</p></td>
+            </tr>
+            <tr>
+                <td colspan="2"><p>
+                <input type="submit" value="확인">
+                <input type="reset" value="취소"> 
+                <!-- <button type="submit">확인</button>
+                <button type="reset">취소</button> disabled -->
+                </p></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

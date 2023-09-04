@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body > div div {
+            height: 100vh;
+        }
+
+        body > div div:nth-child(2) {
+            background-color: skyblue;
+        }
+
+        body > div div:nth-child(3) {
+            background-color: darksalmon;
+        }
+
+        body > div div:nth-child(4) {
+            background-color: darkseagreen;
+        }
+
+        ul {
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        li {
+            list-style: none;
+            padding-left: 50px;
+            transition: 0.5s;
+        }
+
+        li.on {
+            font-size: 40px;
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+        <ul>
+            <li class="on">menu1</li>
+            <li>menu2</li>
+            <li>menu3</li>
+        </ul>
+        <div>box1</div>
+        <div>box2</div>
+        <div>box3</div>
+    </div>
+
+    <script>
+        // 클릭하면 해당 위치로 이동 
+
+        // querySelector 사용
+        // let li = document.querySelector("li");
+        // let li2 = document.querySelector("li:nth-child(2)");
+        // let li3 = document.querySelector("li:nth-child(3)");
+        // console.log(li);
+        
+        // querySelectorAll 사용
+        let lis = document.querySelectorAll("li"); // querySelectorAll ---> 유사배열(노드리스트)로 받음 
+        console.log(lis);
+
+
+        // 화면 높이 값을 wh에 할당 
+        let wh = window.innerHeight;
+
+        // 2번 방법
+        // lis[0].addEventListener("click", function(){
+        //     window.scrollTo({top: 0, behavior: "smooth"});
+        // })
+
+        // 3번 방법
+        for(let i=0; i < lis.length; i++) {
+            lis[i].addEventListener("click", function(){
+            window.scrollTo({top: i*wh, behavior: "smooth"});
+            })
+        }
+
+        window.addEventListener("scroll", function(){
+            let scrollTop = window.scrollY;
+            console.log(scrollTop);
+
+            if(scrollTop >= 0 && scrollTop < wh) {
+                lis[0].classList.add("on");
+                lis[1].classList.remove("on");
+                lis[2].classList.remove("on");
+            }
+            if(scrollTop >= wh && scrollTop < wh*2) {
+                lis[0].classList.remove("on");
+                lis[1].classList.add("on");
+                lis[2].classList.remove("on");
+            }
+            if(scrollTop >= wh*2 && scrollTop < wh*3) {
+                lis[0].classList.remove("on");
+                lis[1].classList.remove("on");
+                lis[2].classList.add("on");
+            }
+        })
+
+        // 1번 방법
+        // li.addEventListener("click", function(){
+        //     window.scrollTo({top: 0, behavior: "smooth"});
+        // })
+        // li2.addEventListener("click", function(){
+        //     window.scrollTo({top: wh, behavior: "smooth"});
+        // })
+        // li3.addEventListener("click", function(){
+        //     window.scrollTo({top: wh*2, behavior: "smooth"});
+        // })
+
+        
+
+
+
+
+    </script>
+</body>
+</html>

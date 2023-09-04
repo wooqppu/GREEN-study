@@ -1,0 +1,45 @@
+{
+    "items": [
+        {"type": "T-shirt",
+        "gender": "남성",
+        "size": "Large",
+        "color": "Pink",
+        "image": "imgs/pink_t.png" 
+        },
+        {
+        "type": "T-shirt",
+        "gender": "여성",
+        "size": "Small",
+        "color": "Yellow",
+        "image": "imgs/yellow_t.png" 
+        },
+        {
+        "type": "Skirt",
+        "gender": "여성",
+        "size": "Medium",
+        "color": "Pink",
+        "image": "imgs/pink_s.png" 
+        }, 
+        {
+        "type": "Pants",
+        "gender": "여성",
+        "size": "Medium",
+        "color": "Yellow",
+        "image": "imgs/yellow_p.png" 
+        },
+        {
+        "type": "T-shirt",
+        "gender": "여성",
+        "size": "Large",
+        "color": "Blue",
+        "image": "imgs/blue_t.png" 
+        },
+        {
+        "type": "Pants",
+        "gender": "남성",
+        "size": "Small",
+        "color": "Blue",
+        "image": "imgs/blue_p.png" 
+        }
+    ]
+}

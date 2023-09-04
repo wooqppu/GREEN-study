@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div { width: 1000px; height: 800px; background-color: antiquewhite; 
+            background-image: url(../images02/dog2.jpg), url(../images02/dog.jpg); 
+            background-repeat: no-repeat, no-repeat; 
+            background-position: 50px 100px, right top; 
+            background-size: 400px auto, auto 300px; 
+            /* 포지션이랑 사이즈를 함께 적을 땐 '포지션 /(슬래쉬) 사이즈'로 속기법 적기 */
+            /* 사진 2개를 나열할 땐 먼저 온 사진이 위치가 겹쳐지면 더 위로 옴 */
+            /* 속기법 사용 예시 (속기법으로도 이미지 여러개 나열 가능 -> 이미지 속성들, 이미지 속성들)
+            background: url(../images02/dog2.jpg) no-repeat 50px 100px / 300px auto aliceblue;
+            */
+            /* 속기법 여러 이미지일 때 예시 
+            background: url(../images02/dog2.jpg) no-repeat left top, 
+            url(../images02/dog1.jpg) no-repeat right top beige; */ }
+    </style>
+</head>
+<body>
+    <div></div>
+</body>
+</html>

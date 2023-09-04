@@ -1,0 +1,88 @@
+
+/* css 변수 선언 */
+:root {
+    /* color */
+    --color-black: #3f454d;
+    --color-white: #fff;
+
+    /* size */
+    --base-space: 12px;
+    --size-button: 50px;
+    --size-border: 10px;
+
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { 
+    width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#wrap {
+    position: absolute;
+    width: 80%;
+    height: 750px;
+}
+
+h1 {
+    text-align: center;
+    padding: 40px;
+} 
+
+#buttonDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 40px;
+}
+
+.btn {
+    /* 자동으로 생긴 버튼 스타일 초기화 */
+    background: transparent;
+    border: none;
+    outline: none;
+
+    margin-right: var(--base-space);
+
+    width: 200px;
+    height: var(--size-button);
+
+    border-radius: var(--size-border);
+    background-color: var(--color-black);
+
+    color: #fff;
+    text-align: center;    
+    font-size: 16px;
+
+}
+
+
+li { list-style: none; }
+
+#books {
+    border-top: 3px solid black;
+}
+
+.book {
+    background-color: var(--color-white);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.book:nth-child(1) { font-weight: bold; } 
+
+.book span {
+    margin-left: var(--base-space);
+    font-size: var(--font-size);
+    
+}
+

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        
+        /*
+        1. const : 블록스코프 
+        할당 후 값 변경할 수 없다 
+        선언시 할당해야함
+        
+        2. var : 함수스코프 
+        같은 이름의 변수를 여러번 선언 가능 
+        변수의 선언부가 자동으로 호이스팅됨 -> 문제 발생 
+
+        3. let : 블록스코프 (유효범위)
+        같은 이름의 변수 여러번 선언 불가능
+        호이스팅 안됨 
+
+        전역변수, 글로벌변수 
+        최상단에 선언한 변수 - 코드 어디에서든 사용 가능 
+        
+        지역변수, 로컬변수
+        {} 안에 작성된 변수 - 스코프 범위 안에서만 사용 가능 
+        */
+
+        const const1 = "green";
+        // const1 = "aaaa"; 값 변경 불가능 
+        // const1 = 10; 도 불가능
+
+        /*
+        var str1 = a;
+        var str1 = b;
+        console.log(str1);
+
+        let str2 = "a";
+        //let str2 = "b";
+        console.log(str2);
+        */
+
+        console.log(a);
+        var a = 10;
+        let b = 20;
+
+        // var는 호이스팅으로 console이 입력값보다 위에 적혀있어도 출력값 읽어냄, 
+        // 그러나 값이 따로 있어도 undifined로 값을 출력하는 오류 발생
+
+
+        {
+            let userName = "blue";
+            console.log(userName);
+            var number = 30;
+            console.log(number);
+
+        }
+
+        function myFun() {  // function : 함수 선언 
+            var number2 = 10;
+            console.log("내부에서 사용 " + number2);
+
+        }
+        myFun()
+        console.log("바깥에서 사용 " + number);
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

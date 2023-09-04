@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="">
+        <p>
+            아이디
+            <input type="text" id="userId" name="userId">
+        </p>
+        <p>
+            비밀번호
+            <input type="text" id="userPw" name="userPw">
+        </p>
+        <p><button type="submit">전송</button></p>
+    </form>
+
+    <script>
+        let form = document.querySelector("form");
+        let idInput = document.querySelector("#userId");
+        let pwInput = document.querySelector("#userPw");
+
+
+        form.addEventListener("submit",function(e){
+            e.preventDefault();
+            formCheck();
+        })
+
+        function formCheck() {
+            // 아이디 입력시 글자 수가 5개 이상인지 체크 
+            if(idInput.value.length >= 5) {
+                console.log(idInput.value);
+            } else {
+                console.log("아이디를 다시 작성하시오.") 
+            }
+
+            // 패스워드는 5글자 이상이고 숫자를 1개 이상 포함하는지 체크
+            if(pwInput.value.length >= 5) {
+                let pwArr = pwInput.value.split(""); // 문자열을 배열로 돌려줌
+                // join은 배열을 문자로 돌려줌 
+                let isNum = false;
+
+                pwArr.forEach(ch => { // 문자열 배열 체크
+                    // 문자를 숫자형으로 형변환 했을 때 NaN이 아니라면 실행
+                    if(!isNaN(Number(ch))) {
+                        isNum = true;
+                        return;
+                    }
+                })
+                if(isNum) {
+                    console.log("숫자를 포함하고 있습니다.")
+                } else { console.log("숫자를 포함하고 있지 않습니다.") }
+
+            } else {
+                console.log("비밀번호를 다시 작성하시오.")
+            }
+        }
+
+    </script>
+</body>
+</html>
