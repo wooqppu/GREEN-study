@@ -1,0 +1,136 @@
+
+JWT (Json Web Tokens) 로그인 
+
+쿠키, 세션, 토큰 
+
+쿠키 : 브라우저에 공개 가능한 정보를 사용자의 브라우저 저장소에 저장
+
+
+서버는 클라이언트의 로그인 요청에 대한 응답을 작성할 때 클라이언트 측에
+저장하고 싶은 정보를 응답 헤더의 set-cookie에 담아서 전달해줌 
+
+클라이언트가 재요청할 때 마다 저장된 쿠키를 요청 헤더의 cookie에 담아서 보냄 
+
+서버는 쿠키에 담긴 정보를 바탕으로 해당 요청의 클라이언트가 누군지 식별 가능함
+
+
+세션 : 비밀번호와 같은 인증 정보를 쿠키에 저장하지 않고, 
+서버에 인증 정보와 더불어 사용자의 식별자인 
+session id와 해당 사용자의 정보를 저장 
+
+
+HTTP 통신 - stateless:
+요청 -> 응답이 종료되면 stateless(상태가 유지되지 않는)
+연결을 끊는 처리 방식 
+
+소켓 통신
+
+
+토큰 JWT
+암호화된 문자열
+ 
+헤더, 페이로드(바디), 서명 
+이렇게 세 가지로 구분되있음
+
+1. 헤더 Header 
+토큰의 타입, 서명 생성에 어떤 알고리즘이 사용되었는지 저장 
+
+ex>
+{
+	"typ": "JWT"
+	"alg" : "HS512"
+}
+
+2. 페이로드(바디) Payload
+사용자 혹은 토큰에 대한 속성을 key-value 형태로 저장 
+토큰에서 사용할 정보의 조각 
+
+Claim 표준 스펙 : setter 메소드를 제공함
+2-1. setIssuer - iss(Issuer) : 토큰 발급자 
+2-2. setSubject - sub(Subject) : 토큰 제목 
+2-3. setAudience - and(Audience) : 토큰 대상자 
+2-4. setExpiration - exp(Expiration Time) : 토큰 만료 시간 
+2-5. setNotBefore - nbf(Not Before) : 토큰 활성 날짜 
+(이 날짜 이전의 토큰은 활성되지 않음을 보장)
+2-6. setIssuedAt - iat(Issued At) : 토큰 발급 시간
+2-7. setId - jti(JWT Id) : JWT 토큰 식별자 (issuer가 여러명일 때 구분하기 위한 값)
+
+3. 서명 Signature
+encodeHeader + "." + encodedClaims
+Key key = getMySecretKey()
+byte[] signature = hmacSha256(concatenated, key)
+
+Base64로 인코딩한 Header와 Claims를 먼저 만든 후 
+이를 Key를 통해서 Sign을 하는 방식 
+
+
+https://jwt.io/
+
+
+4. JWS 생성 
+4-1. JwtBuilder 객체를 생성하고 Jwts.builder() 메소드를 이용함 
+4-2. header 파라미터와 claims를 추가하기 위해 JwtBuilder 메소드를 호출 
+4-3. JWT를 서명하기 위해 SecretKey나 PrivateKey를 지정
+4-4. 마지막으로 압축하고 서명하기 위해 compact() 호출하고 jws를 생성 
+
+SecretKey key = Keys.secretKeyFor(SignatureAlgorithm:HS256);
+
+String jws = Jwts.builder()
+	   .sestHeaderParam("kid", "myKeyId")
+	   .sestSubject("Joe")
+	   .signWith(key)
+	   .compact()
+
+5. JWS 검증하기 
+5-1. Jwts.parserBuilder() 메소드를 사용해서 JwtParserBuilder 인스턴스를 생성 
+5-2. JWS 서명을 확인하기 위해 사용할 SecretKey 또는 비대칭 공개 키를 지정
+5-3. buile() 메소드를 호출하면 thread-safe-JwtParser가 반환됨
+5-4. call the parseClaimsJws(jwtString) 메소드를 호출하면 오리지널 signed JWT가 반환됨
+
+String jwtSubject = Jwts.parseBuilder()
+		.deserializeJsonWith(new JacksonDeserializer(objectMapper))
+		.setSignKey(key)
+		.build()
+
+String parseClaimsJws = jwtSubject
+		      .parseClaimsJws(jws)
+		      .getBody()
+
+
+jwt 라이브러리 JJwt 의존성
+
+<dependency>
+	<groupId>io.jsonwebtoken</groupId>
+	<artifactId>jjwt-api</artifactId>
+	<version>0.11.2</version>
+</dependency>
+<dependency>
+	<groupId>io.jsonwebtoken</groupId>
+	<artifactId>jjwt-impl</artifactId>
+	<version>0.11.2</version>
+</dependency>
+<dependency>
+	<groupId>io.jsonwebtoken</groupId>
+	<artifactId>jjwt-jackson</artifactId>
+	<version>0.11.2</version>
+</dependency>
+
+
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNjkzMzYwMTUyfQ.E5eteuNo6vbhhWrvQrzn28cRw2k4g245-TnJL5OGVm0
+
+수신 요청에서 인증을 처리 
+AuthenticationFilter 클래스 생성 
+OncePerRequestFilter 상속 
+
+
+
+
+
+
+
+
+
+
+
+
+

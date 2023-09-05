@@ -1,0 +1,57 @@
+vs studio
+live server 설치 -> html 코드 작성한대로 웹페이지 열어줌 
+
+2행 3열 
+<table>
+	<caption>표의 제목</caption>
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr></tr>
+</table>
+
+표의 구조적인 표현 : 테이블 안에서 행을 감싸는 표현
+<thead>, <tbody>, <tfoot>
+
+<table>
+	<thead>
+		<tr>
+	</thead>
+</table>
+
+div, span -> 태그를 묶어줌
+
+div : 블럭 태그 묶음 (대부분 div를 사용함)
+span : 인라인 태그 묶음 -> ex) img, span, em, strong, sub, sup, ins, del, mark, a, input, select
+id : div를 구분해주는 이름표 
+
+    태그#아이디명 <tag id="아이디명"></tag>
+    태그.클래스명 <tag class="클래스명"></tag>
+    태그*n <tag></tag><tag></tag>
+    태그1>태그2 <tag1><tag2></tag2></tag1>
+    태그1>태그2*4 <tag1><tag2></tag2><tag2></tag2><tag2></tag2><tag2></tag2></tag1>
+    태그{내용$}*4 ul>li{리스트$}*4
+
+<a href="#">네이버바로가기</a> 인라인태그
+<p>네이버바로가기</p> 블럭태그
+
+form 요소 : 사용자와 애플리케이션이 상호작용
+사용자 입력 -> 전송버튼 -> 애플리케이션 전달 -> 실행결과 반환
+input, textatea, select, button 등의 입력 요소 이용
+
+get전송 - 게시글 조회, 검색 조회, 리퀘스트 헤드
+post전송 - ? , ? , 리퀘스트 바디
+
+input 태그 속성들
+name : 전송되는 변수 이름
+value : 입력필드의 초기값
+type : 입력양식 지정
+placeholder : 설명글 
+required : 필수 필드 지정
+readonly : 읽기 전용 필드 지정 (수정할 수 없음) 
+disabled : 사용불가 지정(사용이나 클릭할 수 없음)
+
+html 마크업 언어 
+css 표현언어 : 레이아웃과 스타일을 정의 (html과 함께 사용)

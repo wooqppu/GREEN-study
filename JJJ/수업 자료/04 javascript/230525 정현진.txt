@@ -1,0 +1,263 @@
+﻿﻿
+배열
+
+let num = [1,2,3,4,5,6,7,8];
+
+let user = {
+	name: "구름",
+	age: 16,
+}
+
+객체는 키와 value로 구성, 이를 합쳐서 프로퍼티라고 함
+(프로퍼티는 쉼표(,)로 구분)
+
+접근방법
+user.name
+user["name"]
+
+
+let num = [1,2,3,4,5,6,7,8];
+
+let user = {
+	name: "구름",
+	age: 16,
+	eat: function() {
+		console.log("dd"); 
+		// 메소드를 가질 수 있음 
+	}
+}
+
+호출하기
+user.eat() 
+
+push() - 마지막에 새로추가
+pop()
+unshift()
+shift()
+
+nums.join("") - 문자열로 바꿈
+nums.indexOf(5)
+
+splice(해당 자리, 삭제할 갯수, 추가할 내용)
+slice()
+split(",")
+
+find()
+map()
+filter()
+
+
+for of문 - 배열이랑 사용, 인덱스로 접근해서 값이 담김
+for(let num of nums) {
+
+}
+
+forEach문 - 자바에서 스트림과 비슷함, 배열을 끝까지 다 돌아줌 
+(for문의 반복이라고 생각하면 됨)
+
+nums.forEach(v=>)
+
+
+배열은 index로 접근 (0번째 부터)
+
+생성자함수 : 설계도, 붕어빵틀, 객체를 찍어내기위한 틀
+funtion User(name, age) {
+	this.name = name;
+	this.age = age;
+	this.eat = function() {
+
+	}
+}
+
+
+객체 만들 때는 new를 사용
+funtion User(name, age) {
+	this = {};
+	this.name = name;
+	this.age = age;
+	this.eat = function() {
+	}
+	return this;
+}
+
+이렇게 객체를 생성
+let user1 = new User("구름", 4);
+let user2 = new User("콩이", 4);
+
+객체 출력 방식
+user.name	//구름
+user["name"]	// 구름
+user.eat()
+
+
+객체 복사하기
+ 
+1)
+let user1 = {
+	name: "green",
+	age: 30,
+}
+let user2 = user1 (참조 주소가 복사 -> 기존 객체의 값까지 바뀜)
+user1.name = "blue";
+
+2)
+let user = { name: "green" }
+let adduser = { age: 20 }
+
+Object.assign(user,adduser) {
+	name: "green",
+	age: 20,
+}
+-> adduser이 갖고있는 age: 20 프로퍼티가 병합되며
+user에 name: "green", age: 20 이라는 두 개의 프로퍼티가 생김
+
+3)
+let dog1 = {
+	name: "구름",
+	color: "흰색",
+}
+
+let dog2 = {}
+// 빈 객체에 dog1의 프로퍼티 전부를 복사해서 넣음 
+
+for (let key in dog1) {
+	dog2[key] = dog1[key];
+}
+(for in - 실제 값이 아니라 키가 담김)
+
+(for in문 말고 이 방식도 가능)
+dog2["name"] = dog1["name"]
+dog2["color"] = dog1["color"]
+
+
+1. 객체 병합
+Object.assign(user, adduser) {
+	name: "green",
+	age: 20
+}
+
+2. 객체 복사 
+let obj1 = Object.assign({}, user)
+
+
+3. 스프레드 구문 ("...") -> 펼치기
+: 배열이나 객체 목록에 사용되면 목록을 펼쳐줌
+
+ex> 
+let user = { name: "green", age:3 }
+let obj1 = { ...user, color: "흰색" }
+{ name: "green", age: 3, color: "흰색" } 으로 펼쳐줌
+
+객체를 펼쳐서 각 요소를 분리 후, 매개변수 목록으로 만든 다음에 
+새로운 객체에 할당함 
+
+
+배열 복사 
+
+1) for문 사용해서 복사 
+let arr = [1,2,3,4,5];
+let newarr = [];
+for(let a of arr) {
+	newarr.push(a)
+}
+
+2) concat
+배열의 요소를 사용해서 새로운 배열을 만들거나 
+기존 배열에 새로운 요소를 추가할 때 사용
+구문 > arr.concat(arg1, arg2, ...)
+
+ex>
+let arr = [1,2,3,4,5];
+let arr3 = [7,8,9];
+let arr2 = arr.concat(6,7);
+let arr4 = arr.concat(arr3);
+
+3) 스프레드 구문 ("...") -> 펼치기
+: 배열이나 객체 목록에 사용되면 목록을 펼쳐줌
+
+ex>
+let arr3 = [...arr1, ...arr2, "💕💖🎶"];
+console.log(arr3);
+
+4) forEach : 값을 받아옴 
+- DOM, 유사배열에서도 사용 가능 
+
+구문> 
+forEach(function(값value, 인덱스index, 배열자체array) {
+	
+})
+
+
+랜덤 
+Math.random() 	0~1 사이의 실수를 리턴
+Math.random() * 3 	0~3 사이의 실수를 리턴 
+Math.floor()	소수점 이하는 내림하여 정수로 리턴
+Math.floor(Math.random() * 3)   0~3 사이의 정수로 리턴
+
+
+DOM
+1. DOM 탐색하기
+
+document DOM 진입점 
+1) <html> = document.documentElement
+2) <body> = document.body
+3) <head> = document.head
+
+4) 단수 선택, 5) 복수 선택
+
+querySelector("css 선택자 구문") --- 단수 선택 
+quertSelectorAll("css 선택자 구문") --- 복수 선택 / 노드리스트
+
+(예전 방식이라 사용 안함)
+getElementById("idname") --- 단수 선택
+getElementByClassName("classname") --- 복수 선택 / html 컬렉션 
+getElementByTagName("tagname") --- 복수 선택 / html 컬렉션 
+-> 유사배열이라서 인덱스로 접근 필요 
+
+6) 형제 요소 노드 탐색 
+nextElementSibling 다음 혹은 우측에 있는 형제 요소 노드
+previousElementSibling 이전 혹은 좌측에 있는 형제 요소 노드
+
+7) 자식 요소 노드 탐색 
+children 자식요소 노드를 탐색 -> html 컬렉션으로 리턴 
+firstElementChild 요소 노드 중 첫번째 자식 노드 탐색
+lastElementChild 요소 노드 중 마지막 자식 노드 탐색
+(css에서 :nth-child() 의 역할과 비슷하다고 생각하면 됨)
+
+DOM은 HTML 태그를 트리 구조로 표현
+
+html	루트노드
+head	루트노드의 자식노드	요소노드 
+title	head노드의 자식노드	요소노드
+#text	텍스트노드
+
+8) 부모 요소 노드 탐색
+parentElement 부모 요소 노드 탐색
+
+
+2. DOM 수정하기 
+1) createElement("div") 요소 노드 생성 
+2) createTextNode("안녕하세요") 텍스트 노드 생성
+3) 노드 삽입
+node.append() - 노드 제일 끝에 삽입
+node.prepend() - 노드 제일 앞에 삽입 
+node.before() - 노드 이전에 삽입 
+node.after() - 노드 다음에 삽입
+
+
+마우스 이벤트 
+click 
+mouseenter 
+mouseleave
+scroll
+
+<li onclick = "myFunction(this)">dddddd</li>
+function myFunction(a) {
+	a.innerHTML -----> dddddd
+}
+li.addEventListner("click", function() {
+	console.log(this)
+})
+
+
+

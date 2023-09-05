@@ -1,0 +1,221 @@
+
+HashMap : Map인터페이스를 구현한 대표적인 Map컬렉션 
+HashMap의 키로 사용할 객체는 equals(), hashCode()메소드를 재정의해서 
+동등객체가 될 조건 정해야함 ( -> 객체가 달라도 동등객체라면 같은 키로
+간주하고 중복저장되지 않도록 하기 위함)
+
+Map<String, Integer> map = new HashMap<String, Integer>();
+map.put("김그린", 85);
+map.put("김그린",90); => 키가 동일하면 뒤에 온 값으로 덮어쓰기함
+map.get("김그린") ---> 90
+
+
+Hashtable : HahMap과 동일한 내부구조를 가짐
+Hashtable은 동기화된 메소드로 구성됨
+멀티스레드 환경에서 사용!!!!
+Map<String, Integer> map = new Hashtable<>();
+
+
+Properties : Hashtable의 자식 클래스
+키와 값 타입이  String타입으로 제한된 클래스 
+확장자가 properties인 프로퍼티 파일을 읽을 때 사용
+
+Properties pro = new Properties();
+pro.load(클래스 경로)
+---> pro.load(클래스객체.getResourceAsStream("파일 경로"))
+
+리플렉션 3가지 방법
+Class clazz = 클래스명.class
+Class clazz = Class.forName("")
+Class clazz = 객체.getClass()
+
+클래스명.class
+
+
+검색 기능을 강화시킨 컬렉션
+TreeSet, TreeMap
+
+이진트리를 기반으로 한 컬렉션 (바이너리 트리)
+
+1. TreeSet 생성하기 
+TreeSet<E> treeSet = new TreeSet<>();
+treeSet.adad(50);
+treeSet.add(20);
+treeSet.add(10);
+treeSet.add(30);
+(알아서 값을 오름차순 정렬해줌)
+
+2. TreeSet 메소드
+first() 제일 낮은 객체를 리턴
+last() 제일 높은 객체를 리턴 
+lower(E e) 주어진 객체 바로 아래 객체를 리턴
+high(E e) 주어진 객체 바로 위 객체를 리턴
+floor(E e) 주어진 객체와 동등한 객체가 있으면 리턴, 
+	없으면 바로 아래의 객체를 리턴
+ceiling(E e) 주어진 객체와 동등한 객체가 있으면 리턴,
+	  없으면 바로 위의 객체를 리턴
+pollFirst() 제일 낮은 객체를 꺼내오고 컬렉션에서 제거
+pollLast() 제일 높은 객체를 꺼내오고 컬렉션에서 제거 
+
+descendingIterator() 내림차순으로 정렬된 iterator를 리턴 
+Iterator<Integer> iterator = treeset.descendingIterator();
+while(iterator.hasNext()) {
+	int a = iterator.next();
+	sout(a);
+}
+
+NavigableSet<E> 
+내림차순 셋을 리턴 
+NavigableSet<Integer> treeset2 = treeset.descendingSer();
+
+headSet(E, boolean) 주어진 객체보다 낮은 객체(이하, 미만)를 set으로 리턴
+tailSet(E, boolean) 주어진 객체보다 높은 객체(이상, 초과)를 set으로 리턴
+subSet(E, boolean, E, boolean) 시작과 끝이 주어진 객체 사이의 객체들을 set으로 리턴
+
+TreeMap
+이진트리를 기반으로 한 Map컬렉션
+TreeMap은 key를 기준으로 자동정렬됨(Entry)
+
+firstEntry() 제일 낮은 Map.Entry 리턴
+lastEntry() 제일 높은 Map.Entry 리턴
+lowerEntry()
+higherEntry()
+floorEntry()
+ceilingEntry()
+pollFirstEntry()
+pollLastEntry()
+descendingKeySet() 내림차순으로 정렬된 키의 NavigableSet을 리턴 
+descendingMap() 내림차순으로 정렬된 Map.Entry의 Map을 리턴 
+
+headMap(k, boolean)
+tailMap(k, boolean)
+subMap(k, boolean, k, boolean)
+
+
+Comparable, Comparator
+TreeSet, TreeMap 저장과 동시에 오름차순으로 정렬됨
+
+TreeSet, TreeMap 객체 저장시 정렬이 되게하는 법 
+
+1) 저장할 객체의 클래스에서 Comparable인터페이스를 구현 
+TreeSet<Person> treeset = new TreeSet<>();
+
+treeset.add(new Person("김그린", 36)); 
+treeset.add(new Person("이그린", 23)); 
+treeset.add(new Person("박그린", 17)); 
+treeset.add(new Person("유그린", 30)); 
+
+public class Person implements Comparable <Person> {
+	public String name;
+	public int age;
+
+	public Person(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
+	@Override
+	public int compareTo(Person o) {
+		if(age < age.o) {
+			return -1;
+		}
+		else if(age == o.age) {
+			return 0;
+		} 
+		else { return 1; }
+	}
+}
+
+2) Comparator인터페이스 구현 클래스를 생성 
+(treeSet 생성자 호출시 비교자를 전달)
+
+new TreeSet<>( Comparator인터페이스 구현 객체  // 객체 전달 )
+
+Comparator인터페이스 구현 객체를 전달
+TreeSet<Person> treeset = new TreeSet<>(비교자 인터페이스 구현객체);
+
+TreeSet<Person> treeset = new TreeSet<>(new PersonComparator());
+public class Person {
+	public String name;
+	public int age;
+
+	public Person(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
+}
+
+public class PersonComparator implements Comparator<Person> {
+	@Override
+	public int compare(Person p1, Person p2) {
+		if(p1.age < p2.age) {
+			return -1;
+		}
+		else if(p1.age == p2.age) {
+			return 0;
+		}
+		else { return 1; }
+	}
+}
+
+
+Stack클래스 : LIFO자료 구조를 구현한 클래스 
+- LIFO (Last In First Out) : 마지막에 저장된 것을 제일 먼저 꺼냄
+- 후입선출 
+- push() 스택에 넣는다, pop() 스택에서 뺀다
+
+Queue클래스 : FIFO자료 구조를 구현한 클래스 
+- FIFO (First In First Out) : 제일 먼저 저장한 것을 제일 먼저 꺼냄
+- 선입선출
+- offer() 큐에 넣는다, poll() 큐에서 객체를 뺀다
+
+
+동기화된 컬렉션 
+
+Collections.synchronizedList(List<T>list)
+Collections.synchronizedMap(Map<K,V> map)
+Collections.synchronizedSet(Set<T> set)
+
+Vector, Hashtable : 멀티스레드 환경에서 사용하도록 설계됨
+(이 둘을 제외한 컬렉션 프레임워크의 대부분의 클래스들은 
+싱글 스레드 환경에서 사용하도록 설계됨)
+
+ArrayList, HashSet, HashMap을 멀티스레드 환경에서 사용하고 싶을 때
+비동기화된 메소드를 동기화된 메소드로 래핑해줘야함
+
+List<T>	synchronizedList(List<T>list)
+Map<K,V> synchronizedMap(Map<K,V> map)
+Set<T>	synchronizedSet(Set<T> set)
+
+ex> List<String> list = Collections.synchronizedList(new ArrayList<>());
+
+
+수정할 수 없는 컬렉션 
+요소를 추가, 삭제할 수 없는 컬렉션 (읽기만 가능)
+생성한 컬렉션을 변경하고 싶지 않을 때 사용 
+1. List, Set, Map - 정적메소드인 of()
+
+ex> List<String> immutableList = List.of("a","b","c");
+
+List<String> list = List.of("A","B","C");
+Set<String> set = Set.of("A","B","C");
+Map<Integer, String> map = Map.of(1,"A",  2,"B",  3,"C");
+
+list.add() 메소드 사용 불가능 
+
+2. List, Set, Map - 정적메소드 copyOf() 사용해서
+복사본을 리턴함 (복사본은 수정할 수 없음)
+
+List<String> list = List.copyOf(Collection<String> coll)
+Set<String> set = Set.copyOf(Collection<String> coll)
+Map<String> map = Map.copyOf(Collection<String> coll)
+
+3. 배열을 사용하여 수정할 수 없는 List컬렉션을 만듬
+String[] strarr = {"A", "B", "C"};
+List<String> arrlist = Arrays.asList(arr);
+
+
+
+
+
+
+ 

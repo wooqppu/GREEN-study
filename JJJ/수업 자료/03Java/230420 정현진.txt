@@ -1,0 +1,263 @@
+자바 -> 자바스크립트 -> 오라클 -> jsp -> 스프링
+
+#복습 시작
+
+자바 개발 순서 
+1) 소스파일 작성 Hello.java
+2) javac 컴파일 class파일 생성
+3) java 명령어로 실행 
+
+기본타입 
+1) 정수형
+byte, short, char, int, long
+2) 실수형
+float, double
+3) 논리형
+boolean
+
+변수 : 변수는 선언과 동시에 초기화할 수 있음
+-> 초기화하지 않으면 사용할 수 없음 
+-> 기본타입은 하나의 값 저장 가능 
+int num;
+num = 20;
+-> 선언한 타입만 저장할 수 있다
+
+타입변환 
+1. 자동타입변환 프로모션
+-> 허용범위가 큰 변수 = 허용범위가 작은 변수 
+
+2. 강제타입변환 캐스팅
+-> 허용범위가 작은 변수 = (캐스팅) 허용범위가 큰 변수
+ex> 
+int intValue = 10;
+byte byteValue = (byte) intValue; 
+
+3. 문자열을 기본타입으로 변환
+ex>
+Strint str = "100";
+int num = Integer.parselnt(str);
+
+String str2 = "10.123";
+double dou = Double.parseDouble(str2);
+
+4. 기본타입을 문자열로 변환
+num +""
+String result =  String.valueOf(num);
+
+변수 종류
+- 클래스 변수 
+- 인스턴스 변수 
+- 지역변수(로컬변수) 메서드 영역에서 선언 
+
+ex>
+public class Hello {
+
+	public static void main(String[] args) {
+		if(true){
+			int num = 0;
+			System.out.println(num);
+		}
+	}
+
+
+}
+
+
+표준 입출력 시스템
+- System.out.println("안녕")
+- System.out.print("안녕")
+- System.out.printf("형식문자열", 값1, 값2, ....)
+
+% [순번] [플래그] [너비] [소수자리] 형식문자기호
+%d 정수
+%f 실수 
+%s 문자열
+플래그 : 생략 
+왼쪽 여백, - 오른쪽 여백, 0 숫자형일 때 왼쪽에서 0으로 여백을 채움
+
+ex> System.out.printf("회원들의 이름은 %s와 %s와 %s이다.", "김그린","이그린","박그린")
+넣을 값의 순번 : 숫자$로 지정 가능
+
+입력 
+int keycode = System.in.read()
+String str = new String("김그린")
+Scanner scan = new Scanner(System.in);
+(자바 기본 탑재가 아니기 때문에 import로 불러와야함)
+String s = scan.readLine();
+System.out.println(s);
+
+#복습 끝
+
+#230420
+
+
+2 + 5 연산식 
+연산자 : 연산에 쓰이는 기호
+피연산자 : 연산에 쓰이는 값
+
+단항연산자 - 피연산자가 하나인 연산자
+이항연산자 - 피연산자가 두 개인 연산자
+삼항연산자 - 피연산자가 세 개인 연산자
+
+산술 연산자
++, -, *, /, % 
+(%는 나머지를 구할 때 사용)
+
+부호 연산자 
+-, +
+int num1 = 10;
+int num2 = -10;
+-num1 ---> -10
+-num2 ---> 10 
+
+증감 연산자 
+++, --
+int num3 = 10;
+num3++ 전이증감연산자 : 1을 더해라  
+값 사용 시 원래 값을 사용 
+++num3 후이증감연산자 : 1을 더해라 
+값 사용 시 1 더해진 값을 사용 
+num3-- 
+--num3
+
+ex>
+int x = 1;
+x++;	//2
+++x;	//3
+int z = x++; // z = 3, x = 4
+int y = ++x; // y = 5, x = 5
+
+대입연산자 
+=	: 우항의 값을 좌항에 할당
+int num = 10;
+
+복합대입연산자 
++= (산술연산 전부 사용 가능)
+ex> 
+num = num + 1; ---> num += 1;  
+num = num - 1; ---> num -= 1;  
+num = num * 1; ---> num *= 1;  
+num = num / 1; ---> num /= 1;  
+num = num % 1; ---> num %= 1;  
+
+비교연산자 
+A == B 	: 좌항과 우항이 같으면 true 다르면 false
+A != B	: 좌항과 우항이 다르면 true 같으면 false
+A > B	: 좌항이 우항보다 크면 true 같거나 작으면 false
+A >= B	: 좌항이 우항보다 크거나 같으면 true 작으면 false
+A < B	: 좌항이 우항보다 작으면 true 같거나 크면 false
+A <= B	: 좌항이 우항보다 작거나 같으면 true 크면 false
+
+문자 비교연산자
+String str = "김그린"
+String str1 = "김그린"
+str == str1 -> 문자열은 비교연산자 사용 불가능 (값이 아니라 번지수로 비교함 [참조])
+str.equals("김그린") -> 문자열은 equals로 사용 필요 
+
+
+
+
+논리연산자
+and	&&, &	true && true : true
+		false && true : false
+		true && false : false
+		false && false : false
+
+or	||, |	true || true : true
+		false || true : true
+		true || false : true
+		false || false : false
+
+not	!	!___ true -> false
+		!___ false -> true
+
+삼항연산자 
+ 조건 ? 참일때적용 : 거짓일때적용
+ex> String s = 10 > 5 ? "크다" : "작다";
+
+
+연습문제
+1) 다음 코드를 실행했을 때 출력결과를 작성하시오
+int x = 10;
+int y = 20;
+int z = (++x) + (y--);
+System.out.println(z);
+
+답 : 31
+
+2) 다음 코드를 실행했을 때 출력결과를 작성하시오 
+int score = 85;
+String result = (!(score>90))? "가" : "나";
+System.out.println(result);
+
+답 : 가
+
+3) 다음 코드를 실행했을 때 출력결과를 작성하시오 
+int x = 10; int y = 5;
+System.out.println((x>7) && (y<=5));
+System.out.println((x%3 == 2) || (y%2 != 1));
+
+답 :
+true
+false
+
+
+조건문 
+if / else if / else
+
+switch문 
+switch (조건) / case - break / default - break
+
+
+연습문제
+String userId
+String userPassword
+
+"green" "1234"
+
+둘 다 맞으면 "로그인 되었습니다."
+하나라도 틀리면 "잘못 입력하셨습니다."
+
+
+Math.random()
+: 0보다 크고 1보다 작은 실수를 랜덤하게 리턴 
+0.0000000001~0.9222222222
+
+Math.random()*3
+0보다 크고 3보다 작은 실수를 랜덤하게 리턴
+(int) (Math.random()*3)
+-> 0,1,2 랜덤한 정수를 리턴
+(int) (Math.random()*3) + 1
+-> 1,2,3 랜덤
+
+
+연습문제 
+윤년 
+2월은 보통 28일까지 있지만 윤년인 경우 2월을 윤달이라고 하고 29일까지 있습니다. 
+1) 4로 나누어 떨어지는 해는 윤년입니다.  
+아니면 평년
+2) 이 중에서 100으로 나누어서 떨어지는 해는 평년입니다. 
+3) 그 중에서 400으로 나누어서 떨어지는 해는 윤년입니다. 
+
+년도를 입력받은 후 
+윤년인지 평년인지 출력해줌 
+
+연습문제 
+가위, 바위, 보 게임 만들기 
+컴퓨터 가위, 바위, 보 중 하나를 할당 
+사용자에게 사용자의 가위, 바위, 보 중 하나를 입력받음 
+
+컴퓨터와 사용자를 비교해서 
+사용자가 가위, 바위, 보를 
+이기면 
+컴퓨터 : 바위, 유저 : 보 승리했습니다. 출력 
+지면
+컴퓨터 : 바위, 유저 : 가위 졌습니다. 출력 
+비겼으면
+컴퓨터 : 바위, 유저 : 바위 비겼습니다. 출력 
+
+
+
+
+
+

@@ -1,0 +1,29 @@
+
+1. loginForm 
+1-1. h2 감싸는 div 추가 후 아이디 log1로 지정 
+<div id="log1">
+	<h2>LOGIN</h2>
+</div>
+
+1-2. 테이블 아이디 log2로 지정 
+<table id="log2">
+
+
+2. joinForm 
+2-1. 1-1. h2 감싸는 div 추가 후 아이디 join1로 지정 
+<div id="join1">
+	<h2>JOIN</h2>
+</div>
+
+2-2. 테이블 아이디 join2로 지정 
+<table id="join2">
+
+
+3. 로그인 폼, 조인 폼의 버튼 감싼 tr에 아이디 btn으로 지정 
+<tr id="btn">
+
+
+4. 헤더, 풋터 안에 있는 로고 이미지 logo2 nobc.png 로 수정
+
+
+5. css 수정은 전부 css_copy에 있음 

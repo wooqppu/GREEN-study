@@ -1,0 +1,73 @@
+
+1. hddetail movie, drama, music
+1-1. 수정하기 버튼 td, 상위 tr에 아이디 지정 
+<tr id="hddetail">
+	<td id="btn"><button type="button"
+
+1-2. 이미지 -> 포스터로 문구 변경 
+
+2. moviedetailpage
+2-1. 영화상세정보 부분
+1) 타이틀 h2 겉에 div 추가, 아이디 지정 
+<div id="title_h2">
+<h2>${ dto.title }</h2>
+</div>
+
+2) div, ul에 아이디 지정 
+<div id="detail_div">
+	<ul id="detail_ul">
+		<li>평점 : ${ dto.rate }</li>
+		<li>${ dto.year }</li>
+		<li>${ dto.runtime }</li>
+		<li>${ dto.age }</li>
+	</ul>
+
+3) 구매 버튼에 아이디 지정  
+
+4) 영화 정보 p 겉에 감싸는 div 아이디 지정 
+<div id="movie_info">
+	<p>감독 ${ dto.director }</p>
+	<p>출연 ${ dto.cast }</p>
+	<p>내용 ${ dto.content }</p>
+</div>
+
+5) 영화 정보 p 안에 span 추가 
+<p>감독 <span>${ dto.director } </span></p>
+<p>출연 <span> ${ dto.cast }</span></p>
+<p>${ dto.content }</p>
+
+2-2. 리뷰 부분 
+1) h2 겉에 div 감싼 후 아이디 지정
+<div id="reviewbox1_h2">
+	<h2>감상평</h2>
+	</div>
+
+2) 테이블 3개에 각각 아이디 지정 
+(2,3번째 테이블은 겉에 감싼 div에 아이디 지정)   
+<table id="reviewbox1">
+	<tr>
+		<td>${ UserId }</td>
+	</tr>
+	<tr>
+		<td><textarea rows="2" cols="100" name="content"></textarea></td>
+	</tr>
+	<tr>
+		<td><input type="submit" value="등록"></td>
+	</tr>
+</table>
+
+<div id="reviewbox2">
+
+<div id="reviewbox3">
+
+3) 리뷰 등록 버튼에 id="review_btn1" 지정
+
+4) 리뷰 삭제 버튼 X로 수정, id="review_btn2" 지정
+
+5) <td><%= mor.getPostdate() %></td> 위치 변경 
+
+6) reviewbox3의 h3 겉에 감싼 div 추가, 아이디 지정 
+<div id="reviewbox3_h3">
+<h3>감상평을 남기시려면 <a href="/project01/form/loginForm.jsp">로그인</a>을 하세요.</h3>
+</div>
+

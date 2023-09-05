@@ -1,0 +1,52 @@
+
+1. movieupload
+1-1. h2 겉에 div 추가, 아이디 지정
+<div id="movie_up1">
+	<h2>영화 등록</h2>
+</div>
+
+1-2. 테이블 아이디 movie_up2로 지정 
+<table id="movie_up2">
+
+1-3. 테이블 겉에 감싼 후 아이디, 클래스 지정
+<div id="movieuploadsection" class="sectiondiv">
+
+1-4. 버튼 td에 아이디 btn 지정, colspan="2" 추가
+
+1-5. 버튼 감싼 tr에 아이디 btn_row 지정 
+
+
+2. dramaupload
+2-1. h2 겉에 div 추가, 아이디 지정
+<div id="drama_up1">
+	<h2>드라마 등록</h2>
+</div>
+
+2-2. 테이블 아이디 drama_up2로 지정 
+<table id="drama_up2">
+
+2-3. 테이블 겉에 감싼 후 아이디, 클래스 지정
+<div id="dramauploadsection" class="sectiondiv">
+
+2-4. 버튼 td에 아이디 btn 지정, colspan="2" 추가
+
+2-5. 버튼 감싼 tr에 아이디 btn_row 지정 
+
+
+3. musicupload
+3-1. h2 겉에 div 추가, 아이디 지정
+<div id="music_up1">
+	<h2>음악 등록</h2>
+</div>
+
+3-2. 테이블 아이디 music_up2로 지정 
+<table id="music_up2">
+
+3-3. 테이블 겉에 감싼 후 아이디, 클래스 지정
+<div id="musicuploadsection" class="sectiondiv">
+
+3-4. 버튼 td에 아이디 btn 지정, colspan="2" 추가
+
+3-5. 버튼 감싼 tr에 아이디 btn_row 지정 
+
+

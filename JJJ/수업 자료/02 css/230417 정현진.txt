@@ -1,0 +1,17 @@
+box-shadow 그림자 
+box-shadow : x-offset y-offset bour color;
+div { box-shadow: 5px 5px 5px black; }
+
+애니메이션 효과 (최소 2개의 스타일 필요)
+@keyframes 이름 { from {  } to {  } }
+
+ex>  @keyframes moveDiv { from { left: 0; } to { left: 500px; } }
+div { width: 200px; height: 200px; background: red; 
+position: absolute; top: 0; left: 0;
+animation: moveDiv 1s; } 
+
+1. animation-name 속성 : 키프레임 지정
+2. animation-duration 속성 : 동작시간 지정
+3. animation-iteration-count 속성 : 동작 반복횟수 지정 (infinite - 무한 반복 )
+4. animation-delay 속성 : 지연시간 (동작이 바로 시작하지 않고 몇 초 후에 시작)
+5. animation-fill-mode 속성 : 동작이 끝난 후의 위치 지정 (forwards - 동작의 마지막 위치에 고정)

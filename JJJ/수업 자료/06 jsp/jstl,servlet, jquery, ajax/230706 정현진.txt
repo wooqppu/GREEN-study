@@ -1,0 +1,178 @@
+
+서블릿 
+
+자바로 웹 어플리케이션을 개발하기 위해 만든 기술 
+서버 단에서 클라이언트 요청을 받아 처리한 후 응답하는 역할 
+
+- javax.servlet.http 패키지에 있는 HttpServlet 클래스 상속 받아야함 
+- public으로 선언 
+- doGet() 또는 doPost() 메소드 오버라이딩 해야함 
+- doGet() 또는 doPost() 메소드 호출 시 
+HttpServletRequest, HttpServletResponse를 사용함 
+
+
+서블릿 -> 서블릿 컨테이너 톰캣)
+
+
+매핑 -> 요청(주소창에 적히는 주소)명과 서블릿을 연결
+1. web.xml 매핑 
+<servlet>
+	<servlet-name>studyServlet</servlet-name>
+	<servlet-class>servlet.StudyServlet</servlet-class>
+	
+	// 초기화 매개변수 
+	<init-param>
+		<param-name>admin_id</param-name>
+		<param-value>green</param-value>
+	</init-param>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>studyServlet</servlet-name>
+	<url-pattern>study.do</url-pattern>
+</servlet-mapping>
+
+
+2. @WebServlet("study.do")
+(*.do -> 와일드카드)
+
+
+
+
+서블릿 메소드 
+
+1. 초기화 매개변수 값 반환  
+this.getInitParameter("admin_id")
+
+2. 파라미터 반환 
+req.getAttribute("userid")
+
+3. 속성 저장 
+req.setAttribute("속성명", "속성값")
+
+4. jsp 페이지로 이동
+req.getRequestDispatcher("jsp파일경로").forward(req, resp);
+
+5. 요청 경로 반환 
+req.getRequestURI()
+
+
+
+
+서블릿 생명주기 메소드 
+
+서블릿의 생명주기는 서블릿 컨테이너가 관리 
+
+클라이언트 요청이 들어오면 
+서블릿 객체를 생성, 
+서블릿을 초기화하고 요청을 처리, 
+서버를 종료하면 서블릿 객체를 소멸시킴 
+
+서블릿 객체 생성 
+전처리를 위한 @PostConstruct
+inin()
+service() -> doGet(), doPost() 를 호출
+destroy()
+@PreDestroy
+
+
+MVC 패턴
+
+
+
+
+
+파일 업로드 
+
+1. cos 라이브러리 다운받기 
+http://servlets.com/cos/
+cos-22.p5.zip 다운
+
+<파일 업로드 순서>
+화면 폼 작성 
+데이터베이스 테이블 작성 
+DTO, DAO 생성 
+연동해서 파일 업로드
+
+
+2. 화면 폼 작성 
+
+enctype 속성 (encodingtype) : 폼값을 서버로 전송할 때 인코딩 방식을 지정 
+
+- application/x-www-form-urlencoded
+모든 문자를 서버로 전송하기 전에 인코딩 (기본값) 
+
+- multipart/form-data 
+모든 문자를 인코딩하지 않음 
+-> 파일을 서버로 전송할 때 사용하는 속성값
+
+- text/plain 
+공백 문자만 +기호로 변환하고 나머지 문자는 인코딩하지 않음
+
+
+<form method="post" enctype="multipart/form-data">
+</form>
+
+<input type="file" name="photo" />
+
+fileUpload.jsp 파일 생성
+
+
+3. 데이터베이스 테이블 작성 
+myfile 테이블
+idx number primary key
+name
+title
+cate
+ofile
+sfile
+postdate
+
+
+create table myfile(
+	idx number primary key,
+	name varchar2(50) not null,
+	title varchar2(200) not null,
+	cate varchar2(30),
+	ofile varchar2(100) not null,
+	sfile varchar2(50) not null,
+	postdate date default sysdate not null
+);
+
+
+create sequence seq_myfile_num
+increment by 1
+start with 1
+minvalue 1
+maxvalue 9999
+nocycle
+nocache;
+
+
+4. DTO, DAO 생성 
+
+
+5. 연동해서 파일 업로드 
+1) uploads 폴더 생성 
+2) MultipleRequest 객체 생성 
+
+public MultipartRequest 
+(HttpServletRequest request,	// request 내장객체
+String savaDirectory, 	// 파일이 저장될 디렉토리의 경로
+int maxPostSize,		// 업로드할 파일의 최대 용량
+String encoding		// 인코딩 방식
+)
+
+3) 새로운 파일명 생성 ("업로드 일시.확장자")
+4) 파일명 변경 
+5) 다른 폼값 처리 
+6) DTO 객체 생성 
+7) DAO를 통해 데이터베이스 반영 
+8) 파일 목록 jsp로 리다이렉션 
+
+
+
+파일 목록 보기 
+1) DAO 목록을 가져오기 위한 메소드 작성 
+2) filelist.jsp 생성 
+

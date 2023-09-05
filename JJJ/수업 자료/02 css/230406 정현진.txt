@@ -1,0 +1,40 @@
+블럭 태그 
+- 블럭은 자신의 옆으로 다른걸 배치가 불가능 
+-> 디스플레이를 인라인블럭으로 변경해서 배치해주기 가능  
+인라인 태그 
+- 인라인은 크기 지정이 불가능함 (블럭으로 지정해야 크기 조절 가능)
+<a>
+display속성
+block
+inline
+inline-block
+flex
+grid
+
+#스타일 리셋 (웹브라우저가 자동으로 준 디자인 설정을 제거)
+1. 모든 태그 여백 제거 * { margin: 0; padding: 0; }
+2. 링크태그 a태그의 underline제거, 색상은 상속받도록 지정
+a{ text+decoration: none; color: inherit; }
+3. 리스트태그의 목록표시 제거 li { list-style: none; }
+4. 모든 태그 width의 기준을 테두리 박스까지로 지정
+* { box-sizing: border-box; }
+5. <address> 글꼴 스타일을 노말로 제거
+address { font-style: normal; }
+
+#스타일 속성
+width 너비
+max-width 최대 너비 
+height 높이
+max-height 최대 높이
+display 
+inline, block, inline-block
+margin
+padding
+border
+border: 1px solid #ddd;
+border-top: 1px solid #ddd;
+border-width/border-color/border-style
+border-radius
+
+#테이블
+border-collapse: collapse;

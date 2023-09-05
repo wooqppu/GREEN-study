@@ -1,0 +1,22 @@
+
+230712 팀플 변경 목록 정현진 
+
+1. images 폴더 
+사진 명 전부 변경 
+
+2. 인덱스 
+2-1. 이미지 이름 전부 변경 
+2-2. 음악 div 요소 추가 
+2-3. 영화, 드라마, 음악 각각 div 안에 p태그 추가 
+2-4. 영화만 겉에 감싼 div 빠져있어서 추가 
+
+3. header에 연결된 css -> style_copy (수정한 css) 로 변경 
+
+4. header, footer 로고 
+4-1. <div id="logo1"><img src="/project01/images/logo2.JPG" alt=""></div>
+로 변경 
+4-2. 아이디 지정 
+header logo - #logo1
+footer logo - #logo2
+
+5. 수정한 css는 style_copy에 전부 들어가있음  

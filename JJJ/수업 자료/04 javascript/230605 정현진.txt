@@ -1,0 +1,110 @@
+
+구조분해할당 
+배열과 객체의 요소 값을 다른 변수에 저장할 때 사용 
+
+let students = ["김수민", "이나래", "김그린"]
+let stu1 = students[0];
+let stu2 = students[1];
+let stu3 = students[2];
+let [stu1, stu2, stu3] = students;
+
+let arr = ["보라", "이"]
+let [firstName, surName] = arr;
+
+변수 교환
+let guest = "jam"
+let admin = "bread"
+let temp = ""
+temp = guest;
+guest = admin;
+admin = temp;
+// 변수 guest에 bread를, 변수 admin엔 jam이 저장되도록 값을 교환 
+[guest, admin = admin, guest];
+
+나머지 요소 가져오기 (...)
+let [name1, name2, ...rest] = ["a","b","c","d","e","f","g"]
+
+// 나머지 요소 갯수 모를 때
+function add(...rest) {
+	let sum = 0;
+	rest.forEach(a => {
+		sim += a;
+	})
+}
+add(1,2,3)
+add(1,2)
+add(1,2,3,4,5,6)
+
+
+객체 구조분해 할당 
+let { key1, key2 } = { key1: "a", key2: "b" }
+let user = {
+	name: "green",
+	age: "30",
+}
+let name = user.name;
+let age = user.age;
+let { name, age } = user;
+
+
+함수에서 사용 
+let dog1 = { name: "구름", age: 4, color: "흰색" }
+
+function dogPrint(obj) {
+	let name = obj.name;
+	let age = obj.age;
+	let color = obj.color;
+	
+	console.log("저희 강아지 이름은 " + name + "입니다");
+	console.log("저희 강아지 나이는 " + age + "입니다");
+	console.log("저희 강아지 색깔은 " + color + "입니다");
+}
+dogPrint(dog1);
+
+// 구조분해할당 - 전달받은 객체를 분해해 변수에 즉시 할당
+
+function dogPrint({name, age, color}) {
+	
+	console.log("저희 강아지 이름은 " + name + "입니다");
+	console.log("저희 강아지 나이는 " + age + "입니다");
+	console.log("저희 강아지 색깔은 " + color + "입니다");
+}
+dogPrint(dog1);
+
+
+클래스 ---> 객체를 만들어내기위한 설계도
+
+class Person {
+	// 생성자 함수
+	constructor(name, age) {
+		this.name = name;
+		this.age = age;
+	}
+	speak() {
+		console.log("hello");
+	}
+}
+
+const green = new Person("green", 30);
+
+
+상속과 다형성 
+1. 상속 키워드 - extends
+2. 메소드 재정의 - 오버라이딩
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

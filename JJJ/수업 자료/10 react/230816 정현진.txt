@@ -1,0 +1,161 @@
+
+리액트 
+
+생성하기 : npx create-react-app 프로젝트 이름 
+노드 설치 -> npm(매니저) (자동으로 같이 설치됨)
+
+npm : node.js 패키지를 관리하는 도구 
+
+리액트 실행 
+npm start 입력
+
+
+컴포넌트
+리액트는 컴포넌트로 관리됨
+(각각의 단위가 레고블럭 조립되듯이 가져와짐, 그 단위가 컴포넌트)
+
+함수형 컴포넌트 
+
+import React form './react'
+
+function 컴포넌트 이름(props로 바로 받거나 
+구조분해할당으로 {name, age} 따로 받을 수 있음) {
+	return (
+		jsx 구문 
+	)
+}
+
+export default 컴포넌트 이름; 
+
+
+상태 state
+상태값이 변경될 때 리랜더링함 
+
+useState(초기값) -> [초기값이 담겨있는 상태, setter함수] 배열로 리턴
+
+const [number, setNumber] = useState(10);
+-> setNumber(100) 통해서만 값 변경 가능 
+
+const [studentArr, setStudentArr] = useState([
+{ name:"김", age:22  }, { name:"박", age:30 }, { name:"이", age:20 }])
+-> 여러개의 값을 배열로 주는 것도 가능 
+
+
+
+리액트 훅 (함수)
+다양한 기능을 사용할 수 있게 만들어준 라이브러리 
+
+라이브러리 React 16.8 버전에 추가됨 
+
+규칙 
+1. 최상위에서만 Hook을 호출해야됨 
+2. 리액트 함수 내에서만 Hook을 호출해야됨 
+
+useState 훅
+
+useRef 훅
+구문 
+const ref = useRef(value) -> { current : value }
+
+ex>
+const ref = useRef(10) -> { current : 10 }
+담긴 값인 10을 불러오려면 ref.current으로 접근해야함
+
+
+변수, 상태, ref
+변수 : 값이 변경되어도 리랜더링되지 않음, 리랜더링되면 값이 초기화됨 (varnum)
+상태 : 값이 변경되면 그 값을 유지하면서 리랜더링 (state)
+ref : 컴포넌트가 리랜더링이 되어도 언마운트(화면에서 다른 화면으로 바뀜)
+되기 전까지 값이 유지됨, 값이 변경되어도 리랜더링 되지 않음
+
+
+function Count() {
+	let num1 = 10;
+
+	const addNum = () => {
+		num1++;
+	}
+	
+	return (
+		<div>
+			num1은 : {num1}
+			<button onClick={addNum}></button>
+		</div>	
+	)
+}
+
+
+
+DOM 접근 ->ref로 접근 가능함
+document.querySelector("input") 랑 똑같은 기능 
+
+const nameinput = useRef();
+
+ref는 current로 값을 부름 -> nameinput.current
+
+const onFocus = () => {
+	nameinput.current.focus();
+}
+
+<input ref = {nameinput} />
+
+<button onClick={onFocus}>클릭</button>
+
+
+useRef 역할 
+1. 컴포넌트가 리랜더링이 되어도 언마운트(화면에서 다른 화면으로 바뀜)
+되기 전까지 값이 유지됨
+
+2. DOM 접근 
+(document.querySelector("input") 랑 똑같은 기능 )
+
+
+배열 랜더링하기 
+배열에 항목 추가하기 
+배열에 항목 제거하기 
+배열에 항목 수정하기 
+
+프로젝트 새로 생성 
+npx create-react-app user-react
+
+users 배열 -> App 컴포넌트에서 관리
+
+CreateUser 컴포넌트 생성
+
+UserList 컴포넌트 생성 
+
+
+배열 목록 중에서 하나를 삭제하고 싶다면 
+users.filter() 사용 가능 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+스프링 부트
+
+
+
+
+
+
+
+
+
+
+
+

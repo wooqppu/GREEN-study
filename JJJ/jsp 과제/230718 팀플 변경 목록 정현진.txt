@@ -1,0 +1,79 @@
+
+1. header 내의 검색 박스 부분
+1-1. select에 아이디 지정 
+id="searchbox"
+
+
+2. moviesearch
+2-1. h2 겉에 div 아이디 지정
+<div id="movie_se1">
+	<h2>영화 검색</h2>
+</div>
+
+2-2. 셀렉트 겉에 감싼 div 아이디 지정 
+<div id="moviesearchsection">
+
+2-3. 셀렉트 아이디 movie_se2로 지정 
+<select id="movie_se2">
+
+2-4. <input type="text" name="searchWord" id="mo_input1" />
+
+2-5. <input type="submit" value="검색" id="mo_input2" />
+
+2-6. 테이블 감싼 div 아이디, 클래스 지정 
+<div id="movie_se3" class="sectiondiv2">
+
+2-7. 테이블에 아이디 지정 
+<table border="1" id="movie_se4">
+
+2-8. 이미지 크기 지정 
+<td><img src="/project01/uploads/<%= dto.getSfile()%>" id="movie_se4img"></td>
+
+
+3. dramasearch
+3-1. h2 겉에 div 아이디 지정
+<div id="drama_se1">
+	<h2>드라마 검색</h2>
+</div>
+
+3-2. 셀렉트 겉에 감싼 div 아이디 지정 
+<div id="dramasearchsection">
+
+3-3. 셀렉트 아이디 drama_se2로 지정 
+<select id="drama_se2">
+
+3-4. <input type="text" name="searchWord" id="dr_input1" />
+
+3-5. <input type="submit" value="검색" id="dr_input2" />
+
+3-6. 테이블 감싼 div 아이디, 클래스 지정 
+<div id="drama_se3" class="sectiondiv2">
+
+3-7. 테이블에 아이디 지정 
+<table border="1" id="drama_se4">
+
+3-8. 이미지 크기 지정 
+<td><img src="/project01/uploads/<%= dto.getSfile()%>" id="drama_se4img"></td>
+
+
+4. musicsearch 
+4-1. h2 겉에 div 아이디 지정
+<div id="music_se1">
+	<h2>음악 검색</h2>
+</div>
+
+4-2. 셀렉트 겉에 감싼 div 아이디 지정 
+<div id="musicsearchsection">
+
+4-3. 셀렉트 아이디 drama_se2로 지정 
+<select id="music_se2">
+
+4-4. <input type="text" name="searchWord" id="mu_input1" />
+
+4-5. <input type="submit" value="검색" id="mu_input2" />
+
+4-6. 테이블 감싼 div 아이디, 클래스 지정 
+<div id="music_se3" class="sectiondiv2">
+
+4-7. 테이블에 아이디 지정 
+<table border="1" id="music_se4">

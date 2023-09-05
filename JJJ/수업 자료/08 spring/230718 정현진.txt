@@ -1,0 +1,36 @@
+
+http//localhost:8060/sample/ex02Bean?list%5B0%5D.name=aaa&/list%5B1%5D.name=bbb
+
+[] 특수문자 허용하지 않음 
+'[' -> '%5B'
+']' -> '%5D'
+
+
+@DateTimeFormat(pattern="yyyy-MM-dd")
+Date타입으로 변환 
+
+스프링 MVC Controller는 기본적으로 Java Bean 규칙에 맞는
+객체는 다시 화면으로 객체를 전달함 
+
+SampleDTO타입의 경우 Java Bean의 규칙에 맞기 때문에 
+자동으로 화면으로 전달됨
+전달될 때는 클래스명의 앞글자는 소문자로 처리됨 
+
+@ModelAttribute("page") 
+전달받은 파라미터를 Model에 담아서 전달하도록 설정해주는 어노테이션 
+
+
+Controller의 리턴 타입 
+1. void
+호출한 url과 동일한 이름의 jsp를 의미함 
+/basic 요청 -> basic.jsp 
+
+2. String
+jsp파일의 경로와 파일 이름을 나타냄 
+/ex01 요청 -> 리턴해주는 문자.jsp (exex01.jsp)
+
+
+String타입에는 특별한 키워드를 사용할 수 있음 
+redirect : 리다이렉트 방식으로 처리하는 경우 
+ 
+ 

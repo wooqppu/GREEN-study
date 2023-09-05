@@ -1,0 +1,51 @@
+
+sql에서 DB 작업
+
+1. 시퀀스 생성 
+create sequence seq_board;
+
+2. 테이블 생성 
+create table tbl_board(
+    bno number(10,0),
+    title varchar2(200) not null,
+    content varchar2(2000) not null,
+    writer varchar2(50) not null,
+    regidate date default sysdate,
+    updatedate date default sysdate
+);
+
+3. primary key 지정 
+alter table tbl_board add constraint pk_board primary key(bno);
+
+4. 데이터 넣기
+insert into tbl_board(bno, title, content, writer)
+values(seq_board.nextval, '테스트 제목', '테스트 내용', 'user00');
+
+select * from tbl_board;
+
+
+
+
+동작 작업
+
+영속 계층의 CRUD 구현 
+C
+R
+U
+D
+
+
+jsp에서 게시판 작업
+
+JDBCConnect
+
+DAO
+DTO
+
+
+스프링에서 게시판 작업 
+
+VO
+src/main/java 안에 
+org.green.domain 패키지 생성 -> BoardVO 클래스 생성  
+

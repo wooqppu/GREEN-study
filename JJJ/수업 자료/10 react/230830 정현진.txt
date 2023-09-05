@@ -1,0 +1,98 @@
+
+JWT 로그인 
+
+1. JJwt 라이브러리 설치 
+jjwt-api / jjwt-impl / jjwt-jackson
+
+2. JwtService 클래스 생성 
+getToken 메서드 -> 토큰 생성 반환 
+getSubject 메서드 -> 사용자 이름 반환 
+
+JWT xxxxxx.yyyyyyy.zzzzzzzz
+마침표로 구분된 세 부분으로 구성됨
+헤더 / 페이로드 / 서명
+
+3. AccountCredentials 클래스 생성 
+
+4. 로그인을 위한 컨트롤러 클래스 생성 
+/login
+
+5. SecurityConfig 클래스에 빈 추가, 시큐리티 기능 추가
+
+
+
+인증 예외 처리 
+틀린 암호로 로그인하면 추가 정보 없이 403상태가 반환 
+
+AuthenticationEntryPoint 인터페이스 : 예외처리 인터페이스 
+
+루트 패키지 안에 AuthEntryPoint 클래스 생성 
+
+예외가 발생되면 응답 상태를 401로 설정하고 
+응답 본문에 예외 메세지를 기록 
+
+
+CORS 필터
+CORS 필터는 요청을 가로채고 해당 요청이 
+교차 출처에서 확인되면 적절한 헤더를 요청에 추가해줌 
+
+스프링 시큐리티의 CorsConfigurationSource 인터페이스를 이용함 
+
+
+
+dispatch({ 액션객체 }) -> reducer함수 호출 -> update state
+
+products [] -> 서버로 요청(데이터) -> update
+
+dispatch({ 액션객체 }) -> 미들웨어(dispatch({  })) -> reducer함수 호출
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

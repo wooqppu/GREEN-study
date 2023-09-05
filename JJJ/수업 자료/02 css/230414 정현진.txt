@@ -1,0 +1,128 @@
+230413
+
+div id ="footer"
+div id="main"
+
+# 시멘틱태그
+<header> 머리글, 제목, 상단영역
+<main> 페이지 중심내용, 직접적인 컨텐츠
+<footer> 바닥글, 하단영역 
+<nav> 네비게이션, 목차, 페이지 이동을 위한 링크 항목
+<section> 주제, 카테고리 별로 섹션을 구분하는 용도로 사용 
+같은 테마를 가진 여러 개의 콘텐츠를 그룹화시킴
+<address> 콘텐츠 작성자나 사이트 소유자의 정보를 
+부가적으로 담을 때 사용
+<article> 기사, 블로그 등 텍스트 위주의 페이지 구성에 사용
+<aside> 좌측과 우측, 사이드 위치의 공간을 의미, 본문 외에
+부수적인 내용을 표현하는데 사용
+
+230414
+
+웹용 사이트
+모바일용 사이트
+# 반응형 웹 Responsive Web
+
+*웹 우선주의 
+*모바일 우선주의 
+
+1) 미디어쿼리
+반응형 웹을 구현하기 위한 기술 중 하나로 컴퓨터나 기기에게 
+어떤 종류의 미디어인지, 화면 크기는 어느 정도인지 미디어에게  
+질문하고 감지하여 웹사이트를 변경하는 기술
+ex> 크기가 1000보다 작으면 가로로 배치되는 요소를 세로로 배치해 
+
+screen : 컴퓨터 화면 또는 스마트기기 화면
+
+@media 미디어 종류 and 조건문
+ex> 모든 미디어 기기 중 브라우저 가로 길이가 320px 이상이면
+@media all and (min-width: 320px) { 스타일구문작성 }
+
+ex> 가로 너비가 320px 이상이면서 768px 이하일 때
+@media all and (min-width: 320px) and (max-width: 768px) { 스타일구문작성 } 
+
+ex> 컴퓨터 기기 중 브라우저 가로 길이가 1024 이하일 때
+@media screen and (max-width: 1024px) { 스타일구문작성 }
+
+
+min(최소값) : 최소 1024(값) 이상의 화면 
+max(최대값) : 최대 1024(값) 이하의 화면 
+
+min-width 최소너비 이상
+max-width 최대너비 이하 
+(웹 우선주의 일 때는 max를 쓰는 것이 편리함)
+
+@media screen and (min-width: 1024px) {  }
+@media screen and (min-width: 768px) {  }
+
+
+# css 우선순위 : 선택자를 정확하게 지정하는 것
+<div>
+	<div id="a" class"c"></div>
+</div>
+
+div { background: red; } 3위
+#a { background: blue; }  div를 감싼게 없을 경우 우선순위 1위
+.c { background: yellow; } 2위
+div #a ---> div 안에 div를 넣어주면 이게 제일 우선순위
+
+2) 뷰포트 : 모바일 기기에서도 화면에 
+웹사이트 상의 css 디자인 설정을 그대로 적용해줌 
+
+# 플렉스 박스 레이아웃
+flex box - 유연한 박스 
+
+1. 컨테이너 박스 (부모요소) 
+
+1) flex컨테이너 지정 
+display: flex; (기본 속성값 : row)
+
+2) 아이템의 배치방향 지시
+flex-direction: 
+row(->), row-reverse(<-), column(아래로), column-reverse(위로)
+
+3) 아이템의 줄바꿈 설정
+flex-wrap 속성 (기본 속성값 : nowrap)
+- wrap : 줄바꿈 가능
+- nowrap : 줄바꿈 불가능 (한 줄로만 표시) 
+- wrap-reverse : 역방향 줄바꿈
+
+*** 배치방향과 줄바꿈 설정을 한 번에 주는 속기법 ***
+flex-flow : row wrap;
+
+4) 주축 방향 정렬
+justify-content 속성 (기본 속성값 : flex-start)
+- flex-start
+- flex-end
+- center
+- space-between
+- space-around
+- space-evenly
+
+5) 교차축 방향 정렬
+*주축 방향으로 한 줄일 때 정렬
+align-items 속성 (기본 속성값 : stretch -> 컨테이너 크기만큼 높이가 늘어남)
+- flex-start 
+- flex-end
+- center
+- stretch
+
+*주축 방향으로 여러 줄일 때 정렬
+align-content 속성 
+- flex-start
+- flex-end
+- center
+- space-between
+- space-around
+- space-evenly
+
+2. 아이템 (자식요소)
+
+1) order : 아이템 배치 순서 (기본 속성값  : 0)
+
+
+
+
+
+
+
+

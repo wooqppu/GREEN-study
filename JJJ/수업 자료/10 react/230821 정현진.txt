@@ -1,0 +1,170 @@
+
+Router 라우터 
+
+라우팅 : 사용자가 요청한 URL에 따라 알맞은 페이지를 보여주는 것
+
+ex>
+글쓰기 페이지 
+목록 페이지 
+글 읽기 페이지 
+
+라우팅 시스템 
+페이지별로 컴포넌트를 분리해서 프로젝트를 관리하는 시스템 
+
+1. 리액트 라우터 : 라우팅 라이브러리 
+2. Next.js : 리액트 프로젝트의 프레임워크 
+
+
+1) 프로젝트 생성, 라우터 설치 
+npx create-react-app router-tutorial
+npm install react-router-dom 
+
+2) 라우터 사용하기 
+2-1. 상위 컴포넌트에서 라우터 적용 
+<BrowserRouter> 컴포넌트 사용 (react-router-dom이 가지고 있음)
+
+ex>
+<BrowserRouter>
+	<App></App>
+</BrowserRouter>
+
+index.js
+
+2-2. 페이지 컴포넌트 3개 생성 
+Home.js / Product.js / View.js
+
+2-3. Routes, Route 컴포넌트로 특정 경로에 
+원하는 component를 설정 
+
+Routes 컴포넌트는 여러 Route를 감싸서 그 중 url이 일치하는 라우트
+하나를 랜더링시켜줌 
+
+<Routes>
+	<Route path = "경로" element = {<component />}
+</Routes>
+
+2-4. Link 컴포넌트를 사용하여 다른 페이지로 이동하는 링크 설정 
+(a태그랑 같은 역할)
+a태그를 클릭해서 페이지를 이동하면 브라우저에서 페이지를 새로 불러옴 
+
+-> link 컴포넌트도 a태그를 사용하지만 패이지를 새로 불러오는 것을 막고 
+History API를 통해 브라우저 주소의 경로만 바꾸는 기능이 내장되있음
+
+구문> 
+<Link to = "경로 이름">링크 이름</Link> 
+
+
+2-5. url 파라미터와 쿼리스트링 
+페이지 주소에 값을 전달할 때 사용 
+
+1) 쿼리스트링 : /view?username=green&keyword=react
+---> ?문자열 이후에 key=value 형태로 값을 정의하고 &로 구분함 
+
+<Link> 컴포넌트의 to 속성에서 ?를 사용해서 
+전달할 데이터는 name=value 형태로 작성 
+ex> <Link to="view?name=green&color=white">상세페이지</Link>
+
+전달받은 값 사용 
+useLocation -> location 객체 리턴 
+- hash
+- pathname : 현재 주소 경로
+- search : ?를 포함한 쿼리 스트링
+- key : location 객체의 고유 값, 초기값은 default, 
+페이지가 변경될 때마다 고유의 값이 생성됨 
+
+useSearchParams() -> 배열 리턴, 
+리턴하는 [0번째 배열]에는 쿼리파라미터 들어있음
+
+0번째에 쿼리파라미터를 조회하거나 수정할 수 있는 메소드가 담긴 객체를 반환 
+ex> 
+abc.get('name')	// green
+abc.get('color')	// white
+
+1번째에 쿼리파라미터를 객체 형태로 업데이트할 수 있는 함수를 반환 
+
+
+2) URL 파라미터 : view/item1 
+---> 주소의 경로에 유동적인 값을 넣는 형태 
+
+사용법
+- Route 컴포넌트의 path 속성에서 params 객체의 키(key 이름)를 지정 
+<Route path="/view/:productname" element={<Component />} />
+
+- Link 컴포넌트의 to 속성에서 값(value)을 넘겨줌 
+<Link to="view/book"></Link>
+
+ex>
+useParams() 라는 훅(Hook)으로 경로를 찾으면 
+---> {product name: "book"} 객체 리턴 - 이런 값을 넘겨주는게 됨
+
+
+2-6. 중첩된 라우터 사용하기 
+페이지에 서브페이지 사용하기 
+
+중첩 라우터 
+1) <Route> 컴포넌트 안에 <Route>컴포넌트를 넣어주면 됨 
+<Route path="">
+	<Route path="" />
+</Route>
+
+2) <Outlet> 컴포넌트
+<Route> 컴포넌트의 Children으로 들어가는 하위 컴포넌트를 보여주는 역할을 함 
+중첩 라우트 컴포넌트가 나타나야할 부분에 <Outlet> 컴포넌트를 작성 
+
+Subpages.js 생성
+Subpage.js 생성 
+
+
+2-7. useNavigate()
+Link 컴포넌트를 사용하지 않고 다른 페이지로 이동해야할 때 사용 
+useNavigate() -> 페이지를 이동할 수 있는 함수를 리턴 
+
+ex> const navigate = useNavigate()
+navigate(-1) 이전 페이지로 이동 
+navigate(-2) 이전 이전 페이지로 이동 
+navigate(1) 다음 페이지로 이동 
+navigate("경로") 원하는 경로로 이동  
+
+
+2-8. NavLink 컴포넌트 
+링크에서 사용하는 경로가 현재 라우트의 경로와 일치하는 경우
+특정 스타일 또는 css 클래스를 적용하는 컴포넌트 
+
+NavLink 컴포넌트 사용 시 style 또는 className을 설정할 때 
+{ isActive: boolean }을 파라미터로 전달받음 
+
+
+
+복습 
+
+상태관리 
+
+1) useState()
+useState(상태의 초기값) -> 배열 리턴 [state, setState]
+ex> const [number, setNumber] = useState(0)
+number = 0
+serNumber(1) -> 상태를 업데이트하는 함수 
+
+2) useReducer()
+useReducer(reducer함수, 상태 초기값) -> 배열 리턴 [state, dispatch]
+
+reducer함수 : 액션 객체를 전달받아서 상태를 업데이트
+reducre 호출하려면 dispatch({ 액션 객체 }) 이용 
+reducer() 로 바로 호출은 불가능함 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

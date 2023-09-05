@@ -1,0 +1,334 @@
+	
+연습문제 
+
+employee 테이블 
+
+1. 김진수의 직급과 같은 직급을 가진 사람의 사원번호, 이름, 직급 순으로 
+출력하여 보시오
+select petno, pname, job from employee
+where job = (select job from where pname = '김진수')
+order by pname;
+ 
+2. 김진수를 대리로 진급하고 급여를 150만원으로 수정하시오 
+update employee
+set job = '대리', sal = 1500000
+where pname = '김진수'
+
+3. 2011년 12월 31일까지 입사한 직급이 '사원'인 사람의 급여를 10% 인상하시오 
+update employee
+set sal = sal * 1.1
+where job = '사원' and hiredate <= '2011-12-31';
+
+4. 강원일을 부서 번호 40번으로 데이터를 수정하시오
+update employee
+set deptno = 40
+where pname = '강원일'
+
+5. 급여가 가장 적은 사람의 이름과 급여, 부서 번호를 출력하시오 
+select pname, sal, deptno fron employee
+where sal = (select min(sal) from employee)
+
+6. 전민철을 부사장으로 승진시키고 급여를 600만원, 보너스 100만원으로 
+인상하여 데이터를 수정하시오 
+update employee
+set job = '부사장', sal = 6000000, bonus = 1000000
+where pname = '전민철'  
+
+7. 부서별로 부서 번호와 월급의 합계를 부서 번호 10번 또는 20번만으로 
+출력하시오 
+select deptno, sum(sal) from employee
+group by deptno
+having deptno = 10 or deptno = 20;
+
+
+
+트랜잭션 제어와 세션
+
+트랜잭션 : 더 이상 분할할 수 없는 최소 수행단위
+한 개 이상의 데이터 조작 명령어로 이루어지며 어떤 기능 한 가지를 
+수행하는 SQL 덩어리라고 볼 수 있음
+
+트랜잭션
+insert
+update
+TCL 
+
+- TCL : 트랜잭션 제어를 위해 사용하는 명령어 
+
+
+rollback
+트랜잭션을 취소하고 싶을 때 사용
+(DML 수행상태 중 모든 명령어가 수행되지 않아 취소된 상태)
+
+commit 
+트랜잭션을 반영하고 싶을 때 사용 
+(DML 수행상태 중 모든 명령어가 정상적으로 수행된 상태)
+
+
+create table dept_tcl
+as select * from dept;
+
+insert into dept_tcl
+values (50, 'DATABASE', 'SEOUL');
+
+select * from dept_tcl;
+
+update dept_tcl
+set loc = 'BUSAN'
+where deptno = 10;
+
+rollback;
+
+insert into dept_tcl
+values (50, 'DATABASE', 'SEOUL');
+
+update dept_tcl
+set loc = 'BUSAN'
+where deptno = 10;
+
+select * from dept_tcl;
+
+commit;
+
+
+- 세션과 읽기 일관성
+
+세션 : 활동을 위한 시간이나 기간 
+데이터베이스 접속을 시작으로 여러 관련 작업을 수행한 후 접속을 
+종료하기까지의 전체 기간을 의미함 
+
+ex > 웹 서비스에 로그인 - 로그아웃 할 때까지의 전체 기간 
+
+읽기 일관성 : 어떤 특정 세션에서 테이블 변경중일 때 데이터의 변경이 
+확정되기 전까지 변경중인 세션을 제외한 나머지 세션에서는 
+현재 진행중인 변경과 무관한 본래의 데이터를 보여주는 특성을 의미함  
+
+(데이터베이스는 여러 곳에서 동시에 접근하여 데이터를 관리, 사용하는 것이 
+목적이므로 대부분의 세션이 동시에 연결되있음)
+
+
+<cmd / developer로 세션 창 두개 띄우기>
+
+cmd -> 
+
+sqlplus scott/tiger
+select * from dept_tcl;
+
+
+developer ->
+
+delete from dept_tcl
+where deptno = 40;
+select * from dept_tcl;
+
+(아직 commit 안했기 때문에 cmd창에서는 40번 행 여전히 존재 )
+
+commit;
+
+
+cmd ->
+select * from dept_tcl;
+(commit으로인해 똑같이 40번행 삭제된 테이블 출력)
+
+
+
+- 수정중인 데이터 접근을 막는 lock
+
+lock : 특정 세션에서 조작중인 데이터는 트랜잭션이 완료되기 전까지 
+다른 세션에서 조작할 수 없는 상태로 데이터가 잠김 
+(조작중인 데이터를 다른 세션에서 조작할 수 없도록 접근을 보류시킴)
+
+hang(행) : 특정 세션에서 데이터 조작이 완료될 때 까지 다른 세션에서 
+해당 데이터 조작을 기다리는 현상 (행레벨록, 테이블레벨록)
+
+developer ->
+
+update dept_tcl
+set loc = 'GREEN'
+where deptno = 30;
+select * from dept_tcl;
+
+
+cmd -> update dept_tcl
+  2  set loc = 'aaaaa'
+  3  where deptno = 30;
+
+(developer에서 업데이트 중이라 
+cmd에서 업데이트 명령은 적용안되고 lock 걸림 )
+
+
+developer ->
+commit;
+
+(커밋해줘야 cmd창에서 lock 풀리고 업데이트 가능해짐)
+
+
+
+309p 연습문제 풀이 
+(사진 참조)
+
+
+
+객체 종류 
+
+- 데이터베이스를 위한 데이터를 저장한 데이터 사전 
+
+select * from dict;
+
+오라클 데이터베이스 테이블은 사용자 테이블과 데이터 사전으로 나뉨 
+사용자 테이블 - normal table, 데이터 사전 - base table
+
+데이터 사전에는 데이터베이스 메모리, 성능, 사용자, 권한, 객체 등 
+오라클 데이터 베이스 운영에 중요한 정보가 보관됨  
+
+오라클 데이터 베이스는 사용자가 데이터 사전 정보에 직접 접근하는 것을 
+허용하지 않으며, 대신에 데이터 사전 뷰를 제공하여 select문 통해서 
+정보열람 가능함
+
+(뷰 : 어떤 목적을 위해 일부 또는 전체 데이터를 열람하기 위해 사용하는 객체)
+
+
+용도에 따른 접두어 종류 
+
+user_xxxx 
+현재 데이터베이스에 접속한 사용자가 소유한 객체 정보
+
+all_xxxx
+현재 데이터베이스에 접속한 사용자가 소유한 객체 
+또는 다른 사용자가 소유한 객체 중 사용 허가를 받은 객체
+즉, 사용 가능한 모든 객체
+
+dba_xxxx
+데이터베이스 관리를 위한 정보 
+(데이터베이스 관리 권한을 가진 system, sys 사용자만 열람 가능)
+
+v$_xxxx
+데이터베이스 성능 관련 정보 
+
+
+- 검색을 위한 인덱스 
+인덱스 : 색인이라는 의미, 오라클 데이터베이스에서 데이터 검색 성능의 
+향상을 위해 테이블 열에 사용하는 객체를 뜻함 (목차가 하나 더 생긴 것)
+
+
+select * from dept;
+
+select table_name from user_tables;
+
+select owner, table_name from all_tables;
+
+select * from user_indexes;
+
+
+--emp테이블의 sal열에 인덱스 생성하기
+
+create index inx_emp_sal
+on emp(sal);
+
+select * from user_indexes;
+
+select * from user_ind_columns;
+
+drop index inx_emp_sal;
+
+
+- 테이블처럼 사용하는 뷰
+뷰 : 가상테이블, 하나 이상의 테이블을 조회하는 select문을 저장한 객체
+select문을 저장하기 때문에 물리적 데이터를 따로 저장하지 않음
+-> 어떤 목적을 위해 일부 또는 전체 데이터를 열람하기 위해 사용하는 객체
+
+grant create view to scott;
+(뷰 생성 권한 지정 : oracle에서 scott에서 view를 만들 수 있도록 권한 변경)
+
+인라인 뷰 : create문을 통해 객체로 만들어지는 뷰 외에 sqk문에서 
+일회성으로 만들어지는 뷰 
+-> select문에서 사용되는 서브쿼리, 
+with절에서 미리 이름을 정의하고 사용하는 select문  
+
+(특정 테이블의 전체 데이터가 아닌 select문을 통해 일부 데이터를 
+추출한 뒤 별칭을 붙여서 사용함) 
+
+rownum : 인라인 뷰와 함께 사용하면 order by절을 통해 정렬된 결과 중
+몇 개의 최상위 데이터만을 출력하는 것이 가능 
+-> rownum은 의사열이라고 하는 특수열, 
+의사열은 데이터가 저장되는 실제 테이블에는 존재하지 않지만 
+특정 목적을 위해 테이블에 저장되어있는 열처럼 사용 가능함 
+
+
+select rownum, e.* from (
+    select * from emp e order by sal desc) e
+where rownum <= 5;
+
+
+연습문제 
+부서 번호가 30인 사원 정보의 모든 열을 출력하는 
+vw_emp30 뷰를 작성하시오 
+
+select * from user_views;
+
+drop view 뷰 이름;
+
+
+연습문제 풀이 
+1. 
+create table empidx
+as select * from emp; 
+
+2. 
+create index idx_empidx_empno 
+on empidx(empno);
+
+3. 
+select * from user_indexes;
+
+
+- 규칙에 따라 순번을 생성하는 시퀀스 
+시퀀스 : 오라클 데이터베이스에서 특정 규칙에 맞는 연속 숫자를 생성하는 객체 
+
+create sequence 시퀀스이름 
+
+생성한 시퀀스 확인 
+select * from user_sequences;
+
+
+create table dept_sequence 
+as select * from dept
+where 1 <> 1;
+
+create sequence seq_dept_sequence
+increment by 10
+start with 10
+maxvalue 90
+minvalue 0 
+nocycle
+cache 2;
+
+select * from user_sequences;
+
+insert into dept_sequence(deptno, dname, loc)
+values(seq_dept_sequence.nextval, 'DATABASE', 'GREEN');
+
+select * from dept_sequence;
+
+
+- 동의어 
+테이블, 뷰, 시퀀스 등 객체 이름 대신 다른 이름을 부여하는 객체 
+
+생성 
+create public synonym 동의어이름 
+for 객체이름 (테이블이름)
+
+ex > 
+create synonym E
+for emp; 
+
+select * from E;
+
+삭제하기 
+drop synonym E;
+
+
+- 권한 부여하기
+grant create synonym to scott;
+grant create public synonym to scott;
+

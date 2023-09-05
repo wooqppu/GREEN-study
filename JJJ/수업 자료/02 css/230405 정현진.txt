@@ -1,0 +1,171 @@
+#html 마크업 언어 
+- 블럭태그 
+웹브라우저가 스타일 속성을 지정해둠 (display : block)
+크기를 지정할 수 있음
+아래로 배치됨
+위, 아래 여백(padding, margin)을 줄 수 있음
+- 인라인태그 
+(div, p, ul, ol, dl, dt, dd, 
+a, span, em, strong, h1~h6, img, input, select)
+옆으로 배치
+크기를 지정할 수 없음 
+위, 아래 여백을 줄 수 없음
+
+#css 표현언어 : 레이아웃과 스타일을 정의 (html과 함께 사용)
+
+1)사용방법
+- 외부스타일 시트 
+- 내부스타일 시트
+- 인라인 스타일 시트
+
+2)선택자
+선택자 { 속성: 속성값; }
+
+#스타일 속성
+1. color 글자 색상
+- 색상명 pink, red
+- 16진수 #000000 ~ #ffffff
+- 컬러함수 rgb(0~255, 0~255, 0~255)
+- rgb(255,0,0)
+2. font-size 글자 크기 
+- 본문 크기 : 14px
+3. text-align 정렬
+- left, right, center
+4. text-decoration 글자 꾸미기
+- none : 밑줄 만들지 않음 
+- underline : 글자 아래에 선을 만듬
+- line-through : 글자 중간에 선을 만듬
+- overline : 글자 위에 선을 만듬 
+5. line-height 행 높이 : 그 다음 줄과의 간격
+(글자 크기보다 줄의 높이가 작으면 글이 겹쳐보임)
+line-height: 20px
+line-height: 1.6
+line-height: 2
+6. font-family 
+- 서체 변경
+- 앞에 body를 사용
+7. font-weight 
+- 글자 두께
+8. font-style
+- 글자 기울이기
+
+#선택자 { 속성: 속성값; }
+1.태그 선택자 - 태그명 { 속성: 속성값; } p {}
+2.아이디 선택자 - #아이디명 { 속성: 속성값; } #p{}
+(앞에 태그명 붙이기 가능, 태그명#아이디명)
+3.클래스 선택자 - .클래스명 { 속성: 속성값; } .p{}
+(앞에 태그명 붙이기 가능, 태그명.아이디명)
+-선택자 예제
+#box1 {color: red;} -> 아이디로 선택
+.a { background-color.yellow;} -> 클래스로 선택 
+<div id = "box1">a</div>
+<div class = "a">b</div> -> 클래스는 같은 이름 사용 가능
+<div class = "a">c</div>
+<div id = "box2">d</div> -> id는 다른 이름 사용해야함
+4.하위 선택자 div p
+.bg td
+div p -> a를 선택
+<div>
+	<p>a</p>
+	<ul>
+		<li><p>c</p></li>
+	</ul>
+</div>
+<p>b</p>
+5.자식 선택자 div > p
+div > p { background-color: tomato; } 
+6.모든 태그 선택자 *
+* {}
+7. 형제 요소 선택자 +
+div + p
+8. 연속선택자 ,
+div, h1, h2 { background-color: pink; }
+<h1></h1>
+<p></p>
+<h2></h2>
+<div></div>
+<p></p>
+9. 구조적 가상 클래스 선택자 :nth child
+ex) li(원하는 태그로 바꿀 수 있음):nth child(1) -> 짝(even), 홀수(odd) 지정 가능
+li:first-child 첫번째 자식 요소
+li:last-child 마지막 자식 요소
+li:only-child 유일한 자식 요소
+p:nth-of-type(1) p태그 중에 첫번째
+10. 속성 선택자
+[ 속성명 ]
+[ type ]
+input { width: 200px; }
+input[ type="text" ] { width: 200px; }
+ex - text, password, radio, checkbox
+[class^="a"] 클래스 속성의 값이 a로 시작하는 요소
+[class$="a"] 클래스 속성의 값이 a로 끝나는 요소
+[class*="a"] 클래스 속성의 값에 a가 포함되는 요소
+[href*="naver"] { font-size: 100px; } -> 네이버에만 디자인 속성 부여
+<a href="https://naver.com">네이버 바로가기</a>
+<a href="https://google.com">구글 바로가기</a>
+<div class="abc"></div>
+<div class="bba"></div>
+
+#box 모델링 
+1. width 넓이 
+div { width: 1200px; }
+
+2. height 높이
+div { height: 500px; }
+
+3. border 테두리 
+border-size: 1px;
+border-color: red; 
+border-style: solid;
+border-radius: 20px; -> 각 모서리를 둥글게 만듬
+-css 속기법
+div { border: 1px 크기 solid 선 종류 red; 색깔 }
+border-top: 1px solid red;
+border-left: 1px solid blue;
+border-right: 1px solid yellow;
+border-bottom: 3px solid black;
+(solid는 실선)
+
+4. padding 내부 여백 -> 글자랑 선 사이의 간격
+div { padding: 50px; }
+padding 상하좌우 여백
+padding-left 왼쪽 여백
+padding-right 오른쪽 여백
+padding-top 상단 여백
+padding-bottom 하단 여백
+
+padding: 10px(위,아래) 20px(좌,우)
+padding: 10px(위) 20px(좌,우) 30px(아래)
+padding: 10px(위) 20px(우) 30px(아래) 40px(좌)
+-> 시계 방향으로 돌아감 
+
+5. margin 외부 여백 -> 박스와 박스 사이의 간격
+margin 좌우상하 바깥여백
+margin-top 상단바깥여백
+margin-bottom 하단바깥여백
+margin-left 왼쪽
+margin-right 오른쪽
+
+margin: 10px(상하좌우)
+margin: 10px(상,하) 20px(좌,우)
+margin: 10px(상) 20px(좌,우) 30px(하)
+margin: 10px(상) 20px(우) 30px(하) 40px(좌)
+-> 시계 방향
+
+6. box-sizing: border-box; (content-box)
+(박스 크기-너비의 기준에 padding과 선 테두리의 크기까지 포함시킴)
+7. margin:0 auto;
+
+#css 표현언어 적용하기 
+1.내부 스타일시트
+head 태그 안에 <style></style> 안에 작성 
+2.외부 스타일시트
+css파일을 만든 후, 
+head 태그 안에 
+<link rel="stylesheet" href="style.css">
+3.인라인 스타일 적용
+<div style="속성: 속성값;">
+<div style="color: red;">
+css구문
+[ ] 대괄호 { } 중괄호 ( ) 소괄호
+선택자 { 속성: 속성값; }

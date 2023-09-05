@@ -1,0 +1,33 @@
+
+스프링 게시판 작업 
+
+프레젠테이션 웹 계층의 crud 
+
+@RequestMapping -> URL 분개 
+
+@RequestMapping("/sample/*")
+class SampleController {
+	@RequestMapping("/list")
+	public void lists() {
+		
+	}
+	@RequestMapping("/view")
+	public String view() {
+		return "userview";
+	}
+}
+
+
+
+BoardController 작성 
+
+/board/
+/board/register 	등록(post)
+/board/read 	조회(get) 
+/board/remove	삭제(post)
+/board/modify	수정(post)
+/board/list	전체목록(get)
+ 
+
+
+

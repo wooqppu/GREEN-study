@@ -1,0 +1,100 @@
+
+스프링 게시판 웹 제작 
+
+1. VO나 DTO를 생성 
+org.green.domain 패키지
+
+2. BoardMapper 인터페이스 생성 
+org.green.mapper 패키지
+
+3. BoardMapper.xml 생성 
+org -> green -> mapper 폴더 
+
+(namespace 인터페이스로 지정)
+
+<select id="인터페이스 추상 메소드">
+쿼리문 작성 
+</select>
+
+(select 태그는 resultType="org.green.domain.BoardVO")
+
+4. BoardService 인터페이스 생성 
+BoardServiceImpl 클래스 -> mapper, Setter 주입 
+
+5. BoardController 생성 
+요청 ---------> 뷰 
+(서비스, 모델) 
+
+list 요청 --- (model) ---> list.jsp
+
+
+
+스프링 설정 
+
+1. 스프링 버전 변경 5.0.7
+자바 버전 변경 11
+
+2. junit 버전 변경 4.12
+log4j 버전 변경 1.2.17 (아래 하위 코드 제거)
+
+3. 스프링 라이브러리 설치 
+jdbc, tx, test
+
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-jdbc</artifactId>
+	<version>${org.springframework-version}</version>
+</dependency>
+		
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-test</artifactId>
+	<version>${org.springframework-version}</version>
+</dependency>
+		
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-tx</artifactId>
+	<version>${org.springframework-version}</version>
+</dependency>	
+
+4. 롬복 설치 1.18.24
+오라클 jdbc 설치 21.9.0.0
+(히카리풀 mybatis)
+
+jdbc 가동 테스트
+
+5. 히카리CP 설치 5.0.1
+데이터소스 테스트 
+
+6. mybatis 설치 
+mybatis/ mybatis-spring 설치
+
+SQLSession 객체 
+-> Connnection을 생성하거나 원하는 SQL을 전달하고 결과를 리턴받는 객체, 
+
+SQLSessionFactory 객체 
+-> 내부적으로 SQLSession 객체를 생성하는 객체
+
+스프링에 SQLSessionFactory를 등록하는 작업은 SQLSessionFactoryBean을 이용함 
+(root-context.xml에 빈을 등록)
+
+7. Mapper 설정 
+org.green.mapper 패키지 생성 
+TimaMapper 인터페이스 생성
+
+MyBatis가 동작할 때 Mapper를 인식할 수 있도록 설정
+- root-contecx.xml 네임 스페이스에서 mybatis-spring 체크
+- root-contecx.xml 에 <mybatis-spring:scan base-package="org.green.mapper" /> 코드 작성
+
+8. log4jdbc-log4j2 설정
+로그를 제대로 출력하기 위한 라이브러리 설치 
+SQL 변환해서 PreparedStatement에 사용된 ?가 어떤 값으로 처리되었는지 확인하는 기능
+
+================================================================
+
+spring-mvc 설정 
+
+9. 서블릿 상위 버전 설치 4.0.1
+
+10. 

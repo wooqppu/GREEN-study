@@ -1,0 +1,70 @@
+
+insert into movie(idx, title, ofile, sfile, rate, year, runtime, age, director, cast, content, price, youtube)
+values(seq_table_num.nextval, '범죄도시3', null, null, '7.8', '2023년', '105분', '15세',
+'이상용', '마동석, 이준혁, 아오키 무네타카, 이범수, 김민재',
+'대체불가 괴물형사 마석도, 서울 광수대로 발탁! 베트남 납치 살해범 검거 후 7년 뒤, <br>
+''마석도''(마동석)는 새로운 팀원들과 함께 살인사건을 조사한다. 사건 조사 중, <br>
+''마석도''는 신종 마약 사건이 연루되었음을 알게 되고 수사를 확대한다. <br>
+한편, 마약 사건의 배후인 ''주성철''(이준혁)은 계속해서 판을 키워가고 <br>
+약을 유통하던 일본 조직과 ''리키''(아오키 무네타카)까지 한국에 들어오며 <br>
+사건의 규모는 점점 더 커져가는데... 나쁜 놈들 잡는 데 이유 없고 제한 없다. <br>
+커진 판도 시원하게 싹 쓸어버린다!', 
+'5900원', 'https://www.youtube.com/embed/4p7WZmM3Bk8');
+
+insert into movie(idx, title, ofile, sfile, rate, year, runtime, age, director, cast, content, price, youtube)
+values(seq_table_num.nextval, '가디언즈 오브 갤럭시: Volume 3', null, null, '9.54', '2023년', '150분', '12세', 
+'제임스 건', '크리스 프랫, 조 샐다나, 데이브 바티스타, 빈 디젤, 브래들리 쿠퍼', 
+'''가모라''를 잃고 슬픔에 빠져 있던 ''피터 퀼''이 위기에 처한 은하계와 동료를 지키기 위해 <br> 
+다시 한번 가디언즈 팀과 힘을 모으고, 성공하지 못할 경우 <br> 
+그들의 마지막이 될지도 모르는 미션에 나서는 이야기',
+'5900원', 'https://www.youtube.com/embed/XyHr-s3MfCQ');
+
+insert into movie(idx, title, ofile, sfile, rate, year, runtime, age, director, cast, content, price, youtube)
+values(seq_table_num.nextval, '존 윅 4', null, null, '7.93', '2023년', '169분', '19세', 
+'채드 스타헬스키', '키아누 리브스, 견자단, 빌 스카스가드, 로렌스 피시번, 이안 맥쉐인', 
+'죽을 위기에서 살아난 ''존 윅''은 ''최고 회의''를 쓰러트릴 방법을 찾아낸다. <br> 
+비로소 완전한 자유의 희망을 보지만, NEW 빌런 ''그라몽 후작''과 전 세계의 최강 연합은 <br> 
+''존 윅''의 오랜 친구까지 적으로 만들어 버리고, 새로운 위기에 놓인 ''존 윅''은 최후의 반격을 준비하는데,, <br> 
+레전드 액션 블록버스터 <존 윅>의 새로운 챕터가 열린다!',
+'5900원', 'https://www.youtube.com/embed/ly3QrgEZaQY');
+
+insert into movie(idx, title, ofile, sfile, rate, year, runtime, age, director, cast, content, price, youtube)
+values(seq_table_num.nextval, '아바타: 물의 길', null, null, '8.64', '2022년', '192분', '12세', 
+'제임스 카메론', '조 샐다나, 샘 워싱턴, 시고니 위버, 우나 채플린, 지오바니 리비시', 
+'<아바타: 물의 길>은 판도라 행성에서 ''제이크 설리''와 ''네이티리''가 이룬 가족이 겪게 되는 무자비한 위협과 <br> 
+살아남기 위해 떠나야 하는 긴 여정과 전투, 그리고 견뎌내야 할 상처에 대한 이야기를 그렸다. <br> 
+월드와이드 역대 흥행 순위 1위를 기록한 전편 <아바타>에 이어 제임스 카메론 감독이 13년만에 선보이는 영화로, <br> 
+샘 워싱턴, 조 샐다나, 시고니 위버, 스티븐 랭, 케이트 윈슬렛이 출연하고 존 랜도가 프로듀싱을 맡았다.',
+'5900원', 'https://www.youtube.com/embed/kihrFxwdMb4');
+
+insert into movie(idx, title, ofile, sfile, rate, year, runtime, age, director, cast, content, price, youtube)
+values(seq_table_num.nextval, '킬링로맨스', null, null, '7.46', '2023년', '106분', '15세', 
+'이원석', '이하늬, 이선균, 공명, 배유람', 
+'대재앙 같은 발연기로 국민 조롱거리로 전락한 톱스타 ''여래''(이하늬). 현실에서 벗어나고자 떠난 남태평양 ''콸라''섬에서 <br> 
+운명처럼 자신을 구해준 재벌 ''조나단''(이선균)을 만나 결혼을 하고 새로운 인생을 꿈꾸며 돌연 은퇴를 선언한다. <br> 
+한편, 서울대가 당연한 집안에서 홀로 고독한 입시 싸움 중인 4수생 ''범우''(공명)는 <br> 
+한때 자신의 최애였던 여래가 옆집에 이사온 것을 알게 되고 날마다 옥상에서 단독 팬미팅(?)을 여는 호사를 누린다. <br> 
+그러던 어느 날 조나단의 사업 확장을 위한 인형 역할에 지친 여래는 완벽한 스크린 컴백을 위해 <br> 
+범우에게 SOS를 보내게 되고 이들은 여래의 인생을 되찾기 위한 죽여주는 계획을 함께 모의하는데…',
+'5900원', 'https://www.youtube.com/embed/lNW1TvpM3hE');
+
+insert into movie(idx, title, ofile, sfile, rate, year, runtime, age, director, cast, content, price, youtube)
+values(seq_table_num.nextval, '에브리씽 에브리웨어 올앳원스', null, null, '8.17', '2022년', '139분', '15세', 
+'다니엘 쉐이너트', '양자경, 스테파니 수, 키 호이 콴, 제이미 리 커티스', 
+'미국에 이민 와 힘겹게 세탁소를 운영하던 ''에블린''은 세무당국의 조사에 시달리던 어느 날 <br>
+남편의 이혼 요구와 삐딱하게 구는 딸로 인해 대혼란에 빠진다. <br>
+그 순간 ''에블린''은 멀티버스 안에서 수천, 수만의 자신이 세상을 살아가고 있다는 사실을 알게 되고, <br>
+그 모든 능력을 빌려와 위기의 세상과 가족을 구해야 하는 운명에 처한다.',
+'5900원', 'https://www.youtube.com/embed/vOXJySPfMJY');
+
+insert into movie(idx, title, ofile, sfile, rate, year, runtime, age, director, cast, content, price, youtube)
+values(seq_table_num.nextval, '애프터썬', null, null, '8.42', '2023년', '101분', '12세', 
+'샬롯 웰스', '폴 메스칼, 프랭키 코리오', 
+'아빠와 20여 년 전 갔던 튀르키예 여행. <br>
+아빠가 남긴 것을 되새길 겸 오래된 캠코더를 꺼내자 <br>
+그해 여름이 물결처럼 출렁이기 시작한다.',
+'5900원', 'https://www.youtube.com/embed/7XNoDQ-Itto');
+
+select * from movie;
+
+commit;

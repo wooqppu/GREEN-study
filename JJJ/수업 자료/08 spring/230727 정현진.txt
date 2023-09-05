@@ -1,0 +1,89 @@
+
+스프링 
+
+파일 업로드 처리 
+
+1. 파일 업로드 방식 
+
+- <form> 태그를 이용하는 방식 
+일반적으로 페이지 이동과 동시에 첨부파일 업로드
+
+- Ajax 이용 방식
+첨부파일을 별도로 처리 
+input type = "file" -> Ajax로 처리
+
+
+
+c드라이브 - upload 폴더 - temp 폴더 생성하기
+
+ex03 프로젝트 생성 
+(new -> 스프링레거시 -> mvc -> ex03 -> org.green.controller)
+
+pom.xml 수정 
+1) 자바 버전 11, 스프링 5.0.7로 변경
+2) 롬복, 서블릿, junit 버전 변경, log4 버전 변경
+3) web.xml 상단 버전 변경 (2.5 -> 4.0) (서버 파일 업로드 설정)
+
+
+파일 업로드 설정
+servlet-context.xml (스프링 파일 업로드 처리)
+MultipartResolver 타입 객체를 빈으로 등록
+
+
+*메소드 정리 
+MultipartFile
+getName() 파라미터 이름 <input> 태그 이름 
+getOriginalFileName() 업로드되는 파일 이름 
+getSize() 업로드되는 파일 크기 
+isEmpty() 파일이 존재하지 않는 경우 true
+transferTo(File file) 파일의 저장
+
+
+File 인스턴스 생성  (파일 저장하기 위해서 필요함)
+File file1 = new File("저장위치", "파일이름")
+
+
+파일 확장자 크기의 사전처리
+exe, sh, zip, alz 
+-> 해당 종류의 파일은 업로드할 수 없습니다. (alert)
+
+파일 사이즈 초과 시 
+-> 파일 사이즈가 초과되었습니다. (alert)
+ 
+정규 표현식
+let regex = new RegExp("");
+
+
+중복된 이름의 첨부파일 처리 
+1. 년/월/일 폴더 생성 
+java.io.File mkdirs -> 폴더 생성할 수 있음 
+
+2. 중복 방지를 위해 UUID 적용
+java.util.UUID
+UUID uuid = UUID.randomUUID();
+
+
+썸네일 이미지 생성 
+1. 라이브러리 추가 
+maven thumbnailator(0.4.8 버전) 라이브러리 검색, 추가
+
+2. 업로드된 파일이 이미지 종류인지 확인 
+이미지 파일인 경우 썸네일 이미지 생성 저장 
+
+
+업로드된 파일의 데이터를 반환 
+1. 서버에서 Ajax의 결과를 전달하기 
+
+(라이브러리 2개 추가)
+maven jackson-databind (2.15.2)
+maven Jackson Dataformat XML (2.15.0)
+
+2. 업로드된 파일의 경로가 포함된 파일의 이름 전달
+
+
+썸네일 이미지 보여주기 
+
+
+
+
+

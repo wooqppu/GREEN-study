@@ -1,0 +1,67 @@
+
+시큐리티 적용하기 
+
+spring-boot-starter-security
+spring-security-test
+
+회원 정보 
+테이블 이름 - "`user`"
+User 클래스 생성 
+id : 기본 키 지정
+username not null
+password not null
+role
+
+
+빌더(Builder) 패턴 
+별도의 Builder 클래스를 만들어서 
+메소드를 통해 스텝 바이 스텝으로 값을 입력받은 후
+최종적으로 build() 메소드로 
+하나의 인스턴스를 생성하여 리턴하는 패턴
+
+빌더 패턴을 사용하면 데이터의 순서에 상관없이 객체를 만들어낼 수 있음 
+
+
+리덕스 미들웨어 
+
+리덕스 모듈 
+
+액션 타입 
+
+액션 생성 함수 
+
+리듀서 
+
+
+미들웨어 
+dispatch (액션 객체) -> 미들웨어 next(액션) -> 리듀서 함수 -> 스토어 상태 변경 
+
+미들웨어 적용하기 
+const store = createStore(rootReducer, applyMiddleware(myLogger))
+
+redux-thunk 설치하기 
+npm install redux-thunk
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

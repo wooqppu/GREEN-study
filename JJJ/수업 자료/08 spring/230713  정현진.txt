@@ -1,0 +1,56 @@
+
+jsp
+
+SMTP를 활용한 이메일 전송하기 
+
+SMTP(Simple Mail Transfer Protocol)
+이메일 보낼 때 사용되는 메일 서버의 기본 프로토콜 
+
+
+이메일 전송에 필요한 라이브러리 
+
+자바메일 
+메일 서비스와 관련된 전반적인 기능을 수행
+링크 : http://mvnrepository.com/artifact/javax.mail/mail/1.4.7
+
+
+자바빈즈 액티베이션 프레임워크
+자바메일 API가 MIME 데이터를 관리하기 위해 사용 
+링크 : http://mvnrepository.com/artifact/javax.activation/activation/1.1.1
+
+
+스프링 설치 
+
+자바 11버전 확인 
+톰캣 9 설치
+이클립스가 아닌 스프링 통합 개발 도구 설치  
+
+스프링 경로 -> springworkspace폴더
+
+window -> preferences -> general -> workspace
+window -> preferences -> web -> html, css, jsp files
+(utf-8로 바꾸기)
+
+
+프로젝트 생성하기 
+(프로젝트 이름 대문자 불가능, 소문자만!)
+new -> spring legacy project
+프로젝트명 ex00
+패키지명 org.zerock.controller
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

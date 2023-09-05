@@ -1,0 +1,605 @@
+
+1. 레코드 : 자료형이 다른 여러 데이터를 저장함,  
+자료형이 각기 다른 데이터를 하나의 변수에 저장하는데 사용
+
+구문 >
+type 레코드 이름 is record(
+	변수 이름 자료형 not null := 값
+)
+
+
+
+create table dept_record
+as select * from dept;
+
+set serveroutput on;
+
+declare
+    type rec_dept is record(
+        deptno number(2) not null := 99,
+        dname dept.dname%type,  --테이블의 열 타입 지정
+        loc dept.loc%type       --테이블의 열 타입 지정
+    );
+    
+    dept_rec rec_dept; --rec_dept(레코드)타입으로 변수 선언 
+
+--begin
+--  dept_rec.dname := 'blue';
+--  dept_rec.loc := 'ulsan';
+--  dept_rec.deptno := 70;
+--
+--  insert into dept_record
+--  values dept_rec;
+    
+begin
+    dept_rec.dname := 'DATABASE';
+    dept_rec.loc := 'SEOUL';
+    dept_rec.deptno := 99;
+
+    update dept_record   --update 이용해서 데이터 변경, 수정
+    set row = dept_rec
+    where deptno = 30;
+    
+end;
+/
+
+
+
+2. 컬렉션 : 특정 자료형의 데이터를 여러개 저장하는 복합 자료형 
+
+- 종류 : 연관배열, 중첩테이블, varray
+
+1) 연관배열
+
+구문 >
+type 연관배열 이름 is table of 자료형
+index by 인덱스형 : 키로 사용할 인덱스의 자료형 지정 
+(binary_integer, pls_integer 같은 정수 또는 varchar2)
+
+
+실습 >
+set serveroutput on;
+
+declare
+    --컬렉션 타입 생성
+    type itab_ex is table of varchar2(20)
+    index by pls_integer;     --정수 타입의 인덱스 지정
+    
+    --변수 선언 컬렉션 타입
+    text_arr itab_ex;
+
+begin
+    text_arr(1) := '1st data';
+    text_arr(2) := '2nd data';
+    text_arr(3) := '3rd data';
+    text_arr(4) := '4th data';
+
+    dbms_output.put_line('첫번째 값은 : ' || text_arr(1));
+    dbms_output.put_line('두번째 값은 : ' || text_arr(2));
+    dbms_output.put_line('세번째 값은 : ' || text_arr(3));
+    dbms_output.put_line('네번째 값은 : ' || text_arr(4));
+
+end;
+/
+
+
+set serveroutput on;
+
+declare
+    --레코드 타입 생성 
+    type rec_dept is record(
+        deptno dept.deptno%type,    --dept테이블의 deptno컬럼타입으로 지정
+        dname dept.dname%type       --dept테이블의 dname컬럼타입으로 지정
+    );
+    
+    --컬렉션 타입 생성
+    type itab_dept is table of rec_dept 
+    index by pls_integer;
+    
+    --컬렉션 타입 변수 생성 
+    dept_arr itab_dept;
+    --pls_integer(정수)타입 변수 생성 
+    idx pls_integer := 0;
+
+begin
+    for i in (select deptno, dname from dept) loop
+        idx := idx + 1;
+        dept_arr(idx).deptno := i.deptno;
+        dept_arr(idx).dname := i.dname;
+        
+        dbms_output.put_line(dept_arr(idx).deptno 
+        || ' : ' || dept_arr(idx).dname);
+        
+    end loop;
+end;
+/
+
+
+set serveroutput on;
+
+declare
+    --컬렉션 타입 생성 
+    type itab_dept is table of dept%rowtype     --dept테이블의 행 타입으로 지정
+    index by pls_integer;
+    dept_arr itab_dept;
+    idx pls_integer := 0;
+
+begin
+    for i in (select * from dept) loop
+        idx := idx + 1;
+        dept_arr(idx).deptno := i.deptno;
+        dept_arr(idx).dname := i.dname;
+        dept_arr(idx).loc := i.loc;
+        
+        dbms_output.put_line(
+        dept_arr(idx).deptno || ' : ' ||
+        dept_arr(idx).dname || ' : ' ||
+        dept_arr(idx).loc
+        );
+        
+    end loop;
+end;
+/
+
+
+
+<컬렉션 메소드>
+
+delete 컬렉션 요소를 삭제
+
+first 컬렉션의 첫번째 인덱스를 반환
+
+last 컬렉션의 마지막 인덱스를 반환
+
+count 컬렉션의 요소의 총 갯수를 반환
+
+prior 특정 인덱스 이전의 인덱스를 반환
+
+next 특정 인덱스 다음의 인덱스를 반환
+
+
+
+457p 연습문제 풀이 
+
+1. emp테이블과 같은 열 구조를 가진 빈 테이블 emp_record를 생성 
+
+create table emp_record
+as select * from emp
+where 1 <> 1;
+
+2. emp_record테이블에 레코드를 사용하여 
+새로운 사원 정보를 삽입하는 sql을 작성 
+
+declare
+	type rec_emp is record (
+	empno emp.empno%type,
+	ename emp.ename%type,
+	job emp.job%type,
+	mgr emp.mgr%type,
+	hiredate emp.hiredate%type,
+	sal emp.sal%type,
+	comm emp.comm%type,
+	deptno emp.deptno%type
+
+);
+
+	--레코드 타입 변수 생성 
+	emp_rec rec_emp;
+
+begin
+	emp_rec.empno := 1111;
+	emp_rec.ename := 'TEST_USER';
+	emp_rec.job := 'TEST_JOB';
+	emp_rec.mgr := null;
+	emp_rec.hiredate := to_date('20180301', 'YYYYMMDD');
+	emp_rec.sal := 3000;
+	emp_rec.comm := null; 
+	emp_rec.deptno := 40;
+
+	insert into emp_record
+    	values emp_rec;
+
+end;
+/
+
+
+2. emp 테이블을 구성하는 모든 열을 저장할 수 있는 레코드를 활용하여
+연관배열을 작성해보시오
+
+declare 
+
+	type itab_emp is table of emp%rowtype
+	index by pls_integer;
+	emp_arr itab_emp;
+	idx pls_integer := 0;
+
+begin 
+	for i in (select * from emp) loop
+		idx := idx + 1;
+		emp_arr(idx).empno := i.empno;
+		emp_arr(idx).ename := i.ename;
+		emp_arr(idx).job := i.job;
+		emp_arr(idx).mgr := i.mgr;
+		emp_arr(idx).sal := i.sal;
+		emp_arr(idx).hiredate := i.hiredate;
+		emp_arr(idx).comm := i.comm;
+		emp_arr(idx).deptno := i.deptno;
+
+
+		dbms_output.put_line (
+		emp_arr(idx).empno || ':' ||
+		emp_arr(idx).ename || ':' ||
+		emp_arr(idx).job || ':' ||
+		emp_arr(idx).mgr || ':' ||
+		emp_arr(idx).sal || ':' ||
+		emp_arr(idx).hiredate || ':' ||
+		emp_arr(idx).comm || ':' ||
+		emp_arr(idx).deptno
+		);
+
+	end loop;	
+end;
+/
+
+
+
+3. 커서 : select문 또는 데이터 조작어 같은 sql문을 실행할 때 해당 sql문을 
+처리하는 정보를 저장한 메모리 공간
+
+- select into 방식 : 단일행 데이터 저장, 조회 가능 
+select 열1, 열2, 열3 into 변수1, 변수2, 변수3 from ...
+
+
+- 명시적 커서 
+
+1단계 : 커서 선언 (declaration)
+사용자가 직접 이름을 지정하여 사용할 커서를 sql문과 함께 선언
+
+2단계 : 커서 열기 (open)
+커서를 선언할 때 작성한 sql문을 실행 
+이 때 실행한 sql문에 영향받는 행을 active set이라고 함 
+
+3단계 : 커서에서 읽어온 데이터 사용 (fetch)
+실행된 sql문의 결과 행의 정보를 읽어와서 변수에 저장한 후 필요한 작업을 수행 
+각 행 별로 공통 작업을 반복해서 실행하기 위해 loop문을 함께 사용 가능 
+
+4단계 : 커서 닫기 (close)
+모든 행의 사용이 끝나고 커서를 종료
+
+
+- 명시적 커서 속성
+
+커서이름%rowcount
+현재까지 추출된 행 수를 반환
+
+커서이름%found
+수행된 fetch문을 통해 추출된 행이 있으면 true, 없으면 false 반환
+
+커서이름%notfound
+수행된 fetch문을 통해 추출된 행이 있으면 false, 없으면 true 반환
+
+커서이름%isopen
+커서가 열려있으면 true, 닫혀있으면 false 반환 
+
+
+구문 >
+declare
+cursor 커서 이름 is sql문; 	--커서 선언
+
+begin
+open 커서이름 	--커서 열기 
+fetch 커서이름 into 변수	-- 커서에서 읽어온 데이터 사용
+close 커서이름	--커서 닫기
+
+end;
+/
+
+
+
+ex >
+set serveroutput on;
+
+declare
+    --커서 데이터를 입력할 변수 선언 
+    dept_row dept%rowtype;
+    --커서 선언
+    cursor c1 is 
+    select * from dept where deptno = 30;
+
+begin
+    --커서 열기(실행)
+    open c1;
+    --커서로부터 읽어온 데이터 할당 
+    fetch c1 into dept_row;
+ 
+    --출력문 작성
+    dbms_output.put_line(dept_row.deptno || + ' : ' || dept_row.dname 
+    || ' : ' || dept_row.loc);
+    
+    --커서 닫기
+    close c1;
+end;
+/
+
+
+set serveroutput on;
+
+declare
+    v_dept_row dept%rowtype;
+    cursor c2 is
+    select * from dept;
+
+begin
+    open c2;
+    loop
+        --커서로부터 데이터 읽기
+        fetch c2 into v_dept_row;
+        exit when c2%notfound;
+        
+        dbms_output.put_line(v_dept_row.dname);
+    
+    end loop;
+    close c2;
+end;
+/
+
+
+
+- 여러 행이 저장, 조회되는 경우 : for loop -> 자동 open, fetch, close됨
+
+구문 >
+for 인덱스 이름 in 커서 이름 loop
+	결과 행 별로 반복 수행할 작업;
+end loop;
+
+
+set serveroutput on;
+
+declare
+    v_dept_row dept%rowtype;
+    cursor c2 is
+    select * from dept;
+
+begin
+    -- for loop 사용하기 
+    for v_dept_row in c2 loop
+
+        dbms_output.put_line(v_dept_row.dname);
+
+    end loop;
+end;
+/
+
+
+- 커서에 파라미터 사용하기 
+
+구문 >
+cursor 커서이름(파라미터 이름 자료형 ...)  is 
+select ...
+
+
+set serveroutput on;
+
+declare
+    --커서 데이터 입력할 변수 선언 
+    v_dept_row dept%rowtype;
+    
+    --사용자가 입력하는 부서 번호를 저장할 변수 선언 
+    v_deptno dept.deptno%type;
+
+    cursor c3 (p_deptno dept.deptno%type) is
+    select * from dept where deptno = p_deptno;
+    
+begin
+
+    v_deptno := &input_deptno;
+    open c3(v_deptno);
+
+    --open c3(10);
+    fetch c3 into v_dept_row;
+
+    dbms_output.put_line(v_dept_row.deptno || '번 부서, 부서 이름 : ' 
+    || v_dept_row.dname);
+    
+    close c3;
+end;
+/
+
+
+- 묵시적 커서 : 별다른 선언 없이 sql문을 사용하면 오라클에서 
+자동으로 선언되는 커서
+
+묵시적 커서의 속성을 사용하면 현재의 커서 정보 확인 가능함 
+커서 이름을 지정하지 않고 sqp키워드로 속성을 지정
+명시적 커서의 속성과 유사한 기능을 가짐 
+
+sql%notfound
+묵시적 커서 안에 추출한 행이 있으면 false, 없으면 true 반환
+
+sql%found
+묵시적 커서 안에 추출한 행이 있으면 true, 없으면 false 반환
+
+sql%isopen
+묵시적 커서는 자동으로 close됨
+sql문 실행한 후 close되므로 이 속성은 항상 false 반환 
+
+sql%rowcount
+묵시적 커서에 현재까지 추출한 행의 수 또는 
+dml명령어로 영향받는 행의 수를 반환 
+
+
+
+set serveroutput on;
+
+begin
+    update dept set dname = 'DB'
+    where deptno = 20;
+    
+    dbms_output.put_line('변경된 행의 수 : ' || sql%rowcount);
+
+    if(sql%found) then
+        dbms_output.put_line('변경 대상 행의 존재 여부 : true');
+    else
+        dbms_output.put_line('변경 대상 행의 존재 여부 : false');
+    
+    end if;
+end;
+/
+
+
+
+478p 연습문제 풀이
+
+1. emp 테이블의 전체 데이터를 조회 후 커서 안의 데이터가 
+다음과 같이 출력되도록 PL/SQL문을 작성하시오
+
+set serveroutput on;
+
+declare
+	--커서 데이터가 입력될 변수 선언 
+	empRow emp%rowtype;
+	
+	--커서 선언	
+	cursor cursor1 is
+	select *  from emp;	
+
+begin
+	--커서 열기
+	open cursor1;
+	loop
+		--커서로부터 데이터 읽기
+		fetch cursor1 into empRow;
+		
+		--무한루프 끝내는 조건 
+		exit when cursor1%notfound;
+
+		dbms_output.put_line('empno : ' || empRow.empno
+		|| 'ename : ' || empRow.ename || 'job : ' || empRow.job
+		|| 'sal : ' || empRow.sal || 'deptno : ' || empRow.deptno
+		);
+
+	end loop;
+	
+	--커서 닫기
+	close cursor1;
+end;
+/
+
+
+or
+
+
+declare
+	--커서 데이터가 입력될 변수 선언 
+	empRow emp%rowtype;
+	
+	--커서 선언	
+	cursor cursor1 is
+	select *  from emp;	
+
+begin
+	for empRow in cursor1 loop
+
+		dbms_output.put_line('empno : ' || empRow.empno
+		|| 'ename : ' || empRow.ename || 'job : ' || empRow.job
+		|| 'sal : ' || empRow.sal || 'deptno : ' || empRow.deptno
+		);
+
+	end loop;
+end;
+/
+
+
+
+- 예외처리 
+오라클에서는 sql 또는  pl/sql이 정상 수행되지 못하는 상황을 오류라고 함
+
+오류는 크게 두 가지로 구분 
+
+컴파일 오류 (문법 오류) : 문법이 잘못되었거나 오타로 인한 오류
+런타임 오류 (실행 오류) : 명령문의 실행 중 발생한 오류 
+
+이 중에서 후자인, 프로그램이 실행되는 도중 발생하는 오류를 예외라고 함 
+이로인해 비정상 종료되는 것을 막기 위해 특정 명령어를 pl/sql문 안에 작성함 
+-> 예외처리
+
+1) 예외 종류 
+내부 예외, 사용자 정의 예외로 나뉨 
+
+내부 예외 : 오라클에서 미리 정의한 예외
+- 사전 정의된 예외 
+내부 예외 중 예외 번호에 해당하는 이름이 존재하는 예외
+- 이름이 없는 예외
+내부 예외 중 이름이 존재하지 않는 예외 (사용자가 필요에 따라 이름 지정 가능)
+
+사용자 정의 예외 : 사용자가 필요에 따라 추가로 정의한 예외
+
+
+예외 처리부 구문 >
+
+EXCEPTION
+WHEN 예외 이름 1 THEN 
+예외 처리에 사용할 명령어;
+WHEN 예외 이름3 THEN
+예외 처리에 사용할 명령어
+...
+WHEN OTHERS THEN
+예외 처리에 사용할 명령어 
+
+
+declare
+    v_number number;
+    
+begin
+    --오류 발생 (문자 타입을 숫자형에 집어넣으려고 함)
+    select dname into v_number
+    from dept where deptno = 40;
+
+--예외 처리
+exception
+    when value_error then
+    dbms_output.put_line('예외처리  : 수치 오류값 오류 발생');
+
+end;
+/
+
+
+
+473p 사전 정의된 예외 종류 
+
+acccess_into_null 초기화되지 않은 객체 속성 값 할당 
+case_not_found case문의 where절에 조건이 없고 else절도 없는 경우 
+
+(이 밖에도 여러가지 예외 본문 참조)
+
+
+
+set serveroutput on;
+
+declare
+    v_wrong number;
+
+begin
+    select dname into v_wrong from dept where deptno = 10;
+    dbms_output.put_line('예외가 발생되면 다음 문장은 실행되지 않음'); 
+
+exception
+    when too_many_rows then --각각의 오류에 예외처리를 주기 
+    dbms_output.put_line('요구보다 많은 행 추출 오류 발생');
+
+    when value_error then 
+    dbms_output.put_line('수치 또는 값 오류 발생');
+    
+    when others then 
+    dbms_output.put_line('사전 정의 외 오류 발생');
+
+    dbms_output.put_line('sqlcode : ' || to_char(sqlcode));
+    
+--    when others then    --예외처리를 한 번에 주는 것도 가능 
+--    dbms_output.put_line('수치 또는 값 오류 발생');
+--    dbms_output.put_line('sqlcode : ' || to_char(sqlcode));
+--    dbms_output.put_line('sqlerrm : ' || sqlerrm);
+
+end;
+/
+

@@ -1,0 +1,86 @@
+
+람다식 
+함수형 프로그래밍 
+함수를 정의하고 함수를 데이터 처리부로 보내 데이터를 처리하는 기법 
+function sum() {
+	
+}
+
+
+객체지향 프로그래밍 
+기능 메소드
+
+데이터 처리부가 따로 있고, 함수를 전달받는다 
+(+함수, -함수 등 함수는 여러가지가 될 수 있음)
+
+데이터 
+
+구문 
+public void plus(int a, int b) {
+	sout(a + " , " + b)
+	}
+
+(a,b) -> {sout(a + " , " + b)}
+(매개변수, ...) -> { 처리내용 }
+
+public interface Calculable {
+	// 추상 메소드 
+	void calculate(int x, int y);
+}
+
+Calculable clac = new Calculable() {
+	@Override
+	public void calculate(int x, int y) {
+		처리내용
+	}	
+}
+
+(x,y) -> { 실행구문 }
+
+매개변수가 없는 람다식
+- 실행문이 하나일 땐 {} 생략 가능
+() -> { 실행구문 }
+() -> 실행구문
+
+- 실행문이 여러개면 {} 생략 불가능
+() -> {
+	실행문1;
+	실행문2; 
+}
+
+
+public void run(int speed) {
+	sout(speed);
+} 
+
+람다식 (화살표 함수, Arrow함수)
+ex> 
+(speed) -> { sout(speed); }
+(speed) -> sout(speed);
+
+- 매개변수가 하나일 땐 () 생략 가능
+(x,y) -> 실행구문 
+x -> 실행구문 
+
+- 실행문에 return문 하나만 있을 경우 return 생략 가능 
+
+* 생략 불가
+(매개변수) -> {
+	실행문 ;
+	return 값;
+}
+
+* 생략 가능
+(매개변수) -> {
+	return 값; }
+-- 생략 후 -- 
+(매개변수) -> 값;
+
+
+메소드 참조 
+(left, right) -> Math.max(left, right)
+
+정적 메소드	클래스 :: 메소드
+인스턴스 메소드 	참조변수 :: 메소드 
+
+

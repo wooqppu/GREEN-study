@@ -1,0 +1,644 @@
+
+오라클
+
+저장 서브 프로그램 
+
+pl/sql 프로그램을 오라클에 저장해두고 필요할 때 마다 수행할 
+내용을 작성하지 않고 실행할 수 있음
+
+저장 프로시저 
+일반적으로 특정 처리 작업 수행을 위한 서브 프로그램으로
+sql문에서는 사용할 수 없음
+
+저장함수
+일반적으로 특정 연산을 거친 결과 값을 반환하는 서브 프로그램으로
+sql문에서 사용할 수 있음
+
+패키지 
+저장 서브 프로그램을 그룹화하는데 사용 
+
+트리거
+특정 상황(이벤트)이 발생할 때 자동으로 연달아 수행할 
+기능을 구현하는데 사용
+
+
+저장 프로시저는 특정 처리 작업을 수행하는데 사용하는 
+저장 서브 프로그램 용도에 따라 파라미토를 사용하거나 
+사용하지 않을 수도 있음
+
+프로시저 생성 구문 >
+create or replace procedure 프로시저 이름 
+is 
+	선언부 
+
+begin
+	실행부
+
+exception
+	예외처리부
+
+end 프로시저 이름;
+/
+
+
+실행 >
+set serveroutput on;
+execute pro_noparam;
+
+
+익명블록에서 실행 >
+begin
+	pro_noparam;
+end;
+/
+
+
+
+create or replace procedure pro_noparam
+
+is
+    v_empno number(4) := 7788;
+    v_ename varchar2(10);
+
+begin
+    v_ename := 'scott';
+    dbms_output.put_line('v_empno : ' || v_empno);
+    dbms_output.put_line('v_ename : ' || v_ename);
+    
+end;
+/
+
+set serveroutput on;
+execute pro_noparam;
+
+
+select * from user_source;
+
+
+begin 
+    pro_noparam;
+end;
+/
+
+drop procedure pro_noparam;
+
+
+
+in 모드 파라미터를 사용하는 프로시저
+
+create or replace procedure pro_param_in
+(
+    param1 in number,
+    param2 number,
+    param3 number := 3,
+    param4 number default 4
+)
+
+is
+
+begin
+    dbms_output.put_line('param1 : ' || param1);
+    dbms_output.put_line('param2 : ' || param2);
+    dbms_output.put_line('param3 : ' || param3);
+    dbms_output.put_line('param4 : ' || param4);
+    
+end;
+/
+
+set serveroutput on;
+execute pro_param_in(1,2,3,4);
+--execute pro_param_in(1,2); 
+-- 3,4에는 디폴트 값을 줬기 때문에 이 둘은 안불러도 오류 발생하지 않지만 
+--  1,2는 값이 없기 때문에 안부르면 오류 발생 -> 무조건 불러줘야함
+-- 원하는 param 지정 호출해서 값을 변경하는 것도 가능 
+
+
+out모드 파라미터를 사용하는 프로시저
+ 
+out모드를 사용한 파라미터는 프로시저를 실행한 후 
+호출한 프로그램으로 값을 반환 (return문과 같은 기능)
+
+
+create or replace procedure pro_param_out (
+    in_empno in emp.empno%type,
+    out_ename out emp.ename%type,
+    out_sal out emp.sal%type
+)
+is 
+
+begin
+    select ename, sal into out_ename, out_sal
+    from emp
+    where empno=in_empno;
+
+end pro_param_out;
+/
+
+
+set serveroutput on;
+
+declare
+    v_ename emp.ename%type;
+    v_sal emp.sal%type;
+
+begin 
+    pro_param_out(7369, v_ename, v_sal);
+    dbms_output.put_line('v_ename : ' || v_ename);
+    dbms_output.put_line('v_sal : ' || v_sal);
+
+end;
+/
+
+
+
+select * from emp;
+
+
+
+in out 모드 파라미터 사용하기 
+
+create or replace procedure pro_param_inout (
+    inout_no in out number
+)
+
+is
+
+begin
+    inout_no := inout_no * 2;
+
+end pro_param_inout;
+/
+
+declare
+    num number;
+    
+begin
+    num := 5;
+    pro_param_inout(num);
+    dbms_output.put_line('num은 : ' || num);
+
+end;
+/
+
+
+
+함수 : 함수는 프로시저와 달리 sql문에서도 사용할 수 있으며, 
+반환값은 return절 및 return문으로 명시해야함 
+return문이 실행되면 함수 실행은 즉시 종료됨
+
+
+특징 
+
+실행
+- 프로시저 
+execute명령어 또는 다른 pl/sql 서브 프로그램 내에서 호출하여 실행
+
+- 함수
+변수를 사용한 execute명령어 또는 다른 pl/sql 서브 프로그램에서 호출하여
+실행하거나 sql문에서 직접 실행 가능 
+
+파라미터 지정 
+- 프로시저
+필요에 따라 지정하지 않을수도 있고 여러 개 지정할 수 도 있으며 
+in, out, in out 세 가지 모드를 사용할 수 있음
+
+- 함수
+프로시저와 같게 지정하지 않을 수 있고 여러 개 지정도 가능하지만 
+in 모드만 사용할 수 있음
+
+값의 반환
+- 프로시저
+실행 후 값의 반환이 없을 수도 있고 out, in out모드의 
+파라미터 수에 따라 여러 개의 값을 반환할 수도 있음 
+
+- 함수
+반드시 하나의 값을 반환해야하며 값의 반환은 프로시저와 달리 
+out, in out 모드의 파라미터를 사용하는게 아니라 return절과 
+return문을 통해 반환
+
+
+
+create or replace function func_aftertax(
+    sal in number
+)
+
+return number
+
+is
+    tax number := 0.05;
+    
+begin
+    return (round(sal-(sal*tax)));
+
+end func_aftertax;
+/
+
+
+declare
+    aftertax number;
+
+begin
+    aftertax := func_aftertax(3000);
+    dbms_output.put_line('after-tax : ' || aftertax);
+
+end;
+/
+
+
+select empno, ename, sal, func_aftertax(sal) aftertax
+from emp;
+
+drop function func_aftertax;
+
+
+
+패키지 : 업무나 기능 면에서 연관성이 옾은 프로시저, 함수 등 여러개의
+p/sql 서브프로그램을 하나의 논리 그룹으로 묶어 통합 관리하는데 사용하는 객체 
+
+패키지는 프로시저, 함수와 달리 보통 두 부분으로 나누어 제작함 
+하나의 명세 또 하나는 본문이라고 부름 
+
+
+패키지 명세 구문 >
+create or replace package 패키지 이름 
+is
+	서브 프로그램을 포함한 여러 객체 선언
+
+end 패키지 이름;
+
+
+
+create or replace package pkg_example
+is 
+    spec_no number := 10;
+    function func_aftertax(sal number) return number;
+    procedure pro_emp(in_empno in emp.empno%type);
+    procedure pro_dept(in_deptno in dept.deptno%type);
+
+end;
+/
+
+select text from user_source
+where type='PACKAGE';
+
+
+
+패키지 본문 
+
+패키지 본문에서는 패키지 명세에서 선언한 서브 프로그램 코드를 작성함
+패키지 명세에 선언하지 않은 객체나 서브 프로그램을 정의하는 것도 가능 
+패키지 본문 이름은 패키지 명세 이름과 동일하게 지정해야함 
+
+
+패키지 본문 구문 >
+create or replace package body 패키지 이름 
+is
+end;
+/
+
+
+create or replace package body pkg_example
+is
+    body_no number := 10;
+    
+    function func_aftertax(sal number) return number
+    is 
+        tax number := 0.05;
+    begin 
+        return (round(sal-(sal*tax)));
+    end func_aftertax;
+    
+    procedure pro_emp(in_empno in emp.empno%type)
+    is 
+        out_ename emp.ename%type;
+        out_sal emp.sal%type;
+    begin
+        select ename, sal into out_ename, out_sal
+        from emp
+        where empno = in_empno;
+        dbms_output.put_line('ename : ' || out_ename);
+        dbms_output.put_line('sal : ' || out_sal);
+    end pro_emp;
+    
+    procedure pro_dept(in_deptno in dept.deptno%type)
+    is
+        out_dname dept.dname%type;
+        out_loc dept.loc%type;
+    begin
+        select dname, loc into out_dname, out_loc
+        from dept
+        where deptno = in_deptno;
+        dbms_output.put_line('dname : ' || out_dname);
+        dbms_output.put_line('loc : ' || out_loc);
+    end pro_dept;
+end;
+/
+
+
+
+패키지 사용하기 
+
+패키지 이름.객체 이름;
+
+pkg_example.pro_emp(7369);
+
+
+set serveroutput on;
+
+begin 
+    pkg_example.pro_emp(7369);
+end;
+/
+
+
+패키지 삭제하기 (명세, 본문 한 번에 삭제)
+drop package 패키지이름;
+
+패키지 본문 삭제하기 
+drop package body 패키지이름;
+
+
+
+518p 1,2번 연습문제 풀이 
+
+1.
+create or replace procedure pro_dept in (
+	inout_deptno in out dept.deptno%type,
+	out_dname out dept.dname%type,
+	out_loc out dept.loc%type
+)
+
+is
+
+begin
+	select deptno, dname, loc into inout_deptno, out_dname, out_loc
+	from dept
+	where deptno = inout_deptno;
+
+end pro_dept_in;
+/
+
+set serveroutput on;
+
+declare 
+	v_deptno dept.deptno%type;
+	v_dname dept.dname%type;
+	v_loc dept.loc%type;
+
+begin 
+	v_deptno := 10;
+	pro_dept_in(v_deptno, v_dname, v_loc);
+	dbms_output.put_line('부서번호 : ' || v_deptno);
+	dbms_output.put_line('부서이름 : ' || v_dname);	
+	dbms_output.put_line('지역 : ' || v_loc);
+end;
+/
+
+
+
+2. 
+create or replace frunction func_date_kor(
+	in_date in date
+
+)
+return varchar2
+
+is
+
+begin
+	return (to_char(in_date, 'YYYY년MM월DD일'));
+
+end func_date_kor;
+/
+
+select ename, func_date_kor(hiredate) as hiredate
+from emp
+where empno = 7369;
+
+
+
+트리거 : 데이터베이스 안의 특정 상황이나 동작, 즉 이벤트가 발생할 경우에 
+자동으로 실행되는 기능을 정의하는 pl/sql 서브 프로그램 
+
+
+create table emp_trg
+as select * from emp;
+
+
+create or replace trigger trg_emp_nodml_weekedn
+
+before 
+insert or update or delete on emp_trg
+
+begin
+    if to_char(sysdate, 'DY') in ('토', '일') then
+
+        if inserting then 
+            dbms_output.put_line('주말엔 insert 안됩니다');
+        elsif updating then
+            dbms_output.put_line('주말엔 update 안됩니다');
+        elsif deleting then
+            dbms_output.put_line('주말엔 delete 안됩니다');    
+        else
+            dbms_output.put_line('주말엔 변경 안됩니다'); 
+        end if; 
+        
+    else
+        dbms_output.put_line('주말이 아닙니다');
+    end if;    
+
+
+        if to_char(sysdate, 'DY') in ('화') then
+
+        if inserting then 
+            dbms_output.put_line('insert 됩니다');
+        elsif updating then
+            dbms_output.put_line('update 됩니다');
+        elsif deleting then
+            dbms_output.put_line('delete 됩니다');    
+        else
+            dbms_output.put_line('화요일 외에는 변경 안됩니다'); 
+        end if; 
+        
+    else
+        dbms_output.put_line('화요일이 아닙니다');
+    end if;
+
+
+end;
+/
+
+
+update emp_trg set sal = 3600 where empno = 7369;
+delete from emp_trg where empno = 7369;
+
+select * from user_triggers;
+
+
+
+520p 연습문제 풀이 
+3. 
+create table dept_trg 
+as select * from dept;
+
+
+create table dept_trg_log(
+	tablename varchar2(10),
+	dml_type varchar2(10),
+	deptno number(2),
+	user_name varchar2(30),
+	change_date date
+);
+
+
+create or replace trigger trg_dept_log
+
+after
+insert or update or delete on dept_trg
+for each row 
+
+begin
+	if inserting then
+	insert into dept_trg_log
+	values('dept_trg', 'insert', :new.deptno, 
+	sys_context('userenv', 'session_user'), sysdate);
+
+	elsif updating then
+	insert into dept_trg_log
+	values('dept_trg', 'update', :old.deptno, 
+	sys_context('userenv', 'session_user'), sysdate);	
+
+	elsif deleting then 
+	insert into dept_trg_log
+	values('dept_trg', 'delete', :old.deptno, 
+	sys_context('userenv', 'session_user'), sysdate);	
+
+	end if; 
+
+end;
+/
+
+
+insert into dept_trg values(99, 'test_dname', 'seoul');
+select * from dept_trg_log;
+
+update dept_trg set loc='test' where deptno = 99;
+select * from dept_trg_log;
+
+update dept_trg set loc='test' where deptno = 99;
+select * from dept_trg_log;
+
+delete from dept_trg where deptno = 99;
+select * from dept_trg_log;
+
+
+insert into dept_trg values(80, 'test_dname', 'seoul');
+select * from dept_trg_log;
+
+update dept_trg set loc='test' where deptno = 80;
+select * from dept_trg_log;
+
+delete from dept_trg where deptno = 80;
+select * from dept_trg_log;
+
+
+
+jsp
+
+
+서블릿 : JSP 이전 세대의 동적 웹페이지 생성 언어 
+(Server + Applet의 합성어)
+브라우저에서 호출하면 WAS에서 웹 페이지를 동적으로 생성 
+
+WAS : 서버 단에서 애플리케이션이 동작할 수 있도록 지원하는 
+컨테이너가 포함된 서버 (ex -> 톰캣)
+
+
+디렉티브
+jsp페이지에 대한 설정 정보를 지정
+<%@ page 속성="속성값"%>
+
+contentType - jsp가 생성하는 문서의 타입과 인코딩을 지정
+include - jsp페이지에 다른 문서를 포함시킴 
+
+
+스크립트 
+표현식 
+<%=val%>
+
+선언문
+<%!
+	메소드
+%>
+ 
+스크립트릿 
+<%
+	자바코드
+%>
+
+
+스크립트 요소 : JSP 프로그래밍에서 사용되는 문법의 형태 
+
+스크립트 요소 종류 
+선언문, 스크립트릿, 표현식, 주석
+
+
+1. 선언문 : JSP에서 사용될 변수나 메소드를 선언할 수 있는 영역들의 요소 
+JSP 페이지 내에서 변수 및 메소드 선언 후 변수나 메소드를 이용하여 
+동적으로 필요한 HTML코드 생성하는데 사용 
+
+멤버 변수 : 선언문에 선언된 변수 
+선언문에서 선언된 변수로 호칭하는 것은 자바에서 
+변수의 종류가 여러가지 있다는 의미
+
+선언문에서 선언된 변수는 JSP 페이지가 서블릿 코드로 
+변환되면 서블릿 클래스의 멤버 변수로 변환됨 
+
+선언문에서 선언된 메소드는
+JSP 페이지 내에서는 일반적인 형태의 메소드로 선언됨 
+
+
+2.  스크립트릿 : JSP 페이지가 서블릿으로 변환, 요청될 때
+_jspService 메소드 안에 선언되는 요소 
+
+스크립트릿은 선언문과 달리 선언된 변수는 
+지역 변수로 선언되고 메소드 선언은 할 수 없음 
+-> 만약 선언한다면 메소드 안에 메소드를 선언한 것이 되기 때문에 만들 수 없음  
+
+
+3. 표현식 : 동적인 JSP 페이지를 브라우저로 표현하기 위한 요소
+
+변수를 출력하거나 메소드의 결과 값을 브라우저에 출력할 수 있음 
+
+스크립트릿 코드 내에서 out이라는 내장객체를 통해
+브라우저에 출력 가능함 
+
+스크립트릿과 달리 변수나 메소드를 출력할 때 세미콜론 표기하지 않음
+(서블릿 코드로 변환될 때 자동으로 세미콜론 붙여짐)
+
+
+4. 주석 : 프로그램에 직접적인 영향을 미치진 않지만 개발자들의
+소스 분석 내용 및 파일 설명 처리를 위해서는 꼭 필요한 요소
+
+
+
+
+request 기본객체 
+웹 브라우저의 요청을 담당
+- 서버와 관련된 정보 읽기 
+- 클라이언트가 전송한 요청 데이터 읽기
+- 클라이언트 관련된 정보 읽기 
+- 속성 처리 기능 
+
+
+클라이언트 및 서버 정보 관련 메소드
+ 
+getRemoteAdd() 	String 	웹 서버에 연결한 클라이언트 ip주소를 반환
+getContentLength()   long	클라이언트가 전송한 요청 정보의 길이를 구함
+ getCharacterEncoding()   String    클라이언트가 요청 정보를 전송할 때 사용한 
+캐릭터의 인코딩을 리턴 
+getContentType()	String    클라이언트가 요청 정보를 전송할 때 사용한
+컨텐츠의 인코딩을 리턴 
+getMethod()	String	정보를 전송할 때 사용한 방식을 리턴
+
+

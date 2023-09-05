@@ -1,0 +1,142 @@
+
+
+기본 제어문 (if-else문)
+
+- if-else문 : 일반적으로 가장 많이 사용되는 특정한 조건에 의해서만 
+코드 실행되는 블록을 조정할 수 있는 조건 제어문 
+
+
+- for문 : 반복문은 모두 스크립트 요소에서 사용하여 JSP 페이지에서
+반복적인 내용 출력할 수 있음
+
+데이터베이스의 질의 결과를 순서대로 출력할 때 매우 유용하게 사용
+for문은 크기 고정되어있을 때 많이 사용함 
+
+
+- while문 : 조건을 검사해서 조건이 참이면 실행문을 반복적으로
+실행하고 그렇지 않으면 while문을 빠져나오는 동작을 하는 반복문
+
+while문 안에 조건이 항상 true인 경우 무한반복에 빠질 수 있음 
+
+
+
+
+response 객체
+응답에 관련된 정보를 관리하는 객체
+- 헤더 정보 입력
+- 리다이렉트 하기 
+
+response.sendRedirect("이동할 페이지");
+
+
+
+
+내부객체 타입과 설명 
+request : 파라미터를 포함한 요청을 담고있는 객체
+response : 요청에 대한 응답을 담고있는 객체
+out : 페이지 내용을 담고있는 출력 스트림 객체
+session : 세션 정보를 담고있는 객체
+application : 어플리케이션 Context의 모든 페이지가 공유할 데이터를 담고있는 객체
+pageContext : 페이지 실행에 필요한 Context 정보를 담고있는 객체
+page : jsp 페이지의 서블릿 객체
+config : JSO 페이지의 서블릿 설정 데이터 초기화 정보 객체
+exception : JSP 페이지의 서블릿 실행 시 처리하지 못한 예외 객체 
+
+
+out 내부 객체의 메소드 
+
+
+
+버퍼
+jsp 페이지는 응답 결과를 바로 웹 브라우저에게 전송하지 않고 
+대신 출력 버퍼라는 곳에 임시로 응답 결과를 저장했다가 
+한 번에 웹 브라우저에게 전송함 
+
+WB -> WAS -> JSP -> 출력버퍼 -> WAS
+
+
+page 디렉티브 버퍼 설정하기 
+
+- buffer 속성 
+kb단위로 버퍼의 크기를 지정 
+(크기를 지정하지 않으면 8kb의 버퍼를 사용)
+
+<%@ page buffer="4kb" %>
+
+
+- autoFlush 속성 
+버퍼가 다 찼을 때 어떻게 처리할지를 결정 
+true : 버퍼가 다 차면 버퍼를 플러쉬하고 계속해서 작업을 진행함
+false : 버퍼가 다 차면 예외를 발생시키고 작업을 중지함
+
+플러쉬(flush) : 버퍼가 다 찼을 때 버퍼에 쌓인 데이터를 실제로
+전송되어야할 곳으로 전송하고 버퍼를 비우는 것을 말함
+
+
+- application 기본 객체
+(서버 정보 관련 메소드)
+getServerInfo() : 서버 정보를 구함
+getMajorVersion() : 서버가 지원하는 서블릿 규약의 메이저 버전을 리턴
+getMinorVersion() : 서버가 지원하는 서블릿 규약의 마이너 버전을 리턴
+
+
+서블릿 규약 메이저 버전 : 3 서블릿 규약 마이너 버전 : 1
+-> 서블릿 3.1버전을 지원
+
+
+- 웹 어플리케이션의 자원 구하기 
+getResource(파일 경로) : 폴더에 위치한 파일을 사용하기 
+getRealPath(path) : 지정한 경로에 해당하는 자원의 시스템 상에서의 경로를 리턴 
+getResourcesAsStream(path) : 웹 어플리케이션 내에서 지정한 경로에 
+해당하는 자원으로부터 데이터를 읽어올 수 있는 InputStream을 리턴함 
+
+
+- inputStreamReader 객체 생성하기
+1) 절대경로를 사용하여 생성하기
+InputStreamReader fr = new InputStreamReader
+(new FileInputStream(절대경로), "UTF-8");
+
+2) application 객체를 사용하여 생성하기 
+InputStreamReader fr = new InputStreamReader
+(application.getResourcesAsStream(상대경로[현재경로]), "UTF-8");
+
+3) url.openStream() 메소드를 사용하여 생성하기 
+URL url = application.getResource(상대경로);
+InputStreamReader fr = new InputStreamReader(url.openStream(), "UTF-8");
+
+
+- read() 사용하기
+read(byte[]) 
+파일 끝까지 도달할 때까지 데이터의 바이트를 반복적으로 바이트 배열로 읽음 
+읽고싶은만큼의 값을 리턴해줌 
+읽을게 없을 때는 -1을 반환
+
+
+- 예외 직접 처리하기 
+1) try ... catch 로 처리 
+
+2) 에러 페이지 지정하기 
+
+- 1. page 디렉티브에서 errorPage 속성을 사용
+
+에러 발생 페이지에서 에러 발생 시 이동할 페이지를 지정
+<%@ page errorPage = "/error/viewErrorPage.jsp" %>
+
+에러 페이지 지정 
+<%@ page isErrorPage = "true" %>
+에러 페이지로 지정해야 exception 객체를 사용할 수 있음 
+
+
+- 2. 응답 상태 코드별로 에러 페이지 지정 
+주요 응답 상태 코드 
+200 : 요청을 정상적으로 처리함
+307 : 임시로 페이지를 리다이렉트함
+400 : 클라이언트 요청이 잘못된 구문으로 구성됨
+401 : 접근을 허용하지 않음 
+404 : 요청한 URL을 처리하기 위한 자원이 존재하지 않음
+405 : 요청한 메소드를 허용하지 않음 
+500 : 서버 내부 에러가 발생함 (jsp에서 예외 발생)
+503 : 서버가 일시적으로 서비스할 수 없음 
+
+(자세한 http응답코드 http://goo.gl/D9th8N 참조)
+

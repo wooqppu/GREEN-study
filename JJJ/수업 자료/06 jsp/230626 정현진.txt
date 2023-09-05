@@ -1,0 +1,201 @@
+
+검색 기능을 강화시킨 컬렉션 
+
+1. TreeSet
+이진트리를 기반으로 한 set 컬렉션 
+
+2. 
+first() 제일 낮은 객체를 리턴
+last() 제일 높은 객체를 리턴 
+lower(E e) 주어진 객체 바로 아래 객체를 리턴 
+higher(E e) 주어진 객체 바로 위 객체를 리턴 
+pollFirst 제일 낮은 객체를 꺼내오고 컬렉션에서 제거
+pollLast 제일 높은 객체를 꺼내오고 컬렉션에서 제거 
+
+NavigableSet<E> headSet(E, boolean) 주어진 객체보다 낮은 객체를 리턴
+NavigableSet<E> tailSet(E, boolean) 주어진 객체보다 높은 객체를 리턴
+NavigableSet<E> subSet(E, boolean, E, boolean) 
+시작과 끝에 주어진 객체 사이의 객체들을 리턴
+
+
+TreeMap 생성하기
+TreeMap<K, V> treemap = new TreeMap<>();
+키를 기준으로 오름차순 정렬됨
+
+TreeMap 메소드
+firstEntry()	: 제일 낮은 Map.Entry를 리턴
+lastEntry()	: 제일 높은 Map.Entry를 리턴
+lowerEntry()	: 주어진 키 바로 아래 Map.Entry를 리턴 
+higherEntry()	: 주어진 키 바로 위 Map.Entry를 리턴  
+subMap()		: 시작과 끝에 주어진 키 사이의 Map.Enrty들을 
+		  NavigableMap  컬렉션으로 리턴
+headMap(K)	: 주어진 키보다 높은 Map.Entry들을 NavigableMap 리턴
+tailMap(K)	: 주어진 키보다 낮은 Map.Entry들을 NavigableMap 리턴 
+
+
+Comparable과 Comparator
+TreeSet에 저장되는 객체와
+TreeMap에 저장되는 키 객체는 저장과 동시에 오름차순 정렬됨
+
+어떤 객체든 정렬되는 것은 아니고 
+객체가 Comparable인터페이스를 구현하고 있어야함
+
+1. Comparable인터페이스를 구현하고 있어야함 
+2. Comparator인터페이스 구현 클래스
+
+
+수정할 수 없는 컬렉션 
+요소를 추가, 삭제할 수 없는 컬렉션을 말함 
+1. List, Set, Map 인터페이스의 정적 메소드인 of()  사용해서 생성
+List<E> list =List.of(E...element);
+Set<E> set =Set.of(E...element);
+Map<K,V> map =Map.of(K k, V v, K k, V v);
+
+2. List, Set, Map 인터페이스의 정적 메소드 copyOf() 를 사용
+List<E> list =List.copyOf(Collection<E> coll);
+Set<E> set =Set.copyOf(Collection<E> coll);
+Map<K,V> map =Map.copyOf(Map<K, V> coll);
+
+3. 배열울 사용하여 수정할 수 없는 List컬렉션을 만듬 
+String[] arr = {"a", "b", "c"};
+List<String> list = Arrays.asList(arr);
+
+
+
+jsp 
+
+표현 언어 (Expression Language) 
+el은 좀 더 편리하게 자바 표현식을 다루기 위해서 
+jsp2.0부터 도입이 됨
+데이터를 출력하는역할을 함
+
+특징 
+기존 표현식보다 편리하게 값을 출력함 
+변수와 여러 연산자를 포함할 수 있음 
+jsp 내장 객체에 저장된 속성 및 자바빈 속성도 출력 가능함 
+el 자체 내장 객체를 제공함 
+값을 표현하는데 사용되는 스크립트 언어로 jsp의 기본 문법을 
+보완하는 역할을 함 
+자바코드를 사용해야하는 모든 곳에서 사용 가능함 
+
+표현식  
+<%
+	String result1 = request.getParameter("name");
+%> 
+
+<%= requst.getParameter("name") %>
+
+${name}
+
+
+<%= requst.getParameter("name") %> ---> ${name}
+
+
+내장객체 - 스코프 객체 
+pageScope : pageContext 기본 객체에 저장된 속성의 <속성, 값>
+매핑을 저장한 Map의 객체
+requestScope : request 기본 객체에 저장된 속성의 <속성, 값>
+매핑을 저장한 Map의 객체
+sessionScope : session 기본 객체에 저장된 속성의 <속성, 값>
+매팡을 저장한 Map의 객체 
+applicationScope : application 기본 객체에 저장된 속성의 <속성, 값>
+매팡을 저장한 Map의 객체
+param : 요청 파라미터의 <파라미터 이름, 값> 매핑을 저장한 Map의 객체
+
+기존의 요청 매개변수 
+<%
+	String id = request.getParameter("id");
+	String pwd = request.getParameter("pwd");
+	String name = request.getParameter("name");
+%>
+
+<%=id%>
+<%=pwd%>
+<%=name%>
+ 
+el 내장객체를 이용한 매개변수
+${param.id}
+${param.pwd}
+${param.name}
+
+
+el 데이터타입 
+boolean 타입, 정수 타입, 실수타입, 문자열 타입, 널 타입 
+
+
+Map - el로 표현 
+<%
+Map<String, String> map = new HashMap<>();
+map.put("lang", "java");
+map.put("song", "cookie");
+map.put("singer", "newjeans");
+map.put("city", "seoul");
+map.put("food", "chocolate");
+%>
+
+<p>map : ${bean1} </p>
+<p>lang : ${bean1.lang} </p>
+<p>song : ${bean1.song} </p>
+<p>singer : ${bean1.singer} </p>
+<p>city : ${bean1.city} </p>
+<p>food : ${bean1.food} </p>
+
+
+List - el로 표현 
+
+<%
+List<String> list = new ArrayList<>();
+list.add("coffee");
+list.add("beer");
+list.add("soju");
+
+pageContext.setAttribute("attr1", list);
+%>
+
+<p>list : ${attr1}</p>
+<p>list 0번째 : ${attr1[0]}</p>
+<p>list 1번째 : ${attr1[1]}</p>
+<p>list 2번째 : ${attr1[2]}</p>
+
+
+el 산술 연산 
++, -, / or div, *, % or mod
+
+
+el 비교 연산 
+== or eq
+!= or ne
+> or gt
+>= or ge
+< or lt
+<= or le
+
+
+el 논리 연산 
+&& or and
+|| or or
+! or not
+
+
+el 삼항 연산자 
+${ 조건 ? "a" : "b" }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

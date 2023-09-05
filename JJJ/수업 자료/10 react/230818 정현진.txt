@@ -1,0 +1,115 @@
+
+자바스크립트 복습 
+
+객체 타입  { key: value, key2:value2 }
+배열 타입 [1,2,3,4]
+
+배열 메소드
+1. map 배열 안의 요소 내용이 변경 (요소값 변경)
+2. filter 배열에서 새로운 배열을 리턴 (길이 변경)
+
+let numbers = [1,2,3,4,5,6];
+
+// 원본배열요소의 값에 1씩 더한 값을 가진 배열을 리턴
+let number2 = numbers.map(num => num+1);
+// [2,3,4,5,6,7]
+
+// 배열요소 중에 조건에 부합하는 값들만 걸러서 리턴 
+let number3 = numbers.filter(num => num >= 5;
+// [5,6]
+
+ex>
+let users = [
+	{id:1, name: "user1", score: "60"},
+	{id:2, name: "user2", score: "70"},
+	{id:3, name: "user3", score: "80"},
+	{id:4, name: "user4", score: "90"},
+	{id:5, name: "user5", score: "50"}
+]
+
+let scores = users.map(user=> user.score); 
+-> map은 users의 배열 길이와 같음
+
+users 안의 배열 길이(요소 값의 갯수)는 그대로고, 요소 값을 변경할 때 map을 사용 
+
+
+let highusers = users.filter(user=> usre.score >= 70);
+-> filter는 users의 배열 길이와 다름 
+
+users 안의 요소 값들에 대한 기준을 지정, 걸러서 
+배열 안의 요소 값은 그대로지만, 요소 값의 갯수(배열 길이)가 바뀔 때 filter를 사용
+
+
+// 화살표 함수 -> 중괄호, return 생략되있음
+let users2 = users.map(user=> {
+	return { ...user, score: user.score+10 }
+});
+
+1. 매개변수가 하나일 때 () 생략 가능 
+2. 실행문이 한줄일 때 {} 생략 가능 
+3. {} 생략했을 때 return 생략 
+-> 화살표 함수의 실행문이 한 줄이고 값일 때는 return문이다.
+ex> let myFun2 = num => num + 10;
+
+
+js에서 스프레드, 화살표 함수, 배열메서드, map, filter 이해해야 리액트 이해도 가능 
+
+
+
+엑시오스 사용해서 리액트 api 라이브러리 다루기 
+
+useState, useEffect로 데이터 로딩하기 
+
+3가지 상태 관리
+
+1. 요청 결과 	users
+초기값 : users = null
+요청시 users = null
+
+요청 성공시 users = data
+요청 실패시 users = null
+	
+2. 로딩 상태 	loading
+초기값 : loading = false
+요청시 loading = true
+
+요청 성공시 loading = false
+요청 실패시 loading = false
+
+3. 에러		error
+초기값 : error = null
+요청시 error = null
+
+요청 성공시 error = null
+요청 실패시 error = error
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

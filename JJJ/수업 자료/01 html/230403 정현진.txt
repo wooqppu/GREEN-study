@@ -1,0 +1,39 @@
+html 마크업 언어
+
+웹 브라우저 - html, css, javascript
+(확장자 html 붙여주면 파일 생성 가능) 
+서버 - java, jsp
+오라클
+
+html : 웹페이지의 뼈대를 구성하는 역할
+(Markup Language는 프로그래밍 언어와는 다름)
+태그 안에는 속성 존재
+꺽새, 열기 태그, 닫기 태그 
+
+태그 : html문서의 문법적 표시를 위해 사용되는 이름표 
+속성 : 태그에 고유한 이름 부여, 경로를 표시, 각 태그의 구체적인 기능을 제시하는 역할 
+요소 : 태그를 사용해 만들어진 객체 시작태그에서 닫기태그 까지
+<a href="속성값"></a>
+
+html 마크업 언어 
+ul -> li -> 1. 텍스트 2. ol 
+ol -> li
+dl -> 1. dt 2. dd
+자식 요소 : 한 단계 바로 아래의 요소
+하위 요소 : 아래에 있는 모든 하위 요소
+
+<img src="이미지 경로" alt="대체텍스트" title= "이미지설명글"
+width="사진 크기 지정"/>
+
+./ : 나의 현재 위치
+alt : 이미지 파일이나 해당 경로를 찾지 못했을 때 나오는 설명
+
+html, body, head, a, title, meta,h1~h6, p, br, ol, ul, li, dl, dt, dd, table, tr, td, th
+
+2행 3열 
+<table>
+	<tr>
+		<td></td>
+	</tr>
+	<tr></tr>
+</table>

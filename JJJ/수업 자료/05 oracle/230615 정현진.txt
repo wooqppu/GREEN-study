@@ -1,0 +1,637 @@
+
+p.357 문제풀이 
+
+create or replace view empidx_over15k
+as (select empno, ename, job, deptno, sal, nvl2(comm, 'o', 'x') as comm
+from empidx where sal > 1500);
+
+1.
+create table deptseq as select * from dept;
+
+2. 
+시작값 : 1, 증가 : 1, 최대값 : 99, 최소값  1, 부서번호 생성 중지, 캐시 없음
+
+create sequence seq_deptseq
+increment by 1
+start with 1
+maxvalue 99
+minvalue 1
+nocycle
+nocache;
+
+3. 
+database seoul, web busan, mobile ilsan
+
+insert into deptseq
+values (seq_deptseq.nextval, 'DATABASE', 'SEOUL');
+
+insert into deptseq
+values (seq_deptseq.nextval, 'WEB', 'BUSAN');
+
+insert into deptseq
+values (seq_deptseq.nextval, 'MOBILE', 'ILSAN');
+
+select * from deptseq;
+
+
+
+사용자, 권한, 롤관리
+
+- 사용자 관리 
+사용자 : 데이터를 관리하는 계정, 오라클 데이터 베이스에 접속할 수 있는 계정
+
+사용자별로 필요한 테이블과 객체를 생성해서 활용할 수 있음 
+ 
+오라클 데이터베이스를 활용해서 새로운 서비스를 구축한다면 
+테이블을 비롯한 여러 객체가 필요함 
+
+스키마 : 오라클 데이터베이스에 접속한 사용자와 연결된 객체를 의미함 
+(사용자 - 데이터를 사용 및 관리하기 위해 오라클 데이터 베이스에 접속하는 객체)
+오라클 데이터베이스는 사용자와 스키마를 구분하지 않음 
+
+데이터를 저장 및 관리하기 위해 정의한 데이터베이스 구조의 범위를 
+스키마를 통해 그룹 단위로 분류함 
+
+구문 >
+create user 사용자 이름
+identified by 패스워드 
+
+
+사용자 생성 
+scott계정에서는 사용자를 생성할 권한이 없음 
+system사용자로 접속하여 생성
+
+
+사용자 정보 조회 
+사용자 또는 사용자 소유 객체 정보를 얻기 위해 데이터 사전을 사용 
+
+<oracle 창에서>
+create user green 
+identified by oracle;
+
+grant create session to green; 
+
+alter user green
+identified by green1234;
+
+grant create table, resource to green;
+
+
+
+- 권한 관리
+1) 시스템 권한 : 사용자 생성과 정보 수정 및 삭제, 데이터베이스 접근, 
+오라클 데이터베이스의 여러 자원과 객체 생성 및 관리 등의 권한을 포함 
+
+user(사용자)
+사용자 생성 권한 
+생성된 사용자의 정보 수정 권한
+생성된 사용자의 삭제 권한
+
+session(접속)
+데이터베이스 접속 권한 
+데이터베이스 접속 상태에서 환경 값 변경 권한 
+
+table(테이블)
+자신의 테이블 생성 권한 
+스키마 소유 테이블 생성, 수정, 삭제 권한 
+스키마 소유 테이블 데이터 삽입, 수정, 삭제, 조회 권한
+
+
+시스템 권한 부여는 grant문을 사용
+grant 시스템 권한 to 사용자 이름/롤 이름/public with admin option
+
+grant 명령어로 부여한 권한 취소는 revoke명령어를 사용
+revoke 시스템 권한 from 사용자 이름/롤 이름/public
+
+
+resource는 오라클 데이터베이스에서 제공하는 롤 중 하나로 
+여러 권한을 하나의 이름으로 묶어 권한 부여작업을 간편하게 함
+
+이 롤에는 사용자 생성할 때 사용 테이블 스페이스의 영역을 무한으로 
+사용 가능하게 해주는 권한이 포함되어 있으므로 grant 사용 시 
+resource롤도 같이 사용 필요함 
+
+
+
+2) 객체 권한 : 특정 사용자가 생성한 테이블, 인덱스, 뷰, 시퀀스 등과 관련된 권한
+scott 소유 테이블에 green 사용자가 select나 insert 등의 작업이 가능하도록 허용
+
+
+구문 >
+grant 개체 권한 on 스키마 객체 이름 to 사용자 이름
+
+실습 >
+<scott 창에서>
+create table temp (
+    col1 varchar2(10),
+    col2 varchar2(10)
+);
+
+grant select, insert on temp to green;
+
+revoke select, insert on temp from green;
+
+<green_tt 창에서>
+insert into scott.temp
+values('text', 'green');
+
+select * from scott.temp
+
+
+3) 롤 관리 
+롤 : 여러 종류의 권한을 묶어놓은 그룹, 롤을 사용하면 여러 권한을 한번에 
+부여하고 해제할 수 있으므로 효율적인 권한 관리 가능함
+
+기본으로 제공되는 사전 정의된 롤, 
+필요에 의해 직접 권한을 포함시킨 사용자 정의 롤로 나뉨 
+
+- 사전 정의된 롤 
+connect롤
+사용자가 데이터베이스에 접속하는데 필요한 create session권한
+
+resource롤
+사용자가 테이블, 시퀀스를 비롯한 여러 객체를 생성할 수 있는 
+기본 시스템 권한을 묶어놓은 롤 
+
+dba롤
+데이터베이스를 관리하는 대부분의 시스템 권한
+
+
+- 사용자 정의 롤 생성 절차 
+1. create role문으로 롤을 생성 
+2. grant 명령어로 생성한 롤에 권한을 포함시킴
+3. grant 명령어로 권한이 포함된 롤을 특정 사용자에게 부여함
+4. revoke 명령어로 취소시킴
+(role을 생성하려면 데이터 관리 권한이 있는 사용자인 system 계정으로 접속 필요)
+
+- 부여된 롤과 권한 확인
+user_sys_privs, user_role_privs 데이터 사전을 사용해서 확인 가능 
+데이터 관리 권한을 가진 계정은 dba_sys_privs, dba_role_privs를 사용해도 됨 
+
+
+실습 >
+<oracle에서>
+create role rolestudy;
+grant connect, resource, create view, create synonym to rolestudy;
+grant rolestudy to green;
+
+revoke rolestudy from green;
+
+<green_tt에서>
+select * from user_sys_privs;
+select * from user_role_privs;
+
+
+
+416p 문제 풀이
+
+1. 
+<oravle에서>
+create user prev_hw
+identified orcl
+
+grant create session to prev_hw;
+
+2.
+<scott에서>
+grant select on emp to prev_hw;
+grant select on dept to prev_hw;
+grant select on salgrade to prev_hw;
+
+3.
+revoken select on salgrade from prev_hw;
+
+
+음악정보 데이터 베이스 구축하기
+
+
+1)'해변의 여인'이라는 노래를 담고있는 타이틀과 아티스트를 검색하라
+SQL작성하시오.
+
+select a.title, a.artist from album a, song s
+where a.albumno = s.albumno2
+and songname = '해변의 여인' 
+
+select a.title, a.artist from album a, song s
+where a.albumno = s.albumno2
+and songname = '해변의 여인' 
+
+
+2)'그대 내 품에' 라는 노래를 부른 아티스트를 검색하라
+
+select a.artist
+from album a join song s on (a.albumno = s.albumno2)
+where songname = '그대 내 품에';
+
+3)'Break UP 2 MAke Up' 이라는 이름을 가지고 있는 앨범에 수록된 노래를 모두 검색하라.
+
+select s.songname
+from album a join song s on (a.albumno = s.albumno2)
+where title = 'Break Up 2 Make Up';
+
+4)각 앨범에 수록된 타이틀별 수록곡의 개수를 검색하라.
+
+select title, count(s.albumno2) 
+from album a join song s on (a.albumno = s.albumno2)
+group by title;
+
+5)'사랑' 이라는 단어가 포함된 곡명을 가진 앨범의 타이틀별 수록곡의 개수를 검색하라.
+
+select title, count(s.albumno2) 
+from album a join song s on (a.albumno = s.albumno2)
+where songname like '%사랑%'
+group by title;
+
+6)타이틀과 곡명이 동일한 앨범의 노래 이름을 검색하라.
+
+select title
+from album a join song s on (a.albumno = s.albumno2)
+where album.title = song.songname;
+
+7)예를 들어 그룹 'Blur' 가 'Blur' 라는 이름의 앨범을 발매할 수 있다. 
+이와 같이 아티스트와 타이틀이 동일한 앨범의 타이틀을 검색하라.
+
+select title from album
+where title = artist;
+
+8)동일한 곡명이 2개 이상 앨범에 존재하는 경우, 해당 곡명과 수록 곡의 개수를 검색하라.
+
+select songname, count(albumno2)
+from song
+group by songname
+having count(songname) >= 2; 
+
+
+
+PL/SQL 구조 
+오라클에서 제공하는 sql 언어를 확장하기 위한 프로그래밍 언어 
+
+기본단위가 블록 
+
+선언부 
+실행부 
+예외처리부
+
+블록의 기본형식 
+
+declare 실행에 필요한 여러 요소 선언 (선택)
+begin 작업을 위해 실제 실행하는 명령어 (필수)
+exception 오류처리 (선택)
+end;
+
+
+변수와 상수 
+
+변수 : 데이터를 일시적으로 저장하는 요소 (저장한 값이 필요에 따라 변함) 
+이름과 저장할 자료형을 지정하여 선언부에서 작성 
+
+변수 작성하기 
+변수 이름 자료형 타입  := 값;
+
+상수 : 한 번 저장한 값이 프로그램이 종료될 때까지 유지되는 저장 요소  
+
+상수 작성하기
+상수 이름 constant 자료형 타입 := 값; 
+
+
+declare
+변수이름타입 := 값
+
+
+v_empno number(4) := 1234;
+v_ename varchar2(10);
+
+begin
+v_ename = 'green';
+dbms_output.put_line('v_ename' || v_ename);
+
+end;
+/
+
+
+
+출력하기 실습 
+
+set serveroutput on;
+
+declare 
+v_empno number(4) := 10;
+v_empno2 number(4) := null;
+v_ename varchar2(10);
+v_color varchar2(20) default 'blue';
+
+v_empno number(4) not null := null; 
+---> 값 자리에 null을 넣으면 안되기 때문에 결과 출력하면 오류 발생
+not null은 변수에 null을 저장할 수 없도록 하기 때문에 값을 비워두면 
+안될 때 사용 가능 
+
+s_name constant varchar(10) := 'aaa';
+
+begin
+v_ename := 'green';
+dbms_output.put_line('empno2은 : ' || v_empno2 || '이다');
+dbms_output.put_line('name은 : ' || v_ename || '이다');
+dbms_output.put_line('color는 : ' || v_color || '이다');
+
+s_name constant varchar2(10) := 'aaa'; ---> 오류 발생, 값 변경 불가능 
+
+dbms_output.put_line('hello');
+dbms_output.put_line('PL/SQL');
+end;
+/
+
+
+변수의 자료형
+- 스칼라형 : 숫자, 문자열, 날짜 등과 같이 오라클에서 기본적으로 정의해놓은
+자료형으로 내부 구성 요소가 없는 단일 값을 의미함 
+
+숫자 
+number : 소수점 포함할 수 있는 숫자 데이터
+
+문자열
+char : 고정 길이 문자열 데이터
+varchar2 : 가변 길이 문자열 데이터
+
+날짜 
+date : 날짜 데이터
+
+논리 데이터
+boolean : PL/SQL에서만 사용할 수 있는 논리 자료형
+
+
+- 참조형 : 오라클 데이터베이스에 존재하는 특정 테이블 컬럼의 자료형이나
+하나의 행 구조를 참조하는 자료형 
+
+열 참조할 때 -> %type
+행 참조할 때 -> %rowtype
+
+v_ename emp.ename%type := 'ggg';
+v_deptno dept.deptno%type := 50;
+v_dept_row dept%rowtype 
+
+select deptno, dname, loc into v_dept row
+from dept
+where deptno = 10;
+
+
+ex>
+set serveroutput on;
+
+declare 
+v_dept_row dept%rowtype;
+
+begin
+select deptno, dname, loc into v_dept_row
+from dept
+where deptno = 10;
+
+dbms_output.put_line('deptno : ' || v_dept_row.deptno);
+dbms_output.put_line('dname : ' || v_dept_row.dname);
+dbms_output.put_line('loc : ' || v_dept_row.loc);
+
+end;
+/
+
+
+조건 제어문
+ 
+- if 조건식 then
+수행할 명령어;
+end if; 
+
+
+if 조건식 then
+수행할 명령어;
+
+else 
+수행할 명령어;
+
+end if; 
+
+
+
+if 조건식 then
+수행할 명령어;
+
+elsif 조건식 then
+수행할 명령어;
+
+else 
+수행할 명령어;
+
+end if; 
+
+ex>
+set serveroutput on;
+
+declare
+v_score number := 85;
+
+begin
+    if v_score >= 90 then
+        dbms_output.put_line('A');
+    
+    elsif v_score >= 80 then
+        dbms_output.put_line('B');
+    
+    elsif v_score >= 70 then
+        dbms_output.put_line('C');
+    
+    else 
+        dbms_output.put_line('D');
+   
+    end if;
+end;
+/
+
+
+- case 조건문 
+
+ex>
+set serveroutput on;
+
+declare
+v_score2 number := 87; 
+
+begin
+	case trunc(v_score2 / 10)
+		when 10 then dbms_output.put_line('A');
+		when 9 then dbms_output.put_line('B');
+        		when 8 then dbms_output.put_line('C');
+       	 	when 7 then dbms_output.put_line('D');
+        		when 6 then dbms_output.put_line('E');
+        
+        		else dbms_output.put_line('F');
+    
+	end case;
+end;
+/
+
+
+or 
+
+
+begin
+	case 
+		when score2 >= 90 then dbms_output.put_line('A');
+		when score2 >= 80 then dbms_output.put_line('B');
+        		when score2 >= 70 then dbms_output.put_line('C');
+       	 	when score2 >= 60 then dbms_output.put_line('D');
+        		when score2 >= 50 then dbms_output.put_line('E');
+        
+        		else dbms_output.put_line('F');
+    
+	end case;
+end;
+/
+
+
+
+- 반복문 
+1)loop문
+
+loop
+
+반복수행작업 
+exit when 조건 
+
+end loop;
+
+
+loop
+
+반복수행작업 
+if 조건 then
+exit;
+
+end if;
+end loop;
+
+
+ex>
+set serveroutput on;
+
+declare
+v_num number := 0;
+    
+begin
+    loop
+        dbms_output.put_line('현재 v_num : ' || v_num);
+        v_num := v_num + 1;
+
+        --exit when v_num > 4;
+
+	if v_num > 4 then
+            	exit;
+        	end if;
+
+    end loop;
+end;
+/
+
+
+
+2) while문
+
+while 조건식 loop 
+	반복 수행 작업;
+end loop;
+
+ex>
+set serveroutput on;
+
+declare
+num2 number := 0; 
+
+begin
+    while num2 < 4 loop
+        dbms_output.put_line(num2);
+        num2 := num2 + 1;
+    end loop;
+end;
+/
+
+
+3) for문
+
+for i in 시작값 .. 종료값 loop
+	반복 수행 작업 
+end loop;
+
+ex>
+for i in 0..4 loop
+	dbms_output.put_line(i);
+end loop;
+
+
+ex>
+set serveroutput on;
+
+begin
+    for i in 0..4 loop
+        dbms_output.put_line('현재 i의 값 : ' || i);
+    end loop;
+end;
+/
+
+
+역행 종료값 -> 시작값
+
+for i in reverse 시작값 .. 종료값 loop
+	반복 수행 작업 
+end loop;
+
+ex>
+set serveroutput on;
+
+begin
+    for i in reverse 0..4 loop
+        dbms_output.put_line('현재 i의 값 : ' || i);
+    end loop;
+end;
+/
+
+
+continue 구문
+
+set serveroutput on;
+
+begin
+    for i in 0..4 loop
+        continue when mod(i, 2) = 0;
+        dbms_output.put_line('현재 i의 값 : ' || i);   
+    end loop;
+end;
+/
+
+
+
+444p 연습문제 풀이 
+
+1. 숫자 1부터 10까지 중 홀수만 출력 
+begin
+	for i in 1..10 loop
+		continue when mod(i,2) = 0;
+		dbms_output.put_line(i);
+	end loop;
+end;
+/
+
+2. dept테이블의 deptno와 자료형이 같은 변수 v_deptno 선언,
+v_deptn에 10,20,30,40 대입했을 때 부서 이름을 출력하도록 프로그램 작성 
+부서번호가 10,20,30,40이 아닐 때는 n/a로 출력 
+
+declare
+	v_deptno dept.deptno%type := 10;	
+begin
+	case v_deptno
+		when 10 then dbms_output.put_line('10일 때 이름');
+		when 20 then dbms_output.put_line('20일 때 이름');
+		when 30 then dbms_output.put_line('30일 때 이름');
+		when 40 then dbms_output.put_line('40일 때 이름');
+		else dbms_output.put_line('dname : N/A');
+	end case;
+end;
+/
+
+

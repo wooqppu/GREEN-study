@@ -1,0 +1,263 @@
+
+복습
+
+1. 라이브러리 web, core, taglibs, config
+web.xml 필터 추가 
+security-context.xml 생성 
+
+2. 접근권한 
+permitAll : 모든 접근 허용
+
+<security:http> ---> 시작점 태그
+	<security:intercept-url pattern="/요청 경로"
+	access="permitAll" >
+	<security:intercept-url pattern="/요청 경로"
+	access="hasRole('ROLE_MEMBER')" >
+	<security:form-login />
+
+	<security:access-denied-handler error-page="/accessError" />
+	---> 접근 거부 페이지 설정
+
+</security:http>
+
+
+<security:authentication-manager> ---> 인증 매니저
+	<security:authentication-provider> ---> 인증 제공자
+		<security:user-service> ---> 실제 사용자 서비스
+			<security:user name="" password="" 
+			access="hasRole('ROLE_MEMBER')" > 
+			---> 사용자 정보가 맞으면 권한 인가 
+		</security:user-service>
+	</security:authentication-provider>
+</security:authentication-manager>
+
+
+3. 접근거부 처리 
+AccessDeniedHandler 인터페이스를 구현하는 클래스 생성 
+
+4. 커스텀 로그인 페이지 
+<security:form-login login-page="/customLogin" />
+
+5. 로그인 성공시 처리
+AuthenticationSuccessHandler 인터페이스 구현 클래스 생성 
+CustomLoginSuccessHandler 클래스 생성 
+빈 등록 
+
+
+- <security:user name="" password="" access="hasRole('ROLE_MEMBER')" >
+이 방식은 새로운 사용자 생길 때 마다 추가해줘야해서 번거롭기 때문에 jdbc를 추가함
+<security:authentication-provider>
+	<security:jdbc-user-service data-source-ref="dataSource" 
+	users-by-username-query="select userid, userpw, enabled from tbl_member where userid = ?"
+	authorities-by-username-query="select userid, auth from tbl_member_auth where userid = ?"
+	>  
+	</security:user-service>
+	
+	<security:password-encoder ref="bcriptPasswordEncoder" />
+</security:authentication-provider>
+
+
+- 위의 방식은 데이터를 따로 담지 못해서 사용자 정보 조회 못하고 인증 방식만 
+구현해서 UserDetailsService 인터페이스 구현 방식 사용함  
+
+(순서)
+회원 클래스 MemverVO, 회원 권한 클래스 AuthVO, 
+MemberMapper 인터페이스 생성
+
+사용자가 입력힌 id를 통해서 테이블 조회
+
+MemberMapper.xml
+
+MemberVO
+
+AuthVO
+
+CustomUserDetailsService 클래스 생성 
+(UserDetailsService 인터페이스 구현)
+
+loadUserByUsername()
+
+빈으로 등록 
+
+<security:authentication-provider user-service-ref="">
+
+
+
+
+
+1. 자동 로그인 
+한 번 로그인하면 일정 시간 동안에 다시 로그인하지 않아도 유지되는 기능 
+쿠키를 이용해서 구현 
+
+아이디 기억하기
+remember-me
+
+1) 데이터베이스 
+로그인되었던 정보를 DB 이용해서 기록
+사용자의 재방문시 정보가 없으면 DB를 조회해서 사용하는 방식 
+
+지정된 이름의 테이블을 생성
+create table persistent_logins(
+	username varchar2(64) not null,
+	series varchar2(64) primary key,
+	token varchar2(64) not null,
+	last_user timestamp not null
+);
+
+2) security-context.xml <remember-me> 설정
+
+data-source-ref : dataSource를 지정하고 테이블을 이용해서 
+기존 로그인 정보를 기록함
+token-validity-seconds : 쿠키 유효시간 (초 단위)
+
+
+<security:http>
+	<security:remember-me data-source-ref="dataSource"
+	token-validity-seconds="6040800" />
+</security:http>
+
+3) customLogin.jsp 추가 
+<input type="checkbox" name="remember-me" />
+
+
+
+
+2. 어노테이션 사용하기
+
+@Secured("ROLE_ADMIN") 접근제한 설정, 단일권한 
+@Secured({"ROLE_ADMIN","ROLE_MEMBER"}) 다중권한
+: 사용자의 권한 정보에 따라 자동으로 해당 메소드의 접근을 제한 
+() 안에는 문자열 혹은 문자열 배열을 사용
+
+ex>
+@Secured({"ROLE_ADMIN","ROLE_MEMBER"}) 
+@GetMapping("/annoAdmin")
+public void getAdminpage() {  }
+
+
+스프링 3버전부터 지원 
+() 안에 표현식 사용 가능
+
+표현식 
+
+hasRole(role) : 현재 사용자의 권한이 파라미터의 권한과 동일한 경우 true
+hasAnyRole("권한1", "권한2" ) : 현재 사용자의 권한이 파라미터의
+권한 중에서 일치하는 것이 있으면 true
+isAnonymous() : 현재 사용자가 익명(비로그인) 상태인 경우 true
+isAuthenticated() :  현재 사용자가 비익명(로그인) 상태인 경우 true
+permitAll : 모든 접근 허용 
+denyAll : 모든 접근 비허용 
+isRememberMe() : 현재 사용자가 RememberMe 사용자라면 true
+
+@PreAuthrize() : 요청이 들어오고 함수를 실행하기 전에 
+권한을 먼저 검사하는 어노테이션
+@PostAuthorize() : 함수를 실행하고 클라이언트한테 응답하기 직전에
+권한을 검사하는 어노테이션
+
+(이 둘은 안에 표현식 사용 가능함)
+
+
+어노테이션 활성화 
+mvc 설정을 담당하는 servlet-context.xml에서 설정 
+namespace에서 security 추가 
+
+<security:global-method-security pre-post-annotations="enable" 
+secured-annotations="enabled" />
+
+
+3. 기존 프로젝트에 시큐리티 적용하기
+
+로그인 회원가입 페이지 작성
+기존 화면과 컨트롤러에 시큐리티 관련 내용 추가 
+ajax 부분 변경
+
+시큐리티 관련 설정 
+라이브러리 추가 
+security-context.xml
+web.xml 필터 추가 
+MemberMapper 인터페이스 
+MemberMapper.xml
+CommonController 추가
+
+
+(기존 패키지에서 가져오기)
+org.green.mapper
+MemberVO
+AuthVO
+
+org.green.mapper
+MemberMapper 인터페이스 
+
+scr/main/resources
+org/green/mapper
+MemberMapper.xml 파일
+
+org.green.security 패키지
+CustomAccessDeniedHandler 클래스
+CustomLoginSuccessHandler 클래스
+CustomUserDetailsService 클래스
+
+org.green.security.domain 패키지
+CustomUser 클래스
+
+org.green.controller
+CommonController 클래스
+
+customLogin.jsp
+costomLogout.jsp
+
+
+
+POST 전송 시 토큰을 가지고 가야함 
+토큰이 없으면 접근거부 페이지로 이동함
+ 
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+토큰이란 세션을 통해 로그인시 사용자를 검증할 수 있는 것 
+
+
+스프링 시큐리티가 적용된 후에는  
+post, put, patch, delete와 같은 방식으로 데이터를 전송할 때는
+반드시 csrf-token을 헤더 정보에 추가해서 토큰 값을 전달하도록 수정해야 함 
+
+beforeSend : 추가적인 헤더를 지정해서 전송
+(특별한 헤더를 추가해서 같이 전송하도록 함)
+
+let csrfHeaderName = "${_csrf.headerName}";
+let csrfTokenValue = "${_csrf.token}";
+
+$.ajax({
+	beforeSend:function(xhr) {
+		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	}
+})
+
+
+
+시큐리티
+
+라이브러리
+web.xml 필터 등록 
+security-contexe.xml
+
+servlet-context.xml 어노테이션 등록 
+
+어노테이션 적용
+@PreAuthorize("isAuthenticated()")
+@Secured("ROLE_ADMIN")
+
+
+스프링 시큐리티 jsp에서 사용하기 
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<sec:authentication property="principal" /> : 인증된 사용자만 볼 수 있도록 설정
+로그인 인증 정보를 받을 때 사용 
+
+<sec:authorize access="isAuthenticated()"></sec:authorize>
+접근 제한을 줄 때 사용 
+
+
+
+
+
+

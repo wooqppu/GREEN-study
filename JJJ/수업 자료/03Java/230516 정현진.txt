@@ -1,0 +1,171 @@
+
+람다식 
+익명구현객체 
+
+interface 선언 
+함수형 인터페이스 
+public interface Calculable {
+	// 추상메소드 1개
+	void calculate(int x, int y);
+}
+
+// 인터페이스 구현 클래스 
+public class Calculator implements Calculable {
+	void calculate(int x, int y) {
+		sout(x + y);
+	}
+}
+
+// 실행 클래스
+// 인터페이스 참조 변수 
+Calculable calc = new Calculator();
+
+// 익명구현 객체 
+Calculable calc = new Calculable() {
+	void calculate(int x, int y) {
+		sout(x + y);
+	}
+}
+calc.calculate(10, 20);
+
+public static void action(Calculable calc) {
+	int x = 20;
+	int y = 10;
+	calc.calculate(x, y);
+} 
+Calculable calc = new Calculable();
+action(calc)
+action(new Calculable() {
+	void calculate(int x, int y) {
+		sout(x - y);
+	}
+})
+
+매개변수가 없는 람다식 
+()->{ sout("하하") }
+매개변수가 있는 람다식 
+(int x, int y)->{  }
+x->{} 
+- 매개변수가 하나일 때만 ()생략 가능
+- 실행문이 한줄일 때 {} 생략 가능
+- 실행문이 한줄이면서 리턴문일 때 리턴도 생략 
+(x,y) -> x+y --> 실행문이 한줄이면서 단지 값을 나타낼 때는 리턴값임 
+
+
+메소드 참조 
+메소드를 참조해서 매개변수의 정보 및 리턴타입을 알아내 
+람다식에서 불필요한 매개변수를 제거하는게 목적 
+(left, right)->Math.max(left, right);
+
+정적메소드일 때
+클래스 :: 메소드 
+Math :: max
+
+인스턴스메소드일 때
+참조변수 :: 메소드 
+
+매개변수의 메소드 참조 
+(a,b) -> { a.instanceMethod(b); }
+클래스 :: instanceMethod
+
+생성자 참조 
+(a,b) -> { return new 클래스(a,b); }
+클래스 :: new 
+
+
+1)스트림 : 내부 반복자 
+(반복처리를 위해서 for Iterator라는 외부 반복자를 사용) 
+
+스트림은 요소들이 하나씩 흘러가면서 처리된다는 의미 
+forEach()메소드로 요소를 어떻게 처리할지 람다식으로 제공 
+forEach(람다식)
+
+스트림 생성 
+Stream<String> stream= list.stream(); // 스트림 
+Stream<String> parallelstream = list.parallelStream(); // 병렬처리 스트림 생성  
+
+2) Stream과 Iterator 비교 
+스트림은 내부 반복자이므로 속도가 빠르고 
+병렬처리에 효율적
+람다식으로 다양한 요소처리 가능 
+중간 처리와 최종 처리를 수행하므로 파이프라인 형성 가능 
+(for, iterator - 외부반복자)
+- 갯수가 많을 땐 병렬처리가 효과적
+
+List<String> list = new ArrayList<>();
+list.add("A");
+list.add("B");
+list.add("C");
+Stream<String> stream = list.parallelStream();
+stream.forEach(item->{
+	sout(item);
+});
+
+3) 중간처리와 최종처리 
+스트림은 하나 이상 연결 가능,
+컬렉션의 오리지널 스트림 뒤에 필터링 중간 스트림이 연결될 수 있고
+그 뒤 매핑 중간 스트림 연결, (매핑, 필터링 순서는 상관 없음) 
+중간 스트림 뒤에 최종처리가 연결 될 수 있다.
+
+스트림 파이프 라인 : 스트림이 연결되있는 것
+- 중간처리과정에서의 순서는 상관 없지만 파이프라인 맨끝에는 
+반드시 최종처리가 있어야함
+
+public Person {
+	private String name;
+	private int score;
+	// 생성자 
+}
+List<Person> list = new ArrayList<>();
+list.add(new Person("green", 30));
+
+// 오리지널 스트림 
+Stream<Person> personStream = list.stream();
+// 중간 처리 
+// score스트림 
+IntStream scoreStream = personStream.mapToInt(person->person.getScore())
+// 최종처리
+scoreStream.average().getAsDouble();
+
+메소드 체이닝 패턴 
+double avg = list.stream()
+	.mapToInt(person->person.getScore())
+	.average()
+	.getAsDouble();
+
+BaseStream
+Stream : 객체 요소를 처리하는 스트림 
+IntStream : 기본타입 int요소를 처리하는 스트림 
+LongStream : 기본타입 Long요소를 처리하는 스트림 
+DoubleStream : 기본타입 Double요소를 처리하는 스트림 
+
+스트림 구현 객체는 다양한 리소스로부터 얻는다.
+
+Stream<T> 객체요소 처리 스트림
+IntStream (정수) 기본타입 int요소를 처리하는 스트림 
+LongStream (정수) 기본타입 long요소를 처리하는 스트림 
+DoubleStream (실수) 기본타입 double요소를 처리하는 스트림 
+
+메소드 
+list.stream()
+list.parellelStream()
+
+Collection.stream()		List컬렉션, Set컬렉션 Stream<T>
+Collection.parallelstream()	
+
+Arrays.stream(T [])		Stream<T>
+Arrays.stream(int [])	IntStream
+Arrays.stream(long [])	LongStream
+Arrays.stream(double [])  	DoubleStream
+
+Stream.of(T[])		Stream<T>
+IntStream.of(int [])		IntStream
+LongStream.of(long [])	LongStream
+DoubleStream.of(double [])  DoubleStream
+
+IntStream.range(int start, int end)		IntStream  // 마지막 포함X 
+IntStream.rangeClosed(int start, int end)	IntStream  // 마지막 포함O
+
+Files.linese(Path, Charset)	Stream<String>
+
+

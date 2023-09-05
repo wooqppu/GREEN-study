@@ -1,0 +1,42 @@
+
+div::after { content: "여러분" }
+::before { content: "하하하" }
+하하하
+<div>
+	안녕 
+</div>
+
+li::before { content:"*" }
+-> 여러개의 항목에 동일한 옵션 지정해주기 가능
+
+<ul>
+	<li>*리스트</li>
+
+</ul>
+
+float속성
+left, right
+
+clear속성
+left, right, both
+
+position 태그를 어떻게 위치시킬지를 정의 
+(좌표체계를 뭘 줄지 결정)
+static 기본값
+absolute 절대좌표를 기준으로 위치를 지정
+(내가 설정한 위치에서 다른 곳으로 이동)
+relative 상대좌표 (원래있던 위치를 기준으로 위치를 지정) 
+(원래 생겼던 위치에서 다른 곳으로 이동)
+fixed '스크롤과 상관없이' 좌측 상단을 기준으로 위치를 지정
+
+-top 
+-left
+-right
+-bottom
+( +값일 땐 안쪽, -값일 땐 바깥쪽으로 이동)
+
+transition 동작시간
+hover 마우스를 올렸을 때 스타일이 바뀌면서 작동, 마우스를 떼면 동작 안함
+
+1. float가 적용된 요소의 부모요소에게 height설정
+2. block요소를 추가하고 그 block요소에게 clear를 설정

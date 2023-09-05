@@ -1,0 +1,74 @@
+1. background 속성 (배경 이미지 속기법)
+- background-color 속성 : 배경색 지정
+색상명 ex> red, green, black
+16진수 표기법 ex> #000000(검은색) ~ #ffffff(흰색) -> 똑같으면 3개로 줄이기 가능 (#000)
+컬러함수 ex> rgb(255,0,0) rgba(255,0,0,0.5) ->투명도(알파) 지정 가능 (0~1, 1이 100%)
+- background-image 속성 : 배경이미지 지정
+div { background-image: url("이미지경로") }
+- backgrounbd-repeat 속성 : 배경이미지 반복 지정
+repeat-x, repeat-y, no-repeat
+(repeat속성을 주지 않으면 가로세로 반복해서 화면을 다 채우는게 기본 속성)
+- background-size 속성 : 배경이미지 크기 지정 
+background-size: cover; -> 이미지가 잘리더라도 빈 공간 없이 꽉 채움 (공간 기준)
+background-size: contain; -> 빈 공간이 생기더라도 이미지 잘림 없이 다 나오게 함 (이미지 기준)
+- background-position 속성 : 배경이미지 위치 지정
+- background-attachment 속성 : 배경이미지 고정 
+background-attachment: fixed; ->  해당 화면을 고정
+background-attachment: local; -> 원래 위치로 돌아감
+background-attachment: scroll; -> 스크롤하면 화면도 같이 올라감   
+
+2. position 속성 : html문서 상에서 배치되는 방식을 지정
+- default(별도로 지정해주지 않을 경우) ---> static
+- static : 작성된 순서대로 화면에서 배치 
+- relative : 원래 위치에서 이동 가능 (원래 위치를 기준으로 배치 가능) 
+- absolute : position속성이 static이 아닌 상위 요소(브라우저)를 
+기준으로 이동 가능 (배치 기준 - 브라우저)
+- fixed : 요소를 고정된 위치에 배치 (배치 기준 - 브라우저 / scroll의 영향을 받지 않음 )
+
+
+#top, left, right, bottom
+top: 100px;
+left: 200px;
+- 상위 요소의 가운데 배치하기
+1. 요소의 position을 absolute로 변경
+상위 요소의 position을 relative로 변경
+2. top: 50% left: 50%
+요소의 width가 400이고 height 200일 때
+3-1. 음수 마진으로 위치 지정하기 
+top: 50% left: 50% 지정
+margin-left: -(요소의 width/2)px
+margin-top: -(요소의 height/2)px
+3-2. 계산 함수로 위치 지정하기 calc(퍼센트 - px)
+top: calc(50% - 요소의 height/2px)
+left: cacl(50% - 요소의 width/2px)
+3-3. translate로 위치 지정하기
+top: 50% left: 50% 지정
+transform: translate(-50%, -50%)
+
+
+3. overflow 속성 : 하위요소가 선택요소보다 클 때 숨기거나 스크롤을 지정
+- hidden, scroll
+- overflow-x
+- overflow-y
+
+4. transform 속성 : 요소의 변형을 지정
+- 이동 translate(x, y) translateX(x) translateY(y)
+- 크기조절 scale(x, y) scaleX(x) scaleY(y)
+scale(2, 1.5) 0 -> 0% 1-> 100%
+- 회전 rotate(45deg)
+- 기울이기 skewX(45deg) skewY(45deg)
+
+5. transition 속성 : 변화하는 동작 시간
+
+6. z-index 요소의 순서
+(크기 단위 없음, position을 같이 고려해야함 -> static과 
+absolute가 같이 있을 때는 static의 크기를 아무리 늘려도 위로 올라오지 않음) 
+
+7. opacity: 0; 투명
+opacity: 0.5; 50%투명
+opacity: 1; 불투명
+
+
+
+
+

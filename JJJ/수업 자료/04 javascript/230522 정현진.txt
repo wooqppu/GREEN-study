@@ -1,0 +1,107 @@
+
+자바스크립트 : 웹 브라우저 제어
+html 변경, css 변경
+
+변수 선언
+var, let
+const
+type of
+
+형변환
+Number()
+parseInt()
+parseFloat()
+String()
+toString(진수)
+toFixed(소수자리수)
+Boolean()
+
+함수 - 기능 
+프로그램 안의 작은 프로그램 
+재사용 가능 
+중복되는 코드를 함수로 정의하여 필요할 때 마다 호출해서 사용 
+
+함수선언문 
+function myFun( name = "a [default 값]" [매개변수 - 있어도 되고 없어도 됨] ) {
+	console.log( name + "님 안녕하세요" );
+}
+
+함수사용
+myFun("김그린");
+myFun("홍길동");
+myFun(); ---> "a" 출력
+
+
+함수표현식
+: 자바스크립트는 함수를 특별한 종류의 값으로 취급
+(변수에 함수를 값으로 집어넣을 수 있음)
+
+let myFun = function(name) {
+	alert( a + " 님 hello" );
+}
+
+myFun("a");
+
+
+웹 브라우저 
+
+window : 전역객체 
+DOM
+document.body
+단수 선택
+document.querySelector("")
+(document - DOM 진입점)
+document.getElementById("")
+
+1) innerHTML : html요소 안의 내용
+2) src : img태그의 속성 
+
+
+css 조작 
+1) style 조작 
+ex>  document.querySelector("div").style.스타일속성명 = 값;
+
+2) 요소의 클래스 조작 
+classList.toggle("클래스명")
+클래스명이 지정되있으면 제거, 없으면 추가
+
+classList.add("클래스명")
+클래스명 추가
+
+classList.remove("클래스명")
+클래스명 제거 
+
+
+이벤트 
+- 마우스 이벤트
+click : 요소에 클릭했을 때
+mouseenter : 요소에 마우스를 올렸을 때
+mouseleave : 요소에서 마우스가 떠났을 때
+mousemove : 요소에서 마우스를 움직일 때
+scroll : 요소에서 스크롤했을 때
+window.scrollY 스크롤값을 반환
+window.scrollTo({ top: 200, behavior: 'smooth' }) 해당 위치로 스크롤을 이동  
+
+
+이벤트 핸들러
+1) html 속성 
+html 안에 on<event>속성에 핸들러를 지정 
+ex> <button onclick="myFun()">
+
+2) DOM프로퍼티 on<event>를 사용해서 핸들러 지정 
+ex> 
+<script>
+	document.querySelector("button").onclick = function() {
+		alert("안녕하세요");
+	}
+</script>
+
+3) addEventListener
+표준 이벤트 지정방식
+elememt.addEventListener(이벤트, 핸들러) 
+ex> 
+document.queySelector("button").addEventListener("click", function() {
+	alert("안녕하세요");
+})
+
+

@@ -1,0 +1,143 @@
+
+Rest 
+네트워크 상에서 Client와 Server 사이의 통신 방식 중 하나 
+
+HTTP URI를 통해서 자원을 명시하고 
+HTTP Method(post, get, put, delete)를 통해 
+해당 자원에 대한 CRUD Operation을 적용하는 것을 의미 
+
+서버 			클라이언트 
+
+
+특징
+- 서버(자원이 있는 쪽), 클라이언트(자원을 요청하는 쪽) 구조
+
+REST Server : API를 제공하고 비즈니스 로직 처리 및 저장을 책임 
+Client : 사용자 인증이나 context(세션, 로그인 정보) 등을 직접 관리하고 책임 
+
+- 서로간의 의존성이 줄어듦 
+
+- 서버와 클라이언트는 단순한 요청만을 처리해서 서비스의 자유도가 높음 
+
+
+RESTful
+REST 라는 아키텍처를 구현하는 웹 서비스를 나타내는 용어 
+REST API를 제공하는 웹 서비스를 RESTful하다고 할 수 있음 
+즉, REST 원리를 따르는 시스템은 RESTful 이라는 용어로 지칭됨 
+
+RESTful 목적 
+이해하기 쉽고 사용하기 쉬운 REST API를 만드는 것 
+일반적인 컨벤션을 통한 API의 이해도 및 호환성을 높이는 것이 주된 동기임 
+
+
+spring.jpa.hibernate.ddl-auto
+create : 기존에 존재하는 스키마를 삭제하고 새로 생성 
+update :  기존의 스키마를 유지하며 JPA에 의해 변경된 부분만 추가 
+validate : 엔티티와 테이블이 정상적으로 매핑되어 있는지만 검증
+create-drop : 스키마를 생성하고 애플리케이션이 종료될 때 삭제 
+none : 초기화 동작을 하지 않음 
+
+
+spring.jpa.generate-ddl 
+spring.jpa.hibernate.ddl-auto 속성을 사용할지 말지 결정하는 옵션 
+기본값이 false임 
+JPA에 의해 자동 초기화 기능을 사용하려면 true로 바꾸고 사용 
+
+
+
+컨트롤러 클래스 
+
+com.packt.cardatabase.web 패키지 생성
+CarController 클래스 생성 
+
+
+스프링 데이터 Rest
+스프링으로 빠르게 RESTful 웹 서비스를 구현하게 해줌 
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-rest</artifactId>
+</dependency>
+
+
+서비스의 엔드 포인트 지정하기
+application.properties 파일에 
+spring.data.rest.base-path=/api 경로 지정
+
+
+postman 다운로드, 설치, 회원가입 
+my workspace - new - file - http
+get : localhose:8010/api 경로 요청하기
+
+
+http 방식 	CRUD
+get		읽기 Read
+post		생성 Create
+delete		삭제 Delete
+put/patch 	수정 Update
+
+요청
+delete http://localhost:8010/api/cars/{id} 
+
+
+
+클라이언트 http://localhost:3000
+
+서버 http://localhost:8010
+
+
+origin : 요청이 시작된 서버의 위치
+ 
+origin은 3가지의 구분을 이용함 
+- 프로토콜, 호스트 주소, 포트 번호 
+
+Cross Origin
+
+Same Origin
+
+SOP (Same Origin Policy)
+2011년 보안정책 - 동일한 출처의 Origin만 리소스를 공유할 수 있다 
+
+CORS
+
+Access-Control-Allow-Origin : 서로 다른 Origin에서 자원 공유 가능 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

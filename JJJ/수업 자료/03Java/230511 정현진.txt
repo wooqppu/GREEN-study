@@ -1,0 +1,226 @@
+
+데몬쓰레드 : 일반 쓰레드의 작업을 돕는 보조적인 역할 수행 
+- 일반 쓰레드가 모두 종료되면 자동적으로 종료 
+
+
+작업스레드 생성하기 
+1. Thread클래스로 생성하기 - 익명구현객체
+(클래스 더 만들지 않고 익명구현객체 바로 생성 가능)
+
+Thread thread = new Thread(new Runnable() {
+	public void run() {
+		// 작업내용
+	}
+ });
+
+2. Runnable인터페이스 구현 클래스 
+public class RunnableChild implements Runnable {
+	public void run() {
+		// 작업내용
+	}
+ }
+
+3. Thread를 상속받는 클래스 
+public MyThread extends Thread {
+	public void run() {
+		// 작업내용 
+	}
+} 
+MyThread mythread = new MyThread();
+mythread.start()
+
+4. 바로 익명자식객체 구현 
+Thread thread = new Thread(); {
+	public void run() {
+		// 작업내용 
+	}
+}
+
+
+스레드 풀 
+병렬 작업처리가 많아지면 스레드 개수가 증가,
+스레드 생성과 스케줄링으로 인해 cpu가 바빠져
+메모리 사용량이 늘어남 ---> 어플리케이션 성능 저하 
+
+병렬작업의 폭증으로 스레드의 폭증을 막으려면 스레드풀 사용
+
+스레드풀은 작업처리에 사용되는 스레드를 제한된 개수만큼 정해두고,
+작업큐에 들어오는 작업들을 하나씩 스레드가 맡아서 처리함
+작업처리가 끝난 스레드는 다시 작업큐에서 새로운 작업을 가져와서 처리함
+
+스레드 풀 생성하기 
+
+1. ExecutorService es = Executors.newCashedThreadPool()
+초기 스레드 수 0, 코어 스레드 수 0, 최대 스레드 수 Integer.MAX_VALUE
+(만들어진 여러 코어 스레드가 60초 동안 작동하지 않으면 자동으로 제거함 )
+
+2. ExecutorService es2 = Executors.newFixedThreadPool(5)
+초기 스레드 수 0, 코어 스레드 수 5, 최대 스레드 수 5
+(코어 스레드가 작동하지 않고 놀고 있어도 제거하지 않음)
+
+// 커스텀 스레드 풀
+3. ExecutorService es3 = new ThreadPoolExecutor(
+	3,		// 코어 스레드 개수
+	100,		// 최대 스레드 개수
+	120L,		// 놀고있는 시간
+	TimeUnit.SECONDS,  // 놀 수 있는 시간 단위
+	new SyschronousQueue<Runnable>()  // 작업큐
+)
+
+
+스레드 풀 종료하기 
+스레드풀에 작업이 남아있으면 데몬스레드가 아니기 때문에
+main스레드가 종료되어도 프로세스가 계속 실행중임
+따라서 main스레드 종료되면 해당 스레드 풀도 종료해줘야함
+
+1. shutdown()	
+현재 작업중인 작업 뿐만 아니라 작업큐에서 대기하고 있는
+모든 작업을 처리한 뒤 스레드풀 종료시킴 
+
+2. shutdownNow()
+현재 작업중인 스레드를 interrupt해서 작업을 중지시키고 스레드풀 종료시킴
+리턴값은 작업큐에 있는 미처리된 작업 목록이다
+
+
+작업 생성
+하나의 작업은 Runnable(리턴X) 또는 Callable(리턴O)구현 객체로 표현됨
+
+1. Runnable 익명구현객체
+new Runnable() {
+	public void run() {
+	// 스레드가 처리할 작업 내용
+	}
+}
+
+2. Callable 익명구현객체
+new Callable<T>() {
+	public T call() throws Exception {
+	// 스레드가 처리할 작업내용
+	return T;
+	}	
+}
+
+
+처리요청 
+1. execute(Runnable command)
+Runnable을 작업큐에 저장
+작업결과를 리턴하지 않음 
+
+ex>
+es.execute(Runnable구현객체)
+
+2. submit(Callable<T> task)
+Callable을 작업큐에 저장 
+작업처리 결과를 얻을 수 있도록 Future를 리턴 
+
+
+컬렉션 프레임워크
+
+컬렉션 : 여러 객체(데이터)를 모아놓은 것
+프레임워크 : 표준화, 정형화된 체계적은 프로그래밍 방식
+
+컬렉션 프레임워크
+컬렉션을 다루기 위한 표준화된 프로그래밍 방식 
+컬렉션을 쉽고 편리하게 다룰 수 있는 다양한 클래스 제공 
+
+컬렉션 클래스 : 다수의 데이터를 저장할 수 있는 클래스
+
+컬렉션 프레임워크의 핵심 인터페이스 
+- list
+list인터페이스의 메서드는 순서 유지하고 저장, 중복 저장 가능 
+
+Vector
+ArrayList와 동일한 구조를 가지고 있음 
+동기화된 메소드로 구성되있음 
+-> 동기화라는 특징이 있어 멀티스레드가 아닌 환경에서는 거의 사용하지 않음 
+(멀티스레드 환경에서 안전하게 객체를 추가 또는 삭제할 수 있음)
+ 
+List<E> list = new Vector<E>();	// E에 지정된 타입의 객체만 저장 
+List<E> list = new Vector<>();	// E에 지정된 타입의 객체만 저장 
+List list = new Vector();		// 모든 타입의 객체를 저장 
+
+
+LinkedList
+List구현클래스이므로 ArrayList와 사용 방법은 같으나 내부 구조가 완전히 다름 
+(배열과 달리 불연속적으로 존재하는 데이터를 연결)
+
+AL - 내부 배열에 객체를 저장해서 관리 
+LL - 인접 참조를 링크해서 체인처럼 관리함
+
+- set 
+set인터페이스의 메서드는 순서가 유지되지 않고 중복 저장 불가능
+(인덱스를 매개값으로 갖는 메소드가 없음)
+하나의 null만 저장 가능 
+
+HashSet : Set인터페이스를 구현한 대표적인 컬렉션
+-> 동일한 객체는 중복 저장하지 않음 
+(객체 저장하기 전에 기존에 같은 객체가 있는지 확인함 
+=> boolean add(Obj o)가 저장할 객체의 중복 확인 위해서 
+equals(), hashCode()메소드 호출 => equals(), hashCode() 오버라이딩 필요)
+(hashCode() 리턴값 비교, 같음 -> equals() 비교, 같음 -> 동등객체)
+
+Set<String> set = new HashSet<>();
+Set set = new HashSet();
+
+1) 향상된 for문
+for(E e : set) {  }
+
+2) Set컬렉션의 iterator()메소드 ---> 반복자
+Set<E> set = new HashSet<E>();
+Iterator<E> iterator = set.iterator();
+
+hasNext() 가져올 객체가 있으면 true, 없으면 false를 리턴
+next() 컬렉션에서 하나의 객체를 가지고옴
+remove() next()로 가지고온 객체를 Set컬렉션에서 제거
+
+
+TreeSet : 범위 검색과 정렬에 유리함
+
+- map
+키와 값의 쌍으로 이루어진 데이터의 집합 
+순서 유지되지 않고, 키는 중복 허용하지 않고, 값은 중복을 허용
+
+HashMap : Map인터페이스를 구현한 대표적인 Map컬렉션 
+HashMap의 키로 사용할 객체는 equals(), hashCode()메소드를 재정의해서 
+동등객체가 될 조건 정해야함 ( -> 객체가 달라도 동등객체라면 같은 키로
+간주하고 중복저장되지 않도록 하기 위함)
+
+Map<String, Integer> map = new HashMap<String, Integer>();
+map.put("김그린", 85);
+map.put("김그린",90); => 키가 동일하면 뒤에 온 값으로 덮어쓰기함
+map.get("김그린") ---> 90
+
+#230512
+
+Hashtable : HahMap과 동일한 내부구조를 가짐
+Hashtable은 동기화된 메소드로 구성됨
+멀티스레드 환경에서 사용!!!!
+Map<String, Integer> map = new Hashtable<>();
+
+
+Properties : Hashtable의 자식 클래스
+키와 값 타입이  String타입으로 제한된 클래스 
+확장자가 properties인 프로퍼티 파일을 읽을 때 사용
+
+Properties pro = new Properties();
+pro.load(클래스 경로)
+---> pro.load(클래스객체.getResourceAsStream("파일 경로"))
+
+리플렉션 3가지 방법
+Class clazz = 클래스명.class
+Class clazz = Class.forName("")
+Class clazz = 객체.getClass()
+
+클래스명.class
+
+
+
+
+
+
+
+
+
+
+
+

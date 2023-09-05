@@ -1,0 +1,17 @@
+
+greenbook sql
+
+create table book (
+    title varchar2(100) not null,
+	writer varchar2(50) not null,
+	company varchar2(50) not null,
+	price varchar2(50) not null,
+	regidate date not null
+);
+
+insert into book (title, writer, company, price, regidate)
+values ('역행자', '자청',	'웅진지식하우스', '19500원', '23/05/29');
+
+select * from book;
+
+commit;

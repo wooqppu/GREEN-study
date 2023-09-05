@@ -1,0 +1,393 @@
+
+125p 문제풀이 
+
+1. select * from emp
+where ename like '%S';
+
+2. select empno, ename, job, sal, deptno 
+from emp 
+where deptno = 30 and job = 'SALESMAN'; 
+
+3-1. select empno, ename, job, sal, deptno 
+from emp 
+where deptno in (20, 30) and sal > 2000;
+
+3-2. select empno, ename, job, sal, deptno 
+from emp
+where deptno = 20 and > 2000
+union
+select empno, ename, job, sal, deptno
+from emp
+where deptno = 30 and sal > 2000;
+
+4. select empno, ename, job, sal, deptno 
+from emp
+where sal < 2000 or sal > 3000;
+
+5. select empno, ename, job, sal, deptno 
+from emp
+where deptno = 30
+and ename like '%E%'
+and sal not between 1000 and 2000;
+
+6. select * from emp
+where comm is null
+and mgr is not null 
+and job in ('MANAGER','CLERK')
+and ename not like '_L%';
+
+
+
+데이터 정의어 (DDL) : 데이터베이스의 데이터를 보관하고 관리하기 위해 
+제공되는 여러 객체의 생성, 변경 관련 기능을 수행함 
+수행하자마자 데이터베이스에 수행한 내용이 바로 반영되는 특성이 있음
+
+1) CREATE문
+데이터 객체(table, database)를 생성하는 명령어
+
+
+데이터베이스 자료형 
+
+- VARCHAR2(길이) 
+4000byte만큼의 가변길이 문자열 데이터 저장 가능 
+
+- NUMBER(전체 자리 수, 소수점 이하 자리 수)
+38자릿수의 숫자 저장 가능 
+NUMBER(p, s) 이렇게 표기하묜 s자리만큼 소수점 이하 자릿수를 표현하고, 
+이 소수점 자리를 포함한 전체 p자리만큼 숫자 데이터를 저장 
+
+- DATE
+날짜 형식을 저장하기 위해 사용하는 자료형
+세기, 년도, 월, 일, 시, 분, 초 저장이 가능함 
+
+
+제약조건 : 테이블의 특정 열에 지정, 제약 조건을 지정한 열에는 제약 조건에 
+부합하지 않는 데이터를 저장할 수 없으며 기존 데이터의 수정이나 
+삭제 가능 여부도 영향을 받음 
+
+- NOT NULL : 지정한 열에 NULL을 허용하지 않음 
+
+- UNIQUE : 지정한 열은 유일한 값을 가져야함, 중복될 수 없음 
+(NULL은 값의 중복에서 제외됨)
+
+- PRIMARY KEY : 지정한 열이 유일한 값이며 NULL을 허용하지 않음 
+PRIMARY KEY는 테이블에 하나만 지정 가능 
+
+- FOREIGN KEY : 다른 테이블의 열을 참조하며 존재하는 값만 입력 가능
+
+- CHECK : 설정한 조건식을 만족하는 데이터만 입력 가능 
+
+
+<테이블 만들기 연습>
+1. 
+create table member(
+mno number(4),
+mname varchar2(20),
+mmail varchar2(30),
+mid varchar2(10) not null
+);
+
+insert into member(mno, mname, mmail, mid)
+values(10,'김그린','green@naver.com','green');
+
+select * from member;
+
+2.
+create table  department(
+deptno number(2) primary key,
+deptname varchar2(20) not null,
+location varchar2(40)	
+);
+
+insert into department(deptno, deptname, location)
+values(10,'인사부','서울');
+
+insert into department(deptno, deptname, location)
+values(20,'영업부','울산');
+
+select * from department;
+
+
+
+- 기존 테이블 열 구조와 데이터를 복사하여 새 테이블을 생성
+where 절을 사용하여 생성 테이블에 저장될 데이터를 조건식으로 지정 가능
+
+- 기존 테이블의 열 구조만 복사하여 새 테이블 생성
+열 구성은 같으나 저장 데이터는 없는 빈 테이블 생성하려면
+where조건식의 결과 값이 언제나 false 나오도록 지정하면 됨
+ex> 
+where 1<>1; ---> 1과 1이 같지 않다는 항상 거짓식을 조건으로 줌
+
+- 테이블 생성하며 제약 조건 지정 
+PRIMARY KEY : 유일하게 하나만 있는 값
+CHECK KEY : 데이터 형태와 범위를 정하는 check 
+기본값을 정하는 default 명령어
+
+
+테이블을 변경하는 alter 
+생성된 객체를 변경할 때 사용하며 새 열을 추가하거나 열 삭제, 열 자료형을 
+변경, 열 이름을 변경, 열 삭제 명령어가 있음 
+- add 열 이름 열 자료형
+- rename column 열 이름 to 변경될 열 이름
+- modify 열 이름 열 타입
+- drop column 열 이름
+
+
+
+324p 연습문제 풀이 
+
+create table emp_hw(
+empno number(4),
+ename varchar2(10),
+job varchar2(9),
+mgr number(4),
+hiredate date,
+sal number(7,2),
+comm number(7,2),
+deptno number(2)
+); 
+
+alter table emp_hw
+add bigo varchar2(20);
+
+alter table emp_hw
+modify bigo varchar2(30);
+
+alter table emp_hw
+rename column bigo to remark;
+
+drop table emp_hw;
+
+
+
+- RENAME(이름 변경), TRUNCATE(데이터 삭제), DROP(테이블 삭제)
+
+create table emp_hw
+as select * from emp;
+
+alter table emp_hw
+add remark varchar(20);
+
+select * from emp_hw;
+
+truncate table emp_hw;
+
+select * from emp_hw;
+
+insert into emp_hw
+select empno, ename, job, mgr, hiredate, sal, comm, deptno, null from emp; 
+
+rename emp_hw to emp_hw2
+
+
+- INSERT(데이터 추가), UPDATE, DELETE
+~~~ 다음시간에 이어서 ~~~
+
+
+
+
+
+오라클 함수 : 특정한 결과 값을 얻기 위해 데이터를 입력할 수 있는 특수 명령어
+
+오라클 함수의 종류 
+- 내장함수 (built-in function)
+오라클에서 기본으로 제공하는 함수 
+
+- 사용자 정의 함수 (user-defined function)
+사용자가 필요에 의해 직접 정의하는 함수
+
+- 문자 함수 
+문자 데이터를 가공하거나 문자 데이터로부터 특정 결과를 얻을 때 사용 
+
+
+UPPER() 모두 대문자로 반환
+LOWER() 모두 소문자로 반환 
+INTCAP() 첫 글자는 대문자, 나머지 문자는 소문자로  반환
+
+UPPER() 함수로 문자열 비교하기
+ex> 
+SELECT * FROM EMP
+WHERE UPPER(ENAME) = UPPER('scott')
+
+LENGTH() 문자열 길이를 반환 
+LENGTHB() 바이트 수를 반환 
+
+SUBSTR(문자열데이터, 시작위치, 추출위치) 
+SUBSTR(문자열데이터, 시작위치)
+문자열의 일부 추출할 때 사용, - 값을 주면 뒤에서부터 -1로 계산됨
+
+
+select ename, upper(ename), lower(ename), initcap(ename) from emp;
+
+
+select * from emp
+where ename = 'clark';
+
+select * from emp
+where lower(ename) = 'clark';
+
+
+select ename, length(ename) from emp;
+
+select ename, length(ename) from emp
+where length(ename) >= 5;
+
+
+select ename, substr(ename,2,2) from emp;
+(순서 0,1,2가 아니라 1,2인 것에 주의)
+
+
+INSTR(대상문자열-필수, 위치찾으려는문자열-필수, 
+위치찾기시작할위치, 시작위치에서몇번째있는문자인지지정) 
+데이터 안에서 특정문자 위치를 찾아서 반환
+
+REPLACE(문자열 또는 열 이름, 찾는 문자, 대체할 문자)
+특정 문자를 다른 문자로 변경 
+만약 대체할 문자 입력하지 않으면 찾는 문자로 지정한건 데이터에서 삭제됨
+
+LPAD(문자열 또는 열 이름, 데이터의 자리수, 빈 공간에 왼쪽부터 채울 문자)
+RPAD(문자열 또는 열 이름, 데이터의 자리수, 빈 공간에 오른쪽부터 채울 문자)
+데이터의 자리 수를 설정 후 빈 공간을 특정 문자로 채움 
+
+
+select instr('HELLO, ORACLE', 'L') as instr_1,
+instr('HELLO, ORACLE', 'L', 6) as instr_2,
+instr('HELLO, ORACLE', 'L', 2, 2) as instr_3
+from dual;
+
+
+select * from emp
+where instr(ename, 'S') > 0;
+
+
+select ename from emp
+where instr(ename, 'S') > 0;
+
+select ename from emp
+where ename like '%S%';
+
+
+select '010-1234-5678' as replace_before,
+replace('010-1234-5678', '-', ' ') as replace_1,
+replace('010-1234-5678', '-') as replace_2
+from dual;  
+
+select 'Oracle',
+lpad('Oracle', 10, '#') as lpad_1,
+lpad('Oracle', 20, '^') as lpad_2,
+rpad('Oracle', 10) as rpad_1,
+rpad('Oracle', 20, '$') as rpad_2
+from dual;
+
+
+
+
+
+
+230608 시험 1
+
+영화관 테이블 
+(영화관 이름, 지역, 운영시간)
+
+create table movietheater(
+theno number(30) primary key,
+thename varchar2(20) not null,
+thetime date,
+location varchar2(40)	
+);
+
+
+영화 테이블 
+(영화 제목, 개봉 일자)
+
+create table movie(
+movno number(20),
+movname varchar2(30) not null,
+movtime date 
+);
+
+고객 테이블 
+(고객 이름, 연락처)
+
+create table customer(
+cusno number(30),
+cusname varchar2(20) not null,
+cusphnum varchar2(11)
+);
+
+
+
+230608 시험2
+emp2 테이블 생성
+사원 번호, 사원 이름, 사원 직급, mgr, 고용 날짜, 급여, comm, 부서코드
+사원번호 - 숫자 4자리 
+사원 이름 - 3글자 
+사원 직급 - 2글자 
+mgr - 숫자 4자리 
+고용날짜 - date
+comm - 전부 null값으로 고정 
+부서 코드 - 숫자 2자리  
+
+create table emp2(
+EMPNO number(4),
+ENAME varchar2(10),
+JOB varchar2(10),
+MGR number(4),
+HIREDATE date,
+SAL number(3),
+COMM number(4),
+DEPTNO number(2)	
+);
+
+insert into emp2(EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, DEPTNO)
+values(7369, '개나리', '사원', 7902, '00/12/17', 200, 20);
+
+insert into emp2(EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, DEPTNO)
+values(7499, '진달래', '주임', 7698, '01/12/15', 360, 20);
+
+insert into emp2(EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, DEPTNO)
+values(7521, '라일락', '주임', 7698, '01/02/17', 355, 30);
+
+insert into emp2(EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, DEPTNO)
+values(7654, '손흥민', '과장', 7839, '02/01/11', 400, 30);
+
+insert into emp2(EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, DEPTNO)
+values(7698, '박지성', '주임', 7698, '00/07/12', 325, 20);
+
+insert into emp2(EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, DEPTNO)
+values(7782, '김연아', '사원', 7698, '01/12/17', 225, 10);
+
+insert into emp2(EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, DEPTNO)
+values(7778, '무궁화', '사원', 7839, '05/11/14', 200, 10);
+
+insert into emp2(EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, DEPTNO)
+values(7839, '홍길동', '부장', 7566, '06/06/17', 450, 20);
+
+insert into emp2(EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, DEPTNO)
+values(7844, '송강호', '과장', 7566, '18/09/17', 400, 30);
+
+insert into emp2(EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, DEPTNO)
+values(7876, '정우성', '대표', 7839, '04/09/09', 500, 30);
+
+insert into emp2(EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, DEPTNO)
+values(7900, '송혜교', '사원', 7902, '01/12/03', 200, 20);
+
+select * from emp2;
+
+desc emp2;
+
+select * from emp2
+order by ENAME asc;
+
+select ENAME, SAL, DEPTNO from emp2
+order by SAL desc;
+
+select distinct JOB from emp2;
+
+select * from emp2
+where DEPTNO = 10
+or DEPTNO = 20
+or DEPTNO = 30; 
+
+
+

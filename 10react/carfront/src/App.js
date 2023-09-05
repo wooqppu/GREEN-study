@@ -1,8 +1,10 @@
 import './App.css';
-import { AppBar, Toolbar, Typography } from '@mui/material';
-import CarList from './components/CarList';
+
 import { useEffect, useState } from 'react';
-import Login from './components/Login';
+import CarFront from './components/CarFront';
+import { Route, Routes } from 'react-router-dom';
+import Tour from './components/Tour';
+
 
 function App() {
 
@@ -26,15 +28,10 @@ function App() {
 
   return (
     <div className="App">
-      <AppBar position='static'>
-        <Toolbar>
-          <Typography>
-            CarShop {isAuthenticated ? <span onClick={logoutAuth}>Logout</span> : "" }
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      {isAuthenticated ? <CarList/> : 
-      <Login loginAuth={loginAuth}/>}
+      <Routes>
+         <Route path='/' element={<CarFront loginAuth={loginAuth} isAuthenticated={isAuthenticated} logoutAuth={logoutAuth} />} />
+         <Route path='/tour' element={<Tour/>} />
+      </Routes>      
     </div>
   );
 }

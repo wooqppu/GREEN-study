@@ -1,0 +1,414 @@
+
+
+2) 다중행 서브쿼리
+실행 결과 행이 여러개가 나오는 서브쿼리 
+
+메인쿼리와 비교 시 단일행 연산자를 사용할 수 없고 
+다중행 연산자를 사용해야 함 
+
+- in 연산자 
+메인쿼리 데이터가 서브쿼리의 결과 중 
+하나라도 일치하는 데이터가 있다면 true
+
+select max(sal) from emp
+group by deptno;
+
+select * from emp
+where sal in (select max(sal) from emp
+group by deptno);
+
+
+- any, some 연산자
+메인쿼리의 조건식을 만족하는 서브쿼리의 결과가 하나 이상이면 true
+
+select * from emp 
+where sal = any (select max(sal) from emp
+group by deptno);
+
+select * from emp 
+where sal = some (select max(sal) from emp
+group by deptno);
+
+select * from emp
+where sal < any (select sal from emp where deptno = 30);
+
+(위와 동일한 단일행 쿼리 max절)
+select * from emp
+where sal < (select max(sal) from emp where deptno = 30);
+
+
+30번 부서의 최소 급여보다 더 많은 급여를 받는 사원 정보를 출력하시오
+
+(단일행 쿼리)
+select * from emp 
+where sal > (select min(sal) from emp where deptno = 30)
+
+(다중행 쿼리)
+select * from emp 
+where sal > any (select sal from emp where deptno = 30)
+
+sal = 3000
+sal = 1500
+
+950,1250,1500,1600,2850
+(any는 위 급여 조건 중 하나보다도 크면 출력되기 때문에 
+3000, 1500 둘 다 출력됨)
+
+
+- all 연산자
+메인쿼리 조건식을 서브쿼리의 결과가 모두 만족하면 true
+
+select * from emp 
+where sal > all (select sal from emp where deptno = 30)
+
+sal = 3000
+sal = 1500
+
+950,1250,1500,1600,2850
+(all은 위 급여 조건 전부보다도 커야 출력되기 때문에 
+3000만 출력, 1500은 출력 안됨)
+
+
+- exists 연산자 
+서브쿼리의 결과가 존재하면 (즉, 행이 1개 이상일 때) true
+
+select * from emp
+where exists (select dname from dept where deptno = 10);
+
+
+서브쿼리 이용해서 emp 테이블의 사원 중에 10번 부서에 속한 
+모든 사원 보다 일찍 입사한 사원의 정보를 출력하시오
+
+select * from emp
+where hiredate < all (select hiredate from emp where deptno = 10);
+
+
+
+3) 비교할 열이 여러개인 다중열 서브쿼리 (복수열 서브쿼리)
+서브쿼리의 select절에서 비교할 열이 여러개인
+
+select * from emp
+where (deptno, sal) in (select deptno, max(sal) from emp group by deptno);
+
+
+4) from절에서 사용하는 서브쿼리와 with절
+from절에서 사용하는 서브쿼리는 인라인뷰라고도 부름 
+특정 테이블 전체 데이터가 아닌 select문을 통해 일부 데이터를 추출한 뒤
+별칭을 붙여 사용함 
+테이블 내 데이터 규모가 너무 크거나 현재 작업에 불필요한 열이 너무 많아
+일부 행과 열만 사용하고자할 때 유용함
+
+from emp e, dept d
+대신에 
+from (select * from emp where deptno = 10) e10, 
+(select * from dept where deptno = 10) d
+를 사용
+
+여기서 가독성을 올리기 위해 with절 구문 사용 
+with 
+e10 as (select * from emp where deptno = 10),
+d as (select * from dept where deptno = 10)
+select e10.empno, e10.ename, d.loc, d.dname from e10, d 
+
+ex>
+select e10.empno, e10.ename, d.loc, d.dname
+from (select * from emp) e10, 
+(select * from dept) d
+where e10.deptno = d.deptno;
+  
+with절로 변경 
+
+with 
+e10 as (select * from emp where deptno = 10),
+d as (select * from dept)
+select e10.empno, e10.ename, e10.deptno, d.loc, d.dname 
+from e10, d 
+where e10.deptno = d.deptno;
+
+
+
+5) select절에서 사용하는 서브쿼리 
+서브쿼리는 select절에서도 사용할 수 있는데 스칼라 서브쿼리라고 부름 
+select절에 하나의 열 영역으로 결과를 출력함 
+select절에 명시하는 서브쿼리는 반드시 하나의 결과만 반환하도록 작성해야함
+
+select empno, ename, job, sal,
+(select grade from salgrade
+where e.sal between losal and hisal) as salgrade,
+deptno, 
+(select dname from dept where e.deptno = deptno) as dname from emp e
+
+
+262p 연습문제 
+
+1. 
+select e.job, e.ename, e.sal, d.deptno, d.dname
+from emp e join dept d on (e.deptno = d.deptno)
+where job = (select job from emp where ename = 'ALLEN');
+
+or 
+
+select e.job, e.empno, e.ename, e.sal, d.deptno, d.dname
+from emp e, dept d
+where e.deptno = d.deptno
+and job = (select job from emp where ename = 'ALLEN');
+
+2. 
+empno, ename, dname, hiredate, loc, sal, grade 출력 필요
+(테이블 3개 사용)
+
+select e.empno, e.ename, d.dname, e.hiredate, d.loc, e.sal, s.grade
+from emp e join dept d on (e.deptno = d.deptno)
+join salgrade s on (e.sal between s.losal and s.hisal)
+where sal > (select avg(sal) from emp)
+order by e.sal desc, e.empno;
+
+or 
+
+select e.empno, e.ename, d.dname, e.hiredate, d.loc, e.sal, s.grade
+from emp e, dept d, salgrade s
+where e.deptno = d.deptno
+and e.sal between s.losal and s.hisal
+and sal > (select avg(sal) from emp)
+order by e.sal desc, e.empno;
+
+3. 
+empno, ename, job, deptno, dname, loc 출력 필요 
+(테이블 2개 사용)
+
+select e.empno, e.ename, e.job, e.deptno, d.dname, d.loc
+from emp e join dept d on (e.deptno = d.deptno)
+where e.deptno = 10
+and job not in (select job from emp where deptno = 30); 
+
+4.
+서브쿼리
+select max(sal) from emp where job = 'SALESMAN'
+
+메인쿼리
+select e.empno, e.ename, e.sal, s.grade
+from emp e join salgrade s on (e.sal between s.losal and s.hisal)
+where sal > (select max(sal) from emp where job = 'SALESMAN')
+order by e.empno;
+
+
+(다중행 함수 사용 방식)
+select e.empno, e.ename, e.sal, s.grade
+from emp e join salgrade s on (e.sal between s.losal and s.hisal)
+where sal > all (select sal from emp where job = 'SALESMAN')
+order by e.empno;
+
+
+(Create. Read. Update. Delete)
+데이터 조작어(DML) : 데이터를 추가, 변경, 삭제할 때 사용하는 명령어 
+
+1. insert
+insert into 테이블 이름(열1, 열2, 열3, ...) 
+values (데이터1, 데이터2, 데이터3, ...) 
+
+- null 데이터 넣기
+
+명시적 입력 -> 데이터 값에 null 입력
+
+암시적 입력 -> null 들어갈 자리의 열 이름 아예 입력하지 않음
+
+
+
+create table dept_temp
+as select * from dept;
+
+select * from dept_temp;
+
+insert into dept_temp(deptno, dname, loc)
+values(50, 'DATABASE', 'SEOUL');
+
+insert into dept_temp(deptno, dname, loc)
+values(60, 'WEB', null);
+
+insert into dept_temp(deptno, dname, loc)
+values(70, 'NETWORK', '');
+
+insert into dept_temp(deptno, loc)
+values(80, 'SEOUL');
+
+
+- 날짜 데이터 입력 
+
+년월일 순으로 날짜 사이에 / 또는 - 입력
+ex> '2023/05/02', '2023/05/02'
+
+to_date 함수 사용
+ex> to_date('07/02/2023', 'MM/DD/YYYY')
+
+SYSDATE 사용
+
+
+create table emp_temp
+as select * from emp where 1 <> 1;
+
+desc emp_temp;
+select * from emp_temp;
+
+insert into emp_temp(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+values (9999, '김그린', 'MANAGER', 8888, '2022-01-15', 5000, 1000, 10);
+
+insert into emp_temp(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+values (2222, '박그린', 'MANAGER', 8888, to_date('02/15/2022', 'MM/DD/YYYY'), 3000, 2000, 20);
+
+insert into emp_temp(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+values (1111, '이블루', 'MANAGER', 8888, sysdate, 4000, null, 30);
+
+
+- 서브쿼리를 사용하여 한 번에 여러 데이터 추가하기 
+
+
+insert into emp_temp(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+select e.empno, e.ename, e.job, e.mgr, e.hiredate, e.sal, e.comm, e.deptno
+from emp e join salgrade s on (e.sal between s.losal and s.hisal)
+where s.grade = 1;
+
+select * from emp_temp;
+
+
+
+2. update
+update 테이블 이름 
+set 변경할 열1 = 데이터1, 변경할 열2 = 데이터2
+where 조건식 
+(where절 없으면 데이터 전체 수정이 됨)
+
+- 수정한 내용 되돌리기 : rollback;
+
+
+insert into emp_temp(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+select e.empno, e.ename, e.job, e.mgr, e.hiredate, e.sal, e.comm, e.deptno
+from emp e join salgrade s on (e.sal between s.losal and s.hisal)
+where s.grade = 1;
+
+select * from emp_temp;
+
+update emp_temp
+set comm = 50
+where sal <= 2500;
+
+select * from emp_temp;
+
+rollback;
+
+insert into emp_temp(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+select e.empno, e.ename, e.job, e.mgr, e.hiredate, e.sal, e.comm, e.deptno
+from emp e join salgrade s on (e.sal between s.losal and s.hisal) 
+where s.grade = 1;
+
+commit;
+
+insert into emp_temp
+values (9999, '김그린', 'MANAGER', 7565, '2023-01-24', 5000, 50, 10);
+
+select * from emp_temp;
+
+rollback;
+
+select * from emp_temp;
+
+(김그린 데이터는 커밋 이후에 추가한거라 롤백하면 데이터 저장 안됨
+다시 김그린 데이터 추가하기)
+
+update emp_temp
+set ename = '이그린';
+
+- 여러 열 한 번에 수정하기
+
+select * from dept_temp;
+
+update dept_temp
+set dname = 'GREEN', loc = 'BUSAN'
+where deptno = 40;
+
+(서브쿼리 사용)
+update dept_temp
+set (dname, loc) = (select dname, loc from dept where deptno = 10)
+where deptno = 40;
+
+
+3. delete
+delete from 테이블 이름 
+where 조건식 (삭제할 행을 선별하기 위해 필요)
+
+
+select * from emp_temp;
+delete from emp_temp;
+
+insert into emp_temp(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+select * from emp;
+
+select * from emp_temp;
+
+delete from emp_temp
+where job = 'MANAGER';
+
+
+emp_temp 테이블에서 부서 번호가 30번이고 급여 등급이 3인 
+레코드를 삭제하시오 
+
+select empno from emp_temp e join salgrade s
+on (e.sal between s.losal and s.hisal)
+where e.deptno = 30
+and s.grade = 3; 
+
+
+delete from emp_temp
+where empno in (
+select e.empno 
+from emp_temp e join salgrade s
+on (e.sal between s.losal and s.hisal)
+where e.deptno = 30 and s.grade = 3);
+
+
+287p 연습문제 풀이 
+
+1.
+create table chap10hw_emp as select * from emp;
+create table chap10hw_dept as select * from dept;
+create table chap10hw_salgrade as select * from salgrade;
+
+insert into chap10hw_dept(deptno, dname, loc) 
+values (50, 'ORACLE', 'BUSAN');
+
+insert into chap10hw_dept(deptno, dname, loc) 
+values (60, 'SQL', 'ILSAN');
+
+insert into chap10hw_dept(deptno, dname, loc) 
+values (70, 'SELECT', 'INCHEON');
+
+insert into chap10hw_dept(deptno, dname, loc) 
+values (80, 'DML', 'BUNDANG');
+
+2. 생략
+
+3.
+update chap10hw_emp
+set deptno = 70
+where sal > (select avg(sal) from chap10hw_emp where deptno = 50)
+
+4.
+update chap10hw_emp
+set deptno = 80, sal = sal * 1.1
+wherehiredate > (select min(hiredate) from chap10hw_emp where deptno = 60);
+
+5.
+delete from chap10hw_emp
+where empno in (
+select e.empno from chap10hw_emp e join chap10hw_salgrade s 
+on (e.sal between s.losal and s.hisal)
+where s.grade = 5
+)
+
+
+
+
+
+
+
+
+

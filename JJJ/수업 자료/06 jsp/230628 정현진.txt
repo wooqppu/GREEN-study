@@ -1,0 +1,151 @@
+
+오라클 연동하기 
+
+
+1. 데이터베이스에 테이블 생성한다.2.JDBC설정 및 데이터베이스 연결
+
+JDBC 데이터베이스 연결 및 관리 작업을 할 때 사용하는 API이다.(=인터페이스이다.)
+
+1) JDBC 드라이버 설정JDBC 드라이버, 
+이 중에서 ojdbc6.jar를 복사, 붙여넣기
+
+2) 연결 관리 클래스 생성
+
+common 패키지 생성   ==> JDBCConnect 생성
+DTO 데이터를 저장하거나 전송하기 위한 클래스
+DAO 데이터 베이스에 접근 CRUD 작업을 하기 위한 객체
+
+DAO   C  ==> insert문
+DAO    R ==> select문
+DAO   U ==> update문
+DAO    D  ==>  delete문
+
+
+
+
+230629
+
+
+1. JDBC 드라이버 설정 
+C:\oraclexe\app\oracle\app\oracle\product\11.2.0\server\jdbc\lib
+
+2. 연결관리 클래스 생성 
+JDBCConnect 클래스 
+Connection타입 연결 담당 
+DriverManager.getConnection(오라클 경로, 접속 아이디, 접속 비밀번호)
+Statement타입 정적 쿼리문 실행 때 사용 객체 	con.createStatement()
+PrepareStatement타입 동적 쿼리문 실행 때 사용 객체 	con.prepareStatement(String sql)
+ResultSet타입 select쿼리문 결과를 저장할 때 사용 객체
+
+public class JDBCConnent {
+	public Connection con;
+	public Statement stmt;
+	public PreparedStatement psmt;
+	public Resultset rs;
+
+	public JDBCConnect() {
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String id = "green";
+		String pw = "green1234";
+		con = DriverManager.getConnection()
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public voud close() {
+		try {
+			if(rs != null) rs.close();
+			if(stmt != null) stmt.close();
+			if(psmt != null) psmt.close();
+			if(con != null) con.close();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+
+test.jsp
+<%
+	JDBCConnect jdbc = new JDBCConnect();
+	쿼리 작성
+	jdbc.close();
+%>
+
+
+3. 쿼리 작성 
+1) 동적쿼리 작성 
+<%
+	JDBCConnect jdbc = new JDBCConnect();
+	String sql = "insert into member values(?,?,?,sysdate)";
+	preparedStatement psmt = jdbc.con.preparedStatement(sql);
+
+	// setInt(int index, int value) : 해당 인파라미터에 정수 타입 값을 대입
+	// setString(int index, String value) : 해당 인파라미터에 문자 타입 값을 대입
+	// setDate(int index, Date value) : 해당 인파라미터에 데이트 타입 값을 대입
+	
+	psmt.setString(1, "test1");
+	psmt.setString(2, "1111");
+	psmt.setString(3, "1회원");	
+
+	jdbc.close();
+%>
+
+쿼리 실행 
+executeUpdate() -> insert, update, delete -> 변경된 레코드의 수(int 타입) 리턴 
+executeQuery() -> select -> 조회 결과 리턴 (ResultSet)
+
+2) 정적쿼리 작성 
+String sql = "select id, pass, name from member";
+Statement stmt = jdbc.con.createStatement();
+
+쿼리 실행
+ResultSet rs = stmt.executeQuery(sql);
+rs.next()
+
+next()메소드를 호출하면 다음 행으로 이동시킴 
+다음행이 있으면 true, 없으면 false 리턴 
+
+
+get메소드들은 커서가 현재 가르키는 행의 컬럼을 읽어옴
+
+getInt(int 컬럼 인덱스), getInt(String 컬럼 이름) 
+지정한 인덱스 혹은 컬럼 이름에 해당하는 값을 정수형으로 반환 
+
+getString(int 컬럼 인덱스), getString(String 컬럼 이름)
+지정한 인덱스 혹은 컬럼 이름에 해당하는 값을 문자형으로 반환 
+ex> rs.getString(1) rs.getString("id")
+
+getDate(int 컬럼 인덱스), getDate(String 컬럼 이름)
+지정한 인덱스 혹은 컬럼 이름에 해당하는 값을 날짜형으로 반환
+
+
+DTO (Data Transfer Object)
+계층 사이에 데이터를 교환하기 위해 사용하는 객체 
+멤버 변수, getter/setter
+
+DAO (Data Access Object)
+
+
+
+BoardDAO 수정 
+1. 게시글 등록하기
+2. 상세보기
+boardview.jsp
+3. 수정하기
+boardupdate.jsp
+boardupdate_process.jsp
+4. 삭제하기
+boarddelete_process.jsp
+
+
+
+
+
+
+ 

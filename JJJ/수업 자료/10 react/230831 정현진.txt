@@ -1,0 +1,89 @@
+
+
+스프링 부트 (restAPI)
+
+로그인 요청, 자원 rest
+
+
+리액트 (화면) - carfroint 프로젝트 
+CRUD
+
+fetch, axious
+
+프로미스 - 자바스크립트 내장 객체 
+비동기적인 것을 수행할 때 쓰임 
+
+동기(Synchronous) - 직렬 실행, 순차적으로 한개씩 처리
+비동기(Asynchronous) - 병렬 실행, 동시다발적으로 여러개 처리 
+
+
+1. Producer 프로미스 생성 
+const promise = new Promise(콜백 함수/ ()=>{} / function)
+
+const promise = new Promise((resolve, reject)=>{
+	resolve("여러분");
+})
+
+2. 소비자 프로미스 사용 
+resolve 함수 호출 시 then 실행
+reject 함수 호출 시 catch 실행 
+
+promise
+.then(value=>{
+	console.log(value);
+})
+.catch(e=>{
+	console.log(e);
+})
+
+
+javascript - 비동기 폴더 - 05 promise.html 생성
+
+
+async, await 구문 
+async function myfun() {
+	try {
+		const response = await fetch("")
+		const json = await response.json();
+		console.log(json);	
+	}
+	catch() {
+		
+	}
+}
+
+
+
+npm install @mui/material @emotion/react @emotion/styled
+
+표 커뮤니티
+npm install @mui/x-data-grid
+
+
+삭제 
+표의 각 행에 열을 추가하고 삭제 버튼을 구현 
+
+컬럼에 renderCell 속성 -> 해당 셀에 화면을 지정 
+
+fetch(url, {method: "DELETE"})
+
+삭제 후 목록 다시 요청 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

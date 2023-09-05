@@ -1,0 +1,270 @@
+
+변수선언 : let
+
+let a = 123
+
+a = "1234"
+
+==> 자바스크립트는 변수선언하고 문자열, 숫자를 넣어도 알아서 변경해서 출력
+
+
+기본타입이 있으나 따로 선언하지 않음
+ex> let Number a = 123 이렇게 하진 않음
+
+기본타입 : Number, BigInt, String, Boolean, null, undefined
+==> 타입을 찾는 방법 : typeOf연산자
+
+
+형변환 
+암시적 형변환 
+"6"/"2, "6"-"2", "6"%"2" ---> Number로 변환해서 연산함 
+"6"+"2" ---? "62"
+
+사용자 입력 
+pompt, input ---> 숫자를 입력해도 문자 
+
+let name = "" || "그린" || "블루";
+let name = "" && "그린" && "블루";
+
+Number("123a") ---> NaN
+String(123)
+Boolean(0) ---> 숫자 0, 문자열 빈문자 "", null, undifined, NaN
+
+let html = document.getElementById("id명").innerHTML;
+document.querySelector("#id명").innerHTML = "aa"
+
+
+조건문 
+
+if(조건1) {
+	조건이 true일 때 실행  
+} 
+else if(조건2) {
+	조건1이 false이고 조건2가 true일 때 실행
+}
+else {
+	모든 조건이 false일 때 실행
+}
+
+
+삼항연산자 
+let result = 10 > 5 ? "yes" : "no";
+let result;
+
+if (a + b < 4) {
+	result = '미만';
+} 
+else {
+	result = '이상';
+}
+
+let result = (a+b<4) ? "미만" : "이상";
+
+
+switch
+
+switch(num) {
+	case "value1":
+	console.log("1");
+	break;
+
+	case "value2":
+	console.log("1");
+	break;
+	
+	default :  // 값이 다 안맞을 때 기본값 설정
+	console.log("기본값");
+}
+
+
+연습문제 - switch문으로 바꾸기
+
+let a = +prompt('a?', '');
+if (a == 0) {
+	alert ( 0 );
+}
+if (a == 1) {
+	alert ( 1 );
+}
+if (a == 2) {
+	alert( 2 ); 
+}
+
+
+<switch문>
+let a = prompt("a?", "");
+        console.log(a);
+        if(a) {
+            switch(Number(a)) {
+                case 0:
+                alert(0);
+                break;
+                case 1:
+                alert(1);
+                break;
+                case 2:
+                alert(2);
+                break;
+
+                default :
+                alert("0,1,2 만 입력하세요.");
+            }
+
+
+<while문>
+let num = 1;
+while(num < 10) {
+	console.log(num);
+	num++;
+} // break 없어서 무한루프 발생 
+
+<do-while문>
+do {
+	실행문
+} while(조건)
+// 조건에 상관 없이 do가 있어서 무조건 한 번은 실행
+
+// 횟수 정해진 조건문 - for 사용
+// 횟수 정해지지 않은 조건문  - while 사용
+
+<for문>
+for(초기값; 조건; 증감) {
+	실행문
+}
+
+ex>
+for(let i=0; i < 10; i++) {
+	console.log(i);
+}
+
+반복문 빠져나가기
+break;
+
+현재 실행중인 반복을 종료하고 다음 반복으로 넘어가기 
+continue;
+
+
+연습문제1
+
+사용자가 100보다 큰 숫자를 입력하도록 안내하는 프롬프트 창을 띄워보세요.
+사용자가 조건에 맞지 않는 값을 입력한 경우 반복문을 사용해 동일한 
+프롬프트 창을 띄워줍니다. 
+
+사용자가 100을 초과하는 숫자를 입력하거나 취소 버튼을 누른 경우,
+혹은 아무것도 입력하지 않고 확인 버튼을 누른 경우엔 더는 
+프롬프트 창을 띄우지 않아도 됩니다.
+
+사용자가 오직 숫자만 입력한다고 가정하고 답안을 작성하도록 합시다.
+숫자가 아닌 값이 입력되는 예외 상황은 처리하지 않아도 됩니다.
+
+let num;
+        do {
+            num = prompt("100을 초과하는 숫자를 입력해주세요", "");
+        } while (num <= 100 && num);
+
+
+연습문제2
+
+숫자가 아닌 값이 입력되는 예외 상황은 쳐리하지 않아도 됩니다.
+
+2월은 보통 28일까지 있지만 윤년인 경우 2월을 윤달이라고 하고 29일까지 있습니다.
+예로, 2020년은 윤년으로 2020년 2월은 윤달이며, 2020년 2월은 29일까지 있습니다.
+{보통 윤년이 4년마다 돌아온다고 알고 있지만 이는 정확한 것은 아닙니다.}
+
+(아래는 위키/htps:/a wikipedia.org/wik/윤년)에서 가져온 윤년을 구하는 정확한 규칙입니다.
+- 서력 기원 연수가 4로 나누어떨어지는 해는 윤년으로 한다.
+(1992년, 1996년, 2004년, 2008년, 2012년, 2016년, 2020년 ..)
+- 이 중에서 100으로 나누어떨어지는 해는 평년으로 한다.
+(1900년, 2100년, 2200년, 2300년, 2500년 ...)
+- 그중에 400으로 나누어떨어지는 해는 윤년으로 둔다
+(1600년, 2000년, 2400년 ...)
+
+이 규칙을 사용하여 입력된 년도가 윤년인지 아닌지를 구하는 함수를 만들어 보세요.
+- 함수는 하나의 양의 정수를 년도로 받습니다.
+- 윤년 규칙에 따라 윤년이면 true를, 윤년이 아니면 false를 return 합니다.
+- 위 조건을 만족하는 함수를 만들고, 2020(윤년), 1992(윤년), 1900(평년), 1600(윤년) 등의 
+값을 넣어서 제대로 작동하는지 확인해 보세요.
+
+프롬프트로 입력
+function chyear(year) {
+	return isyear;
+}
+
+let inyear = Number(prompt("년도를 입력하세요.")); 
+        // 1) 4로 나누어 떨어지면 윤년
+        // 2) 그 중에서 100으로 나누어 떨어지면 평년
+        // 3) 그 중에서 400으로 나누어 떨어지면 윤년
+        function chyear(year) {
+            let isyear = "평년";
+            if(year%4==0) { // 윤년
+                if(year%100==0) {  // 평년
+                    isyear = year%400==0 ? "윤년" : "평년";
+                } else {
+                    isyear = "윤년";
+                }
+            } 
+            return isyear;
+        }
+        let result = chyear(inyear);
+        console.log(result);
+
+연습문제3
+
+주사위는 눈금이 1~6
+컴퓨터와 사람 랜덤하게 주사위 값을 지정 
+지정된 주사위 값을 출력 
+주사위 값을 비교하여 승리자를 출력 
+
+function gameGo() {
+	코드 작성
+}
+gameGo();
+
+         // Math.random() - 0~1 아무 실수를 반환 
+        // Math.floor(Math.random()*5) - 0~4
+        let randomNum = Math.floor(Math.random()*5);
+        console.log(randomNum);
+
+        function gameGo() {
+            let com_dice = Math.floor(Math.random()*6)+1;
+            let per_dice = Math.floor(Math.random()*6)+1;
+            // 템플릿리터럴 구문 
+            // `문자 ${변수, 표현식 - ex>2+3}`
+            // "문자" + 변수, 표현식이랑 똑같음 
+            console.log(`컴퓨터 주사위 : ${com_dice}, 사람 주사위 : ${per_dice}`);
+            
+            if(com_dice === per_dice) {
+                console.log("비겼습니다.")
+            } else if(com_dice > per_dice) {
+                console.log("컴퓨터가 이겼습니다.")
+            } else {
+                console.log("사람이 이겼습니다.")
+            }
+        }
+        gameGo();
+
+
+자바스크립트가 돌아가는 플랫폼 - 호스트 라고 함
+호스트 환경이 웹브라우저일 때,
+제일 최상위 : window
+그 밑에 : DOM, BOM, Object
+- window는 전역 객체 
+(console.log도 윈도우가 가지고 있음)
+
+DOM (DocumentObjectModel) : 문서 객체 모델
+- document : 페이지의 진입점 (DOM의 제일 최상위 객체)
+document객체를 이용해서 페이지 내에 무엇이든 선택하고 변경할 수 있음 
+
+요소 선택하기 
+1. 단수 선택 
+document.getElementById("id명");
+document.querySelector("css선택자 그대로");
+
+2. 복수 선택 (묶음 선택하기)
+document.getElementByClassName("클래스이름");
+document.getElementByTagName("태그이름");
+document.querySelectorAll("css선택자 그대로");
+
+
+
+

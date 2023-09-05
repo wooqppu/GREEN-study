@@ -1,0 +1,132 @@
+
+JQuery
+jquery.com -> 구글 cdn
+
+이벤트 연결 
+
+1. obj.이벤트 (function() { })
+
+2. obj.on("이벤트", function() { })
+
+
+JS
+document.querySelector("div").innerHTML = "<p>p입니다.</p>";
+
+JQ
+$("div").html("<p>p입니다.</p>")
+: div 안에 p태그를 넣는다.
+
+css 변경 
+JS
+document.querySelector("div").style.display = "none"
+
+JQ
+$("div").css("display", "none")
+
+$("div").css("속성", "속성값")
+$("div").css({ "속성1" : "속성값", "속성2" : "속성2값" })
+
+
+
+
+스프링 
+
+member 테이블 생성 (회원가입 테이블)
+
+회원가입 페이지 
+회원 목록 페이지 
+
+
+1. 테이블 생성 
+create table member (
+    userid varchar2(20) primary key,
+    password varchar2(20) not null,
+    birthyear number(4) not null
+);
+
+2. MemberDTO 생성
+
+3. MemberMapper 인터페이스 생성 
+MemberMapper.xml (실제 쿼리 작성)
+
+4. MemberService 인터페이스 생성 
+인터페이스 구현 클래스 생성 
+
+5. Controller 생성 
+
+
+
+스프링 - 시큐리티 (로그인을 위한 라이브러리)
+서블릿의 필터와 인터셉터를 이용해 처리함
+
+필터 
+서블릿에서 말하는 단순한 필터 
+스프링과 무관한 서블릿 자원 
+
+인터셉터 
+스프링에서 필터와 유사한 역할 
+스프링의 빈으로 관리되면서 스프링의 컨텍스트 내에 속함 
+
+
+스프링 시큐리티 관련 라이브러리
+maven spring-security-web 5.0.6
+
+maven spring-security-core 5.0.6
+
+maven spring-security-taglibs 5.0.6
+
+maven spring-security-config 5.0.6
+
+
+security-context.xml 생성
+
+
+/sample/all -> 로그인을 하지않은 사용자도 접근 가능 
+/sample/member -> 로그인한 사용자만 접근 가능
+/sample/admin -> 로그인한 사용자 중에서 관리자 권한 가진 사용자만 접근 가능
+
+
+SampleController 생성 
+
+
+스프링-시큐리티의 역할 
+
+인증과 인가 
+
+인증 : 자신을 증명하는 것 (스스로 무언가 자신을 증명할 자료를 제시함)
+인가 : 권한을 부여하는 것 (인증의 과정을 거친 후 담당자에 의해서 권한 부여)
+
+1. 인증을 담당하는 인증 매니저 
+AuthenticationManager : 인증 매니저
+
+하위 ProviderManager : 인증에 대한 처리를 위임함
+
+AuthenticationProvider : 인증 제공자  
+(실제 인증 작업을 처리함)
+
+UserDetailsService : 권한에 대한 정보를 전달하는 객체 
+
+
+접근 제한 설정 
+: 특정한 url  접근할 때 인터셉터를 이용해서 접근을 제한
+
+<security:intercept-url pattern="/sample/all" access="permitAll"/>
+속성 
+pattern : url 패턴을 의미, access: 권한 체크
+
+<security:intercept-url pattern="/sample/member" 
+access="hasRole('ROLE_MEMBER')"/>
+
+<security:intercept-url pattern="/sample/all" access="permitAll"/>
+
+
+
+
+
+
+
+
+
+
+
+ 

@@ -1,0 +1,153 @@
+복습
+
+자바 
+기본타입
+byte, short, char, int, long, float, double, boolean
+참조타입
+배열, 열거, 클래스, 인터페이스
+
+String 타입  (클래스타입)
+
+String str1 = "김그린"
+String str2 = "김그린"
+String str3 = new String("김그린")
+String str4 = new String("김그린")
+
+str1==str2 true -> 참조타입 비교시 번지를 비교 
+str3==str4 false (둘의 번지가 다르기 때문에 false)
+
+str3.equals(str4) -> 문자열의 값 비교는 equals 사용 
+
+
+산술연산자, 논리연산자, 비교연산자, (복합)대입연산자
+
+&& : true && true --> true, false && true --> false
+|| : true || false --> true, false || false --> false
+! : !true --> false, !false --> true
+
+int x = 10;
+x += 5 //15 
+x -= 2 // 13
+
+A==B 같으면 true
+A!=B 다르면 true
+
+
+제어문 조건문, 반복문
+
+if문
+else if문
+else문
+
+if(조건1) { 실행 }
+else if(조건2) { 조건1이 false, 조건2가 true일 때 실행 } 
+else { 조건1,2가 다 false일 때 실행 }
+
+switch문
+switch(변수) { 
+	case 'A' : 
+	case 'a' : (A 또는 a일 때)
+		실행;
+		break;
+	case 'B' :
+	case 'b' : (B 또는 b일 때)
+		실행;
+		break;
+	default :
+		실행;
+		break;
+ }
+
+switch표현식 : break 따로 걸어줄 필요 없음 (람다식을 활용)
+switch(변수) { 
+	case 'A', 'a' -> { 실행; } 
+	case 'B', 'b' -> { 실행; }
+	default -> { 실행; }
+}
+
+
+반복문 
+for(초기값; 조건식; 증감) { 실행문 }
+
+ex> for(int i = 1; i<11; i++) { System.out.println(i) }
+int i = 1;
+while(i<11) { 
+	System.out.println(i) 
+	i++;
+}
+	
+do {
+	실행문
+} while(true);
+
+
+이중for문 break --> for문에 이름을 붙여주고, 이름 지정해서 break 걸기
+Green: for() { 
+	for() {
+		break Green;
+	}
+
+ }
+
+String str = "김"
+String str = new String("김그린")
+
+배열 (제일 많이 쓰는 데이터 타입)
+각 데이터에 인덱스를 부여한 자료구조 
+- 같은 타입 데이터만 저장
+- 한 번 생성된 배열은 길이를 늘리거나 줄일 수 없음 
+- 0번부터 시작 
+
+배열 선언 
+- 타입 [] 변수
+int[] scores = { 10,20,30,40,50 } // 리터럴 형식으로 지정
+int[] scores = new int[5];    // {0,0,0,0,0}
+
+int[] a = null;
+a = {10,20,30} ----> 컴파일 에러 발생
+a = new int[] {10,20,30}
+
+- 타입 변수 []
+
+연습문제
+1) 10개의 정수를 입력받아 짝수 중 가장 큰 값과 
+홀수 중 가작 작은 값을 출력하는 프로그램  
+
+
+2) 5개의 정수를 {95, 75, 85, 100, 50}로 초기화하고 
+오름차순으로 정렬하는 프로그램
+
+3) 5개의 정수를 입력받아서 내림차순(큰 수 -> 작은 수) 정렬 후 출력
+
+
+배열복사
+
+int[] nums = {10,20,30,40,50} ---> 참조 타입의 값은 힙에, 힙의 주소(번지)는 스택에 생성
+스택 영역 nums : 10011234 
+힙 영역 10011234(번지수) : {10,20,30,40,50}
+int[] nums2 = nums; ---> 값을 복사한게 아니라 번지가 같음 
+nums2 : 10011234
+
+int[] nums3 = new int[5]; ---> 참조 변수는 새로운 값 형성으로 복사
+nums[3] : 
+힙 영역 10027896 : {0,0,0,0,0}
+
+System.array.copy(복사할 배열, 복사할 배열의 인덱스, 
+붙여넣기할 배열, 붙여넣기할 배열의 인덱스, 붙여넣을 요소의 갯수)
+int[] arr1 = {1,2,3}
+int[] arr2 = new int[5]; {0,0,0,0,0};
+System.arraycopy(arr1, 0, arr2, 0, 2 )
+
+향상된 for문 : 배열항목 반복을 위한 for문
+int nums = {1,2,3,4,5}
+for(int i=0; i<nums.length; i++) {
+	System.out.println(nums[i]);
+}
+for(int i : nums) {
+	System.out.println(nums[i]);
+} 
+
+for(타입변수 : 배열변수) {
+	실행문
+} 
+

@@ -1,0 +1,146 @@
+클래스 설계도 
+객체를 만들기위한 설계도
+
+1) 객체 생성 
+클래스명 변수명 = new 클래스명();
+
+붕어빵 틀
+붕어빵
+
+class Person {
+	필드 String name; int age; int height; int weight;
+	생성자 public Person() {} 	// 기본생성자
+
+	// 생성자 역할 : 초기화
+	public Person(String name, int age, ...) {
+		this.name = name;
+		this.age = age;
+		this.height = height;
+		...	
+	}
+
+	메소드 public void eat() { System.out.println("먹는다"); }
+}
+
+
+public  모든 패키지 사용 가능
+protected 같은 패키지  + 자식 클래스(다른 패키지)
+default 같은 패키지에서 사용 가능
+private 클래스 내부에서만 사용 가능 
+
+
+상속 시 
+자식 생성자에서 부모 생성자를 호출
+Super() ---> 부모디폴트생성자호출 생략가능
+
+메소드 재정의 - 오버라이딩
+다형성 실행방법은 같으나 다른 다양한 결과가 나오도록함 
+
+상속받은 메소드를 자식 클래스에서 재정의해서 사용 
+
+자식클래스 extends 부모클래스 {
+	클래스() {
+	super()
+	}
+	오버라이딩
+	public void sound() {
+		super.sound()
+		실행문
+	}
+
+}
+
+class Animal {
+	public void sound() {
+		System.out.println("소리를 냅니다");
+	}
+}
+class Cat extends Animal {
+	Cat myCat = new Cat();
+	myCat.sound();
+	public void sound() {
+		System.out.println("냐옹냐옹");
+	}
+}
+
+
+final 클래스와 final 메소드 
+final 필드
+
+1) 선언할 때 초기화
+2) 생성자로 초기화
+
+static field 필드 ---> 상수
+1) 선언할 때 초기화
+2) 정적 블럭
+static final MIN_ACCOUNT;
+static  {
+	MIN_ACCOUNT = 10000/4+5;
+}
+
+final class ---> 최종적인 클래스 
+상속 할 수 없는 클래스(부모클래스 지정안됨) 
+
+public final class Cat {}
+public class WhiteCat extends Cat (불가능)
+
+final 메소드 
+메소드를 선언할 때 final키워드를 붙이면 최종적인 메소드 
+오버라이딩 할 수 없음 (재정의 불가)
+
+
+
+
+메소드
+한국사람
+국적
+
+
+한국사람 손민영 = new 한국사람("민영")
+한국사람 김그린 = new 한국사람("그린")
+손민영 이름: 민영,  
+김그린 이름: 그린, 
+손민영.이름 
+손민영.국적 
+한국사람.국적
+
+한국사람 {
+
+   이름 
+   static 국적=대한민국
+}
+
+
+
+
+
+class Person{
+	String 이름;
+	int 나이;
+	String 성별;
+	String 취미;
+	static String 국적="대한민국";
+
+	public Person(){
+	}
+	public Person(String 이름){
+		this(이름, 20,"여성","독서");
+	}
+	public Person(String 이름, int 나이, String 성별, String 취미){
+		this.이름 = 이름;
+		this.나이 = 나이;
+		this.성별 = 성별;
+		this.취미 = 취미;
+	}
+	public eat(){
+		System.out.println("먹는다");
+	}
+	public String getName(){
+		return this.이름;
+	}
+	public void setHobby(String 취미){
+		this.취미 = 취미
+	}
+}
+
+

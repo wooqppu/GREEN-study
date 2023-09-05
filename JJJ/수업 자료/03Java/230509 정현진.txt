@@ -1,0 +1,219 @@
+
+복습
+
+날짜와 시간 클래스
+
+Date 클래스 
+Date now = new Date()
+SimpleDateFormat 클래스 
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 
+HH시 : mm분 : ss초")
+sdf.format(now) ---> 2023년 5월 9일 09시 : 09분 : 25초
+
+Calendar 클래스
+Calendar now = Calendar.getInstance()
+now.get(Calendar.Year)
+now.get(Calendar.MONTH)+1
+
+TimeZone tm = TimeZone.getTimeZone("ID")
+String[] avail = TimeZone.getAvailableIDs();
+
+LocalDateTime 클래스
+LocalDateTime now = LocalDateTime.now();
+LocalDateTime target = LocalDateTime.of(year, month, day, 
+hour, minute, second)
+
+날짜와 시간 비교 메소드
+
+isAfter()	이후 날짜인지?	boolean
+isBefore()	 이전 날짜인지?	boolean
+isEqual() 	같은 날짜인지?	boolean
+until() 	기간이 얼마인지?	long
+
+minusYear()	long타입
+plusYear()	long타입
+
+DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+now.format(dtf)	--->	"2023.05.09"
+
+
+형식 클래스 
+SimpleDataFormat : 날짜를 형식화된 문자로 반환
+DecimalFormat : 숫자를 형식화된 문자로 반환 
+
+DecimalFormat
+0 10진수 (빈자리는 0으로 채움)
+# 10진수 (빈자리 채우지 않음)
+. 소수점
+, 단위 구분 ex> #,###
+% %문자
+\u00A4 통화기호
+
+DecimalFormat df = new DecimalFormat("형식");
+df.format(숫자)	--->	형식화된 문자로 리턴
+
+SimpleDataFormat sdf = new SimpleDataFormat("형식");
+sdf.format(날짜객체)	--->	형식화된 문자열로 리턴
+
+
+정규표현식 
+: 문자열 형태를 검증하는 경우 사용 
+ex> 이메일 형식체크, 비밀번호 입력 양식 체크
+
+[] 한개의 문자 [a-z] [a-zA-Z0-9] [abc] [^abc]
+\d 한개의 숫자 / [0-9]와 동일
+\s 공백
+\w 한개의 알파벳 또는 한개의 숫자 / [a-zA-Z0-9]와 동일
+\. .
+. 모든 문자 중 한개 
+? 없음 또는 한개 
++ 한개 이상
+* 없음 또는 한개 이상
+{n} 정확히 n개
+{n, } 최소 n개
+{n,m} n개부터 m개까지
+a | b a 또는 b
+() 그룹핑
+
+검증하기 
+Pattern 클래스 
+Pattern.matches("정규식", "검증할문자") ---> true, false
+
+String reg = "\\d" (역슬래시를 문자처럼 사용할 경우 \를 2번 사용)
+ex> (02|010)-\\d{3,4}-\\d{4}
+
+
+
+연습문제 
+1. 문자열 my_string과 정수 n이 매개변수로 주어질 때, my_string의 
+뒤의 n글자로 이루어진 문자열을 return하는 solution함수를 작성하세요
+
+2. 정수가 담긴 리스트 num_list가 주어질 때 모든 원소들의 곱이 모든 원소들의
+합의 제곱보다 작으면 1을, 크면 0을 return하도록 solution함수를 완성하세요
+
+3. 정수 리스트 num_list와 정수 n이 주어질 때, num_list의 첫 번째 원소부터 
+마지막 원소까지 n개 간격으로 저장되어있는 원소들을 차례로 담은 리스트를 
+return하도록 solution함수를 완성하세요
+
+
+리플렉션 
+class객체 : 클래스와 인터페이스 메타정보 관리
+메타 정보 : 패키지 정보, 타입 정보, 멤버(필드, 생성자, 메소드)
+메타정보를 프로그램에서 읽고 수정하는 것
+
+ex>
+Class clazz = Car.class;
+Class clazz = Class.forName("패키지.. 클래스 이름");
+Class.forName("ch04.eaxm01.sec01.Car")
+
+Car carClass = new Car();
+Class clazz = carClass.getClass();
+
+패키지와 타입정보 얻기 
+getPackage() 패키지 정보 읽기
+getSimpleName() 패키지를 제외한 타입 이름
+getName() 패키지를 포함한 전체 이름 
+
+멤버 정보 얻기
+클래스 멤버 
+필드, 생성자, 메소드 
+
+Constructor[]	getDeclaredConstructors() 생성자 정보읽기
+Field[]		getDeclaredFields() 필드 정보읽기
+Method[]		getDeclaredmethods() 메소드 정보읽기
+
+
+리소스 경로 얻기 
+클래스 객체 - 클래스 파일의 경로 정보 
+이 경로를 기준으로 리소스 파일(이미지, xml)의 경로를 얻을 수 있음 
+
+getResource("파일 이름")  리소스 파일의 url 경로를 리턴 
+
+
+어노테이션
+: 클래스나 인터페이스를 컴파일하거나 실행할 때 
+어떻게 처리하는지를 알려주는 설정 정보
+
+1) 컴파일 시 사용하는 정보 전달 ex> @Override
+2) 빌드 툴이 코드를 자동으로 생성할 때 정보 전달 ex> 롬복 @Data
+3) 실행 시 특정 기능을 처리할 때 사용되는 정보 전달 
+
+정의하기 
+@Target({XlementType.TYPE, ElementType.FIELD, Element.Type.METHOD})
+public @interface AnnotationName { 
+	// 속성 타입 이름으로 구성
+	String value(); // value는 기본속성
+	String prop1();	
+	int prop2() default 1;
+ }
+
+사용하기
+@AnnotationName("*");
+@AnnotationName(value = "*", prop1 = "안녕", prop2 = 20);
+@AnnotationName(prop1 = "안녕");
+@AnnotationName(prop1 = "안녕", prop2 = 20);
+
+어노테이션 적용 대상 
+
+어노테이션 유지 정책 
+SOURCE 컴파일할 때 적용 		컴파일된 후 제거 
+CLASS 메모리로 로딩할 때 적용	메모리로 로딩된 후 제거
+RUNTIME 실행할 때 적용		계속 유지
+
+
+어노테이션 설정 정보 받기 
+Annotation[] 리턴 getDeclaredAnnotations() 적용된 어노테이션을 리턴 
+
+
+제네릭 Generic
+: 선언할 때 결정되지 않은 타입을 타입파라미터로 처리하고, 
+실제 사용할 때 파라미터 타입을 구체적인 타입으로 대체하는 기능
+
+public class Box<T> {
+	public T content;
+}
+Box<String> box1 = new Box<String>();
+box1.content = "green";
+String a = box1.content;
+
+기본타입X  래퍼클래스(기본타입의 포장 클래스)
+Integer, Double, Character, Float
+
+Box<Integer> box2 = new Box<Integer>(); 
+box2.content = 300;
+int a = box2.content;
+
+Box<String> box3 = new Box<String>();
+Box<String> box3 = new Box<>();
+
+Box<Integer> box2 = new Box<Integer>(); 
+Box<Integer> box2 = new Box<>(); 
+
+제네릭 타입 
+: 클래스와 인터페이스 선언부에 <>부호가 붙고
+그 사이에 타입 파라미터가 들어가는 타입
+
+public class 클래스 이름<T,M> {  }
+public interface 인터페이스 이름<T,M> {  } 
+
+제네릭 메소드 
+: 타입 파라미터를 가지고 있는 메소드 
+public <A> 리턴타입 메소드이름() {  }
+public <T> Box<T> boxing() {  }
+
+제한된 타입 파라미터
+<T extends 상위타입> 상위타입이거나 상위타입을 상속받은 자식타입
+public class box<T extends Number> {
+	public T field1;
+}
+
+Number
+Byte, Short, Integer, Float, Long, Double
+
+와일드카드 타입 파라미터 
+: 매개값이나 리턴 타입으로 사용할 때 타입 파라미터로
+?(와일드 카드)를 사용할 수 있음 
+
+<? extends Student> 
+<? super Worker>
+

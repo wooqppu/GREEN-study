@@ -1,0 +1,232 @@
+중간처리 과정 
+
+1. 필터링 : 요소 걸러내기  
+- 필터링은 요소를 걸러내는 중간처리 기능
+
+destinct() 중복제거
+filter() 
+(타입이 함수형 인터페이스일 때 가능)
+
+filter(Predicate<T>)
+filter(IntPredicate)
+filter(LongPredicate)
+filter(DoublePredicate)
+
+모든 predicate는 매개값을 조사한 후 boolean을 리턴하는 
+teat()메소드를 가지고 있음
+
+T -> { return true }
+T -> true;
+
+ex> filter( num -> num>=70 )
+filter( str -> str.startWith("김") )
+
+List<String> list = new ArrayList<>();
+list.add("김그린");
+list.add("박그린");
+list.add("김그린");
+list.add("최그린");
+list.add("김블루");
+
+Stream<String> stream = list.stream();
+stream.distinct();
+.filter(obj -> obj.startsWith("김"));
+.forEach(e -> sout(e));
+
+
+연습문제
+
+50,80,90,100,70,60,90 ---> List컬렉션
+중복 제거 후 70 이상만 평균을 구해서 출력
+
+
+2. 매핑 : 요소 변환
+- 스트림의 요소를 다른 요소로 변환하는 중간처리 기능이다.
+
+mapXXX() 객체요소를 다른 새로운 스트림으로 리턴  
+map(Function<T,R>)		T -> R (객체 스트림)
+mapToInt(ToIntFunction<T>) 	T -> int
+mapToLong(ToLongFunction<T>)	T -> long
+mapToDouble(ToDoubleFunction<T>)	T -> double
+
+mapToObj(intFunction<U>)  int스트림에서 새로운 객체 스트림<U>을 돌려줌
+mapToObj(LongFunction<U>)  long -> U
+
+mapToDouble(intToDoubleFunction)  int -> double
+
+매개변수 Function 함수형 인터페이스 
+모든 Function은 매개값을 리턴으로 매핑하는 applyXXX메소드를 가짐 
+매개값 -> applyXXX() -> 리턴값 
+
+
+기본 타입간의 변환, 
+기본 타입 요소를 래퍼 객체 요소로 변환
+
+asLongStream()	int->long 	리턴타입 LongStream
+asDoubleStream()	int->double	리턴타입 DoubleStream
+		long->double
+
+
+boxed()		int->Integer		Stream<Integer>
+		long->Long		Stream<Long>
+		double->Double		Stream<Double>
+
+
+요소를 복수개의 요소로 변환 
+flatMapXXX()
+하나의 요소를 여러개의 요소들로 변환한 새로운 스트림을 반환 
+원래 스트림의 A요소를 A1, A2요소로 변환, B요소를 B1, B2로 변환 
+
+A1, A2, B1, B2 -> 새로운 스트림으로 반환
+
+
+3. 요소 정렬 
+- 정렬은 요소를 오름차순 또는 내림차순 정렬하는 중간처리 
+
+sorted() Comparable요소를 정렬한 새로운 스트림 생성 --> Stream<T>
+
+스트림의 요소가 객체일 때 Comparable을 구현하고 있어야만 
+sorted()메소드를 사용하여 정렬할 수 있음 
+
+요소객체 Comparable인터페이스를 구현하고 있지 않다면,
+비교자(Comparator)를 제공해서 요소를 정렬시킬 수 있음 
+명시적인 클래스로 구현할 수 있으며 람다식으로 처리할 수도 있음 
+
+sorted((o1, o2)-> {
+	if(o1.getScore() < o2.getScore()) {
+		return -1;
+	} else if()
+})
+
+sorted(o1, o2) -> {
+	return Integer.compare(01.getScore(), o2.getScore());
+})  // 생략 1
+
+sorted(o1, o2) -> Integer.compare(01.getScore(), o2.getScore()))
+// 생략 2
+
+- Comparable인터페이스 구현되있을 때 내림차순 정렬 
+.sorted(Comperator.reverseOrder())
+
+4. 루핑 : 요소를 하나씩 처리 
+- 스트림에서 요소를 하나씩 반복해서 가져와 처리하는 것을 말함 
+
+루핑 메소드
+forEach() 	 최종처리 
+peek()	 중간처리 
+
+5. 매칭 : 요소조건 만족 여부 
+- 최종처리 메소드
+
+allMatch()		모든 요소가 조건에 부합해야 true리턴, 그 외 false
+anyMatch()	요소 중 하나라도 조건에 부합하면 true, 그 외 false
+noneMatch()	모든 요소가 조건에 부합하지 않으면 true, 그 외 false
+
+6. 요소 기본 집계
+- 최종처리 기능으로 요소들을 처리해서 카운팅, 합계, 평균값, 최대값, 최소값
+하나의 값으로 산출하는 것을 말함 
+
+count()		요소 개수		리턴타입 long
+findFirst()		첫번 째 요소	리턴타입 OptionalXXX
+max()		최대 요소		리턴타입 OptionalXXX
+min()		최소 요소		리턴타입 OptionalXXX
+average()		평균 		리턴타입 OptionalDouble
+sum()		요소 총합 (합계)	리턴타입 int, long, double
+
+OptionalXXX
+: Optional, OptionalDouble, OptionalInt, OptionalLong 클래스를 말함
+
+get()
+getAsDouble()
+getAsInt()
+getAsLong()
+
+7. 컬렉션의 요소는 동적으로 추가되는 경우가 많다 -> 
+컬렉션에 요소가 존재하지 않으면 집계값을 산출할 수 없으므로 
+NoSuchElementException예외가 발생 
+
+예외 발생 방지 방법 3가지
+1) isPresent()	집계값이 있는지 체크 	리턴타입 boolean
+OptionalDouble optional = stream.average()
+if(optional.isPresent()) {
+	sout("평균 : " + optional.getAsDouble());
+} else { sout("평균 : 0"); }
+
+2) orElse()	집계값이 없는 경우 디폴트값을 지정 
+double avg = stream
+.average()
+.orElse(0.0);
+sout(avg)
+
+3) ifPresent(Consumer)  집계값이 있을 때만 동작하는 Consumer람다식을 제공
+stream 
+.average()
+.ifPresent(a -> sout(a));
+
+
+8. 요소들을 필터링 또는 매핑한 요소들을 수집하는 
+최종처리 메소드는 collect()를 제공 
+- 필요한 요소만 컬렉션에 담을 수 있고, 요소들을 그룹핑한 후에 집계할 수도 있음 
+
+collect(Collector<T,A,R>)
+toList()	list저장
+toSet()	set저장
+toMap()	map저장
+
+ex> List<Integer> numlist = new ArrayList<>();
+numlist.add(10)
+numlist.add(20)
+numlist.add(30)
+
+List<Integer> new Numlist = numlist.stream()
+.filter(num->num>=20)
+.collect(Collectors.toList())
+
+java16부터는 .toList() 사용하면 됨
+List<Integer> new Numlist = numlist.stream()
+.filter(num->num>=20)
+.toList();
+
+9. 요소 그룹핑
+collect()메소드는 단순히 요소를 수집하는 기능 이외에
+컬렉션의 요소들을 그룹핑해서 Map객체를 생성할 수 있음 
+
+Map<String, List<Student>> map = stuList.stream()
+.collect(
+	Collectors.groupingBy(s->s.getGender())	// 그룹핑 key
+)
+["남"=리스트, "여"=리스트]
+
+
+collect(Collectors.groupingBy(그룹핑, 맵핑 및 집계))
+mapping()
+averageDouble() 평균값
+countion() 요소수
+maxBy() 최대값
+minBy() 최소값
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

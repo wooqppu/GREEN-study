@@ -1,0 +1,122 @@
+반복문 
+
+System.out.println(1)
+System.out.println(2)
+System.out.println(3)
+.
+.
+.
+
+1. for문 : 횟수가 정해진 반복문
+for( 초기화, 조건식, 증감 ) { 반복될 실행문 }
+ex>
+for(int i = 1; i<11; i++) { System.out.println(i) }
+- 1 int i=1
+- 2 조건식 비교 1 < 11 ? true
+- 3 반복문 코드 블럭 실행 1 출력
+- 4 i를 1씩 더해줌 i ---> 2
+- 5 조건식 비교 2 < 11 ? true
+- 6 반복문 코드 블럭 실행 2 출력
+- 7 i를 1씩 더해줌 i ---> 3
+.
+.
+.
+조건식에서 false 나올 때까지 반복
+
+ex> 이중for문
+for(int i = 0; i<5; i++) {
+	for(int j = 0; j<5; j++) {
+		System.out.println(i + "" + j) }
+	}
+}
+   i    j
+- 0 +1
+- 0 +2
+- 0 +3
+- 0 +4
+(하위 조건(j식) 전부 수행 이후에 i 증감 조건으로 올라감) 
+
+이중for문을 사용해서 구구단 출력 
+2 * 1 = 2
+2 * 2 = 4
+.
+.
+.
+9단까지 만들기 
+for(int i=2; i<10; i++) {
+	for(int j=1; j<10; j++) {
+		System.out.println( i + "*" +  j + "=" + i*j );
+		}
+	}
+
+Star Exam
+*	i : 0 j : 0
+**	i : 1 
+***	i : 2
+****
+*****
+Star Exam Reverse
+*****
+****
+***
+**
+*
+
+
+2. while문 
+초기값
+while(true) {
+	System.out.println(1)
+	증감식
+} 
+int num = 1; 
+	while(num<11) {
+		System.out.println(num);
+		num++;
+}
+
+
+3. do-while문 : 조건과 관계없이 무조건 한 번은 코드를 실행해야할 때 사용
+(이후 while조건 성립되면 코드 반복 실행)
+
+do {
+	반복될실행문
+} while(조건);
+
+
+break문 : 반복문을 빠져나가는 역할 (무한루프 끝내기)
+continue문 : 반복문을 빠져나가는게 아니라 한 번만 넘기기 
+
+참조타입
+int num = 10;
+String str = "green"; (str은 클래스 타입 -> 참조타입)
+
+기본객체(ex>int)는 값이 바로 담겨있지만 -> 스택 영역에 값 저장 
+참조타입(ex>str)은 값의 번지(주소)가 담겨있음 -> 스택 영역에 번지, 힙 영역에 값 저장 
+(-> 번지값 비교 가능)
+(참조타입의 값을 비교하려면 equals 사용)
+
+참조타입 문자열 메소드
+1)length() : 문자열의 길이를 반환
+ex> String name ="abcde"
+int len = name.length();
+
+2)charAt(인덱스) : 인덱스에 해당하는 문자 추출
+ex> char ch = name.charAt(2)
+
+3)replace("특정문자열", "변경할문자열")
+String str = "자바는 재미있다."
+String newStr = str.rplace("자바", "파이썬")
+
+4)substring(startIndex, endIndex)
+substring(startIndex) : 끝 번호는 포함X -> 바로 앞 번호까지의 문자열 추출
+
+5)indexOf("찾는문자열") : 문자열에서 해당 문자의 인덱스를 반환
+String a = "javascript";
+a.indexOf("s")
+
+6)split : 문자열을 배열로 변경해줌
+String names = "그린, 블루, 오렌지";
+String[] names2 = names.split(",")
+
+7)contains("찾는 문자열") ---> 찾는 문자열이 있으면 true, 없으면 false 리턴

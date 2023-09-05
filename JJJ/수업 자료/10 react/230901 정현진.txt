@@ -1,0 +1,27 @@
+
+클라이언트 요청 메서드
+
+get	조회		read
+
+post	저장(insert)	create
+
+delete	삭제 요청		delete
+	
+put	수정 요청 	update
+
+
+fetch API 요청 
+
+get
+fetch("http://localhost:8010/api/cars")
+
+fetch("http://localhost:8010/api/cars", {
+	method: "POST",
+	headers: {
+		"Content-Type" : "application/json"
+	},
+	body: JSON.stringify(obj)
+})
+
+
+서버 restFul API 제공

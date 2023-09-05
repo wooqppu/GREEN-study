@@ -1,0 +1,546 @@
+
+sqlplus scott/tiger
+
+오라클 함수
+
+- 문자 함수 
+
+CONCAT() : 두 개의 문자열 데이터를 하나의 데이터로 연결하는 연산자 
+
+select concat(empno, ename) from emp;
+
+select concat(empno, concat(':', ename)) from emp;
+
+
+TRIM(삭제옵션 - 선택, 삭제할 문자 - 선택, from 원본문자 - 필수)
+문자열 내에서 특정 문자를 지우기 위해 사용 
+삭제할 문자 생략된 경우 기본적으로 공백을 제거, 
+끝부분 공백만 제거하고 문자 사이 공백은 제거되지 않음  
+
+select trim(' _oracle_ ') as trim, 
+trim(leading from ' _oracle_ ') as leadingtrim, -> 왼쪽 공백
+trim(trailing from ' _oracle_ ') as trailingtrim, -> 오른쪽 공백
+trim(both from ' _oracle_ ') as trimboth -> 양쪽 공백
+from dual; 
+
+select trim('_' from '_oracle_') from dual;
+
+select trim('_oracle_') as trim,
+trim(leading '_' from '_oracle_') as trimleading,
+trim(trailing '_' from '_oracle_') as trimtrailing,
+trim(both '_' from '_oracle_') as trimboth
+from dual;
+
+
+- 숫자 함수
+
+ROUND(숫자 - 필수, 반올림 위치 - 선택)
+지정된 숫자의 특정 위치에서 반올림한 값을 반환 
+반올림 위치 지정하지 않으면 소수점 첫번째 자리에서 반올림 수행
+
+select round(1234.5678) as round,
+round(1234.5678,0) as round0,
+round(1234.5678,1) as round1,
+round(1234.5678,2) as round2,
+round(1234.5678,-1) as roundminus1,
+round(1234.5678,-2) as roundminus2
+from dual;
+
+
+TRUNC(숫자 - 필수, 버림 위치 - 선택)
+지정된 숫자의 특정 위치에서 버림한 값을 반환 
+버림 위치를 지정하지 않으면 소수점 첫번째 자리에서 버림 수행
+
+select trunc(1234.5678) as trunc,
+trunc(1234.5678,0) as trunc0,
+trunc(1234.5678,1) as trunc1,
+trunc(1234.5678,2) as trunc2,
+trunc(1234.5678,-1) as truncminus1,
+trunc(1234.5678,-2) as truncminus2
+from dual;
+
+
+CEIL() : 입력된 숫자와 가까운 큰 정수를 반환
+ex> CEIL(3.14) -> 4
+
+FLOOR() : 입력된 숫자와 가까운 작은 정수를 반환
+ex> FLOOR(3.14) -> 3
+
+select ceil(3.14), floor(3.14), ceil(-3.14), floor(-3.14) 
+from dual; 
+
+
+MOD(나눗셈 될 숫자 - 필수, 나눌 숫자 - 필수)
+특정 숫자로 나눈 나머지를 반환 
+나머지를 구하는 함수 
+
+select mod(15,6), mod(10,2), mod(11,2), mod(5,3)
+from dual;
+
+
+- 날짜 데이터 함수 
+date형 데이터의 연산이 가능함 
+
+SYSDATE
+날짜 데이터의 연산 가능 (날짜 데이터끼리의 더하기는 연산되지 않음)
+날짜 + 숫자, 날짜 - 숫자, 날짜 - 날짜 (날짜 + 날짜는 불가능)
+오라클 서버가 놓인 OS의 현재 날짜와 시간을 보여줌
+
+select sysdate as now, 
+sysdate-1 as yesterday,
+sysdate+1 as tomorrow
+from dual;
+
+
+ADD_MONTHS(날짜 데이터, 더할 개월 수(정수))
+특정 날짜에 지정한 개월 수 이후 날짜 데이터를 반환
+
+select sysdate, add_months(sysdate,3)
+from dual;
+
+
+desc emp;
+
+select empno, ename, hiredate,
+add_months(hiredate, 120) as work10year
+from emp;
+
+
+MONTHS_BETWEEN(날짜 데이터1, 날짜 데이터2)
+두 날짜 데이터 간의 날짜 차이를 개월 수로 계산하여 반환
+
+select empno, ename, hiredate, sysdate,
+months_between(hiredate, sysdate) as months1,
+months_between(sysdate, hiredate) as months2,
+trunc(months_between(sysdate, hiredate)) as months3
+from emp;
+
+
+<연습문제>
+입사한지 40년이 지나지 않은 사원의 이름과 입사일을 출력하시오 
+where 조건, add_months, 480(40*12) 
+
+select ename, hiredate from emp
+where add_months(hiredate, 480) > sysdate;
+
+
+
+NEXT_DAY(날짜 데이터, 요일 문자) : 돌아오는 요일에 해당하는 날짜 데이터를 반환
+
+select sysdate, next_day(sysdate, '월요일'),
+last_day(sysdate) from dual;
+
+
+LAST_DAY(날짜 데이터) : 달의 마지막 날짜 데이터를 반환
+
+select sysdate, next_day(sysdate, '목요일'),
+last_day(sysdate) from dual;
+
+
+ROUND(), TRUNC()
+날짜 데이터의 반올림, 버림 처리
+
+
+155p 실습 (날짜 데이터 기준 포맷값)
+
+select sysdate,
+round(sysdate,'CC') as format_cc,
+round(sysdate,'YYYY') as format_yyyy,
+round(sysdate,'Q') as format_Q,
+round(sysdate,'DDD') as format_DDD,
+round(sysdate,'HH') as format_hh
+from dual;
+
+
+select sysdate,
+trunc(sysdate,'CC') as format_cc,
+trunc(sysdate,'YYYY') as format_yyyy,
+trunc(sysdate,'DDD') as format_DDD,
+trunc(sysdate,'HH') as format_hh
+from dual;
+
+
+- 자료형 변환 함수 
+각 데이터에 지정된 자료형을 변환해줌 
+
+TO_CHAR(날짜 데이터, 문자 형태)
+숫자 또는 날짜 데이터를 문자 데이터로 변환 
+
+select to_char(sysdate, 'YYYY/MM/DD HH24:MI:SS') as 현재날짜시간
+from dual;
+
+select sysdate,
+to_char(sysdate, 'YYYY') as year, 
+to_char(sysdate, 'MM') as month,
+to_char(sysdate, 'MON') as mon,
+to_char(sysdate, 'DD') as dd,
+to_char(sysdate, 'DY') as dy,
+to_char(sysdate, 'DAY') as day     
+from dual;
+
+
+select sysdate, 
+to_char(sysdate, 'DD') as dd,
+to_char(sysdate, 'DY', 'nls_date_language = korean') as dy_kor,
+to_char(sysdate, 'DY', 'nls_date_language = japanese') as dy_jpn,
+to_char(sysdate, 'DY', 'nls_date_language = english') as dy_eng
+from dual;
+
+select sysdate, 
+to_char(sysdate, 'DD') as dd,
+to_char(sysdate, 'DAY', 'nls_date_language = korean') as dy_kor,
+to_char(sysdate, 'DAY', 'nls_date_language = japanese') as dy_jpn,
+to_char(sysdate, 'DAY', 'nls_date_language = english') as dy_eng
+from dual;
+
+select sysdate, 
+to_char(sysdate, 'MM') as dd,
+to_char(sysdate, 'MON', 'nls_date_language = korean') as dy_kor,
+to_char(sysdate, 'MON', 'nls_date_language = japanese') as dy_jpn,
+to_char(sysdate, 'MON', 'nls_date_language = english') as dy_eng
+from dual;
+
+select sysdate, 
+to_char(sysdate, 'MM') as dd,
+to_char(sysdate, 'MONTH', 'nls_date_language = korean') as dy_kor,
+to_char(sysdate, 'MONTH', 'nls_date_language = japanese') as dy_jpn,
+to_char(sysdate, 'MONTH', 'nls_date_language = english') as dy_eng
+from dual;
+
+
+HH24 : 24시간으로 표현 
+HH, HH12 : 12시간으로 표현
+MI : 분
+SS : 초
+AM, PM : 오전, 오후 
+
+
+select sysdate, 
+to_char(sysdate, 'HH24:MI:SS') as hh24miss,
+to_char(sysdate, 'HH12:MI:SS AM') as hhmiss_am,
+to_char(sysdate, 'HH:MI:SS PM') as hhmiss_pm
+from dual;
+
+
+
+숫자를 문자로 반환 
+
+select sal, 
+to_char(sal, '$999,999') as sal$,
+to_char(sal, 'L999,999') as salL,
+to_char(sal, '$999,999.00') as sal1,
+to_char(sal, '000999,999.00') as sal2,
+to_char(sal, '000999,999.99') as sal3,
+to_char(sal, '999,999.00') as sal4
+from emp;
+
+select sal, 
+to_char(sal, '000,000.00') as sal4
+from emp;
+
+select sal, 
+to_char(sal, 'L999,999') as salL
+from emp;
+
+
+
+문자열의 산술 연산 
+
+select 1300 - '1500' from dual;
+
+select '1300' + 1500 from dual;
+(문자열을 자동으로 숫자 형태로 변환 -> 암시적 형변환)
+
+하지만 
+select '1,300' + 1500 from dual;
+이런 형태는 암시적 형변환 불가능 -> to_number 사용해야 함
+
+
+TO_NUMBER(문자열 데이터, 인식될 숫자 형태)
+문자 데이터를 숫자 데이터로 변환
+
+select to_number('1,300','999,999') - to_number('1,500','999,999')
+from dual;
+
+
+TO_DATE(문자열 데이터, 인식될 날짜 형태)
+문자열 데이터를 날짜 데이터로 변환
+
+select to_date('2022-02-05', 'YYYY-MM-DD') as todate1,
+to_date('20230315', 'YYYY-MM-DD') as todate2
+from dual;
+
+
+select * from emp
+where hiredate > to_date('1982/01/01', 'YYYY/MM/DD'); 
+
+(WHERE절에서도 TO_DATE 함수 사용 가능)
+
+
+
+- NULL 처리 함수 
+
+NVL(열, NULL인 경우 반환할 데이터)
+데이터가 NULL이 아니면 해당값을 반환, NULL이면 다른 값으로 대체해서 반환
+
+select comm, nvl(comm, 0) from emp;
+
+NVL2(열, NULL이 아닐 경우 반환 데이터, NULL일 경우 반환 데이터)
+데이터가 NULL이 아니면 두번째 값을 반환, NULL이면 세번째 값을 반환
+
+select comm, nvl2(comm, 'a', 'b') from emp;
+
+추가 수당이 없어도 연봉을 출력하고 싶을 때
+
+select empno, sal, comm, 
+sal*12+comm,
+sal*12+nvl(comm, 0)
+from emp;
+
+select empno, ename, nvl2(comm, sal*12+comm, sal*12) 
+as annsal from emp;
+
+
+
+- DECODE함수와 CASE함수
+
+DECODE(열 이름, '조건1', 데이터-조건1 일치 시 반환결과, 
+'조건2', 데이터-조건2 일치 시 반환 결과)
+
+if 또는 switch문처럼 조건에 맞을 때 해당 데이터를 결과 값으로 내보냄 
+조건에 해당하는 값이 없을 때의 반환 값 지정하지 않거나 
+조건에 맞는 값이 없을 경우 NULL이 반환됨
+
+select empno, ename, job, sal,
+decode(job, 'MANAGER', sal*1.1, 'SALESMAN', 
+sal*1.05, 'ANALYST', sal, sal*1.03) as upsal
+from emp;
+
+
+CASE()
+case 열 이름
+when 조건 then 조건 맞을 때 반환 
+else 조건 안맞을 시 반환 결화 
+end
+
+
+select empno, ename, job, sal,
+case job
+when 'MANAGER' then sal*1.1
+when 'SALESMAN' then sal*1.05
+when 'ANALYST' then sal
+else sal*1.03
+end as upsal
+from emp;
+
+
+
+
+174p 문제 풀이 
+
+1. substr(), rpad() 활용
+select empno, rpad(substr(empno, 1, 2), 4, '*') as masking_empno,
+ename, rpad(substr(ename, 1, 1), length(ename), '*') as masking_ename 
+from emp
+where length(ename) >= 5 and length(ename) < 6;
+
+2. trunc(), round() 활용
+select empno, ename,  sal,
+trunc(sal/21.5, 2) as day_pay,
+round(sal/21.5/8, 1) as time_pay
+from emp;
+
+3. 
+입사일을 기준으로 3개월이 지난 첫 월요일에 정직원 전환 
+정직원이 되는 날짜를 출력, 형식 YYYY-MM-DD
+to_char(next_day(add_months(hiredate, 3), '월요일'), 'YYYY-MM-DD')
+as r_job
+
+추가수당이 없는 사원의 추가수당은 N/A로 출력 
+nvl(to_char(comm), 'N/A') as comm
+
+->
+select empno, ename, hiredate,
+to_char(next_day(add_months(hiredate, 3), '월요일'), 'YYYY-MM-DD')
+as r_job,
+nvl(to_char(comm), 'N/A') as comm
+from emp;
+
+4. case 활용
+
+case
+when then
+end
+
+select empno, ename, mgr,
+case 
+when mgr is null then '0000'
+when substr(mgr, 1, 2) = '78' then '8888'
+when substr(mgr, 1, 2) = '77' then '7777'
+when substr(mgr, 1, 2) = '76' then '6666'
+when substr(mgr, 1, 2) = '75' then '5555'
+else to_char(mgr)
+end as chg_mgr
+from emp;
+
+
+
+
+- 다중행 함수와 데이터 그룹화 
+
+1) 다중행 함수
+그룹함수 복수행 함수로도 불리는 다중행 함수는 여러 행을 바탕으로 
+하나의 결과 값을 도출해내기 위해 사용하는 함수 
+
+SUM(distinct, all 중 하나 - 선택, 합계 구할 열이나 연산자, 함수 사용한 데이터 - 필수,
+over 분석을 위한 여러 문법 지정 - 선택)
+
+지정한 데이터의 합 반환 
+distinct는 중복값 한번만 포함 
+all은 모든 데이터 적용
+distinct 지정하지 않으면 all이 디폴트 
+
+select sum(sal) from emp;
+
+select sum(sal), sum(distinct sal) from emp;
+
+
+COUNT( sum과 동일 )
+지정한 데이터의 개수 반환 
+null이 데이터로 포함된 경우 null데이터는 반환 갯수에서 제외됨
+
+select count(sal) from emp;
+
+select count (*) from emp;
+select * from emp;
+
+select count (comm) from emp;
+
+
+MAX( sum과 동일 ) : 지정한 데이터 중 최대값 반환, 날짜 데이터도 가능
+
+select max(sal) from emp
+where deptno = 10;
+
+MIN( sum과 동일 ) : 지정한 데이터 중 최솟값 반환
+
+select min(sal), max(sal) from emp
+where deptno = 10;
+
+AVG( sum과 동일 ) : 지정한 데이터의 평균값 반환
+
+select min(sal), max(sal), trunc(avg(sal)) from emp
+where deptno = 10;
+
+20번 부서의 가장 먼저 입사, 가장 늦게 입사 날짜 조회
+select min(hiredate), max(hiredate) from emp
+where deptno = 20;
+
+평균, 중복 제거 후 평균
+select trunc(avg(sal)), trunc(avg(DISTINCT sal)) from emp;
+
+각 부서 번호의 모든 평균 -> group by 사용 가능  
+select avg(sal) as deptno10 from emp
+where deptno = 10
+union all
+select avg(sal) as deptno20 from emp
+where deptno = 20
+union all
+select avg(sal) as deptno30 from emp
+where deptno = 30;
+
+2) 데이터 그룹화 
+group by : 특정 열 또는 데이터를 기준으로 데이터를 그룹으로 묶어줌 
+
+select 조회할 열 이름1, 열 이름2, ...
+from 테이블 이름 
+where 조회할 행 선별하는 조건식
+group by 그룹화할 열을 지정 (여러개 가능)
+order by 정렬하려는 열 지정 
+
+(주의 - 그룹화된 열 외에 일반 열을 select절에 명시할 수 없음)
+
+select avg(sal), deptno
+from emp
+group by deptno;
+
+select avg(sal), deptno, job
+from emp
+group by deptno, job
+having avg(sal) >= 2000
+order by deptno, job;
+
+having절은 그룹으로 묶은(group by) 절에 조건을 줘서 
+그룹화된 결과 값의 범위를 제한할 때 사용 
+(where절과는 다름 - where절은 출력 대상의 행을 제한, 
+having절은 그룹회된 대상을 출력에서 제외하므로 쓰임새가 전혀 다름
+where, having 같이 사용하면 where이 먼저 적용됨)
+
+select deptno, job, avg(sal)
+from emp
+where sal >= 2000
+group by deptno, job
+having avg(sal) >= 1000
+order by deptno, job; 
+
+
+<연습문제>
+
+1. 이름이 김씨인 사람의 모든 컬럼을 검색
+select * from employee
+where pname like '김%';
+
+2. 2010년에 입사한 사람의 이름, 입사일, 급여를 검색 
+select pname, hiredate, sal
+from employee
+where hiredate between '2010-01-01' and '2010-12-31';
+
+3. 직급이 과장인 사람의 급여 평균을 검색, 별칭은 임의로 설정
+select avg(sal) as 과장평균급여 from employee
+where job='과장';
+
+4. 중복되는 값을 제외한 직급의 개수를 출력하시오
+select count(distinct job) as 직급수 from employee;
+
+5. 부서 번호 별로 부서 번호와 급여의 평균을 출력하시오
+select deptno, avg(sal) from employee
+group by deptno
+order by deptno;
+
+6. 퇴사한 사람의 수 
+select count(*) as 퇴사자수 from employee
+where firedate is not null;
+
+7. 급여의 평균보다 많은 사람의 이름, 직급, 급여 순으로 출력 
+급여를 내림차순으로 정렬 
+(서브쿼리 사용)
+- 1. 급여의 평균 구하기
+select avg(sal) from employee
+
+- 2. 평균 자리에 () 넣고 그 안에 -1번식 넣기
+select pname, job, sal from employee
+where sal > (select avg(sal) from employee)
+order by sal desc; 
+
+8. 보너스를 받지 않는 사람의 수 
+select count(*) as 보너스가없는사원수 from employee
+where bonus is not null;
+
+9. 부서 번호가 30인 사원의 급여 평균을 구하시오
+select avg(sal) from employee
+where deptno = 30;
+
+10. 급여가 가장 적은 사람의 이름과 급여, 부서 번호를 출력하시오  
+(서브쿼리 사용)
+- 1. 급여가 가장 적은 사람 
+select min(sal) from employee
+
+- 2. 제일 적은 급여 자리에 () 넣고 그 안에 -1번식 넣기
+select pname, sal, deptno from employee
+where sal = (select min(sal) from employee);
+
+11. 부서별로 부서 번호와 월급의 합계를 
+부서 번호가 10번 또는 20번만 출력
+select deptno, sum(sal) from employee
+group by deptno
+having deptno=10 or deptno=20; 

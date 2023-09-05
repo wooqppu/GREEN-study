@@ -1,0 +1,45 @@
+
+MVC 
+요청 -> 컨트롤러 (서블릿) -> 뷰 포워드
+
+상세보기 
+- 상세보기 시 조회수는 1 증가
+updateVisitcount 메소드 
+
+- 클릭한 레코드의 idx에 맞는 레코드 조회 
+selectView 메소드 
+
+클라이언트가 view.do 요청 
+서블릿 ViewController.java
+뷰 view.jsp
+
+
+수정하기 
+비밀번호 검증 후 edit.do로 요청 
+컨트롤러 EditController.java
+뷰 Edit.jsp
+
+
+삭제하기 
+비밀번호 확인 후 삭제하기 
+pass.do로 요청 
+요청 시 mode=delete
+idx = 게시글 번호 
+
+
+pass.do로 요청
+
+PassController
+(비밀번호 입력 페이지 이동 서블릿)
+
+Pass.jsp 
+(비밀번호 입력 페이지)
+
+
+비밀번호와 게시글 번호가 일치하는 게시글이 있는지 조회 
+모델에 작성 
+
+confirmPassword 메소드
+(매개변수로 패스워드, idx를 받아오고 true, false를 리턴 -> boolean타입 리턴) 
+
+

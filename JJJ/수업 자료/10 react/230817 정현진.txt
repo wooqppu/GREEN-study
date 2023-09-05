@@ -1,0 +1,112 @@
+
+state, ref
+
+useState(초기값) -> [state, setState] 
+useRef(curent값) -> { current: current값 }
+
+컴포넌트 : 상위 컴포넌트에서 그 안에 있는 하위 컴포넌트로 값을 전달 가능함
+
+	속성(props)
+App.js 	-------> 	UserList 	-------> 	User
+
+
+useEffect
+마운트 (화면에 첫 랜더링) / 언마운트 (화면에서 사라질 때) / 업데이트 (리랜더링)
+시에 할 작업 설정하기 
+
+state가 변경될 때 리랜더 
+name -> 리랜더
+age -> 리랜더
+
+구문 useEffect(함수, 연관배열)
+useEffect(()=>{
+	// 작업 
+}, [name])
+
+[연관배열]을 뒤에 적어주면 그 배열이 마운트, 상태가 업데이트될 때 작동되지만
+연관배열을 안적어주면 처음에 새로 화면을 그려주거나 리랜더될 때 작동함 
+
+
+마운트, 언마운트시 실행 
+useEffect(()=>{
+	console.log("마운트되었어요")
+
+	// return 함수는 언마운트될 때 호출됨
+	return () => {
+		console.log("언마운트되었어요")
+	}
+}, [])
+
+
+
+컨텍스트 API
+최상위 컴포넌트부터 최하위 컴포넌트에 걸친 전역으로 
+관리해야할 데이터가 필요한 상황에 사용 
+
+1) context 생성 
+createContext 함수로 생성함
+ex> const UserContext = createContext("green")
+
+2) context 사용
+const username = useContext(컨텍스트 이름)
+
+3) context값 변경하여 사용
+컴포넌트를 Provider로 감싸주면 그 하위에 있는 모든 컴포넌트는 
+Context에 저장되어있는 전역 데이터에 접근할 수 있음  
+
+<UserContext.Provider value = "blue">
+	<div></div>
+</UserContext.Provider>
+
+
+실습 
+
+npx create-react-app context-react
+
+UserContext.js
+
+import { createContext } from "react";
+export const UserContext = createContext("green");
+
+Header.js 함수형 컴포넌트 
+const userName = useContext(UserContext);
+
+
+useState(상태초기값) -> 상태관리
+userReducer Hook : 상태 관리
+-> 리덕스로 이어짐 
+
+reducer 함수 역할 : 상태를 업데이트해줌 
+현재 상태와 액션 객체를 파라미터로 받아서 
+새로운 상태를 반환해주는 함수 
+
+액션객체 역할 : 상태 업데이트를 위한 정보를 가진 객체
+
+구문 
+useReducer(reducer함수, 초기값) -> [state, dispatch]를 리턴 
+
+function reducer(state, action) {
+	return nextState;
+}
+
+reducer함수 호출하려면 dispatch 필요함
+
+
+const [astate, dispatch] = useReducer(reducer, initState) -> 리턴 배열 
+dispatch({ 액션객체 })
+
+
+
+
+npx create-react-app reducer-todo 생성
+
+
+
+
+
+
+
+
+
+ 
+

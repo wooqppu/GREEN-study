@@ -1,0 +1,141 @@
+ 
+1. dramadetailpage
+1-1. 드라마상세정보 부분
+1) 타이틀 h2 겉에 div 추가, 아이디 지정 
+<div id="title_h2">
+<h2>${ dto.title }</h2>
+</div>
+
+2) 타이틀 감싼 div 안에 <p>에피소드 ${ dto.episode }</p> 도 포함되게함
+
+3) div, ul에 아이디 지정 
+<div id="detail_div">
+	<ul id="detail_ul_mu">	// 음악 상세페이지랑 동일한 아이디
+		<li>${ dto.year }</li>
+		<li>${ dto.age }</li>
+		<li>${ dto.cast }</li>
+	</ul>
+
+4) 구매하기 버튼 
+4)-1. 버튼에 아이디 지정 id="buy_btn"
+4)-2. button 안에 span 태그 4개 추가 
+
+5) 드라마 정보 p 겉에 감싸는 div 아이디 지정 
+<div id="drama_info">
+	<p>내용 <span>${ dto.content }</span></p>
+</div>
+
+6) 드라마 정보 p 안에 span 추가 
+<p>내용 <span>${ dto.content }</span></p>
+
+1-2. 리뷰 부분 
+1) h2 겉에 div 감싼 후 아이디 지정
+<div id="reviewbox1_h2">
+	<h2>감상평</h2>
+	</div>
+
+2) 테이블 3개에 각각 아이디 지정 
+(2,3번째 테이블은 겉에 감싼 div에 아이디 지정)   
+<table id="reviewbox1">
+	<tr>
+		<td>${ UserId }</td>
+	</tr>
+	<tr>
+		<td><textarea rows="2" cols="100" name="content"></textarea></td>
+	</tr>
+	<tr>
+		<td><input type="submit" value="등록"></td>
+	</tr>
+</table>
+
+<div id="reviewbox2">
+
+<div id="reviewbox3">
+
+3) 리뷰 등록 버튼에 id="review_btn1" 지정
+
+4) 리뷰 삭제 버튼 X로 수정, id="review_btn2" 지정
+
+5) <td><%= mor.getPostdate() %></td> 위치 변경 
+
+6) reviewbox3의 h3 겉에 감싼 div 추가, 아이디 지정 
+<div id="reviewbox3_h3">
+<h3>감상평을 남기시려면 <a href="/project01/form/loginForm.jsp">로그인</a>을 하세요.</h3>
+</div>
+
+7) 에피소드 부분 첫번째, 두번째 div에 각각 아이디 지정 
+<div id="episodebox1">
+<div id="episodebox2">
+
+
+2. musicdetailpage
+2-1. 음악상세정보 부분
+1) 타이틀 h2 겉에 div 추가, 아이디 지정 
+<div id="title_h2">
+<h2>${ dto.title }</h2>
+</div>
+
+2) div, ul에 아이디 지정 
+<div id="detail_div">
+	<ul id="detail_ul_mu">
+		<li>엘범 : ${ dto.album }</li>
+		<li>${ dto.year }</li>
+		<li>${ dto.playtime }</li>
+	</ul>
+
+3) 구매하기 버튼 
+3)-1. 버튼에 아이디 지정 id="buy_btn"
+3)-2. button 안에 span 태그 4개 추가 
+
+4) 음악 정보 p 겉에 감싸는 div 아이디 지정 
+<div id="music_info">
+	<p>아티스트 ${ dto.artist }</p>
+	<p>가사 ${ dto.lyrics }</p>
+</div>
+
+5) 음악 정보 p 안에 span 추가 
+<p>아티스트 <span>${ dto.artist }</span></p>
+<p>가사 <span>${ dto.lyrics }</span></p>
+
+
+2-2. 리뷰 부분 
+1) h2 겉에 div 감싼 후 아이디 지정
+<div id="reviewbox1_h2">
+	<h2>감상평</h2>
+	</div>
+
+2) 테이블 3개에 각각 아이디 지정 
+(2,3번째 테이블은 겉에 감싼 div에 아이디 지정)   
+<table id="reviewbox1">
+	<tr>
+		<td>${ UserId }</td>
+	</tr>
+	<tr>
+		<td><textarea rows="2" cols="100" name="content"></textarea></td>
+	</tr>
+	<tr>
+		<td><input type="submit" value="등록" id="review_btn1"></td>
+	</tr>
+</table>
+
+<div id="reviewbox2">
+
+<div id="reviewbox3">
+
+3) 리뷰 등록 버튼에 id="review_btn1" 지정
+
+4) 리뷰 삭제 버튼 X로 수정, id="review_btn2" 지정
+
+5) <td><%= mor.getPostdate() %></td> 위치 변경 
+
+6) reviewbox3의 h3 겉에 감싼 div 추가, 아이디 지정 
+<div id="reviewbox3_h3">
+<h3>감상평을 남기시려면 <a href="/project01/form/loginForm.jsp">로그인</a>을 하세요.</h3>
+</div>
+
+
+3. footer html 수정 
+3-1. ul 두개로 분리
+3-2. 첫 번째 ul 안에 h2를 span으로 변경 
+
+

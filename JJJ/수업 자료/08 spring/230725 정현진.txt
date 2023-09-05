@@ -1,0 +1,68 @@
+
+페이징 처리
+
+sql
+1. 재귀복사
+insert into tbl_board(bno, title, content, writer)
+(select seq_board.nextval, title, content, writer from tbl_board);
+
+2. 페이징 쿼리문 
+select * from 
+( select Tb.*, rownum rNum from
+    (select * from tbl_board order by bno desc) Tb
+) where rNum between 1 and 10;
+
+
+스프링 
+
+1) Criteria 클래스 생성 
+org.green.domain 패키지 
+Criteria 클래스 생성 
+pageNum : 페이지 번호 - 디폴트 값 1
+amount : 페이지 당 항목 수 - 디폴트 값 10
+
+2) BoardMapper 인터페이스 
+public List<BoardVO> getListWithPaging(Criteria cri);
+
+3) BoardService 인터페이스 
+BoardServiceImple 클래스 수정 
+
+4) BoardController 수정 
+
+5) 페이징 처리를 위한 클래스 설계
+org.green.domain 패키지
+PageDTO 클래스 생성 
+
+startPage
+endPage
+prev, next
+total 
+cri
+
+6) 게시글을 조회할 때 pageNum과 amount 전송하기 
+
+BoardController
+@RequestParam
+@ModelAttribute("cri")
+-> 사용자가 요청시 전달하는 값을 
+오브젝트 형태로 매핑해주는 어노테이션 
+
+
+
+
+전반적인 흐름 정리 
+
+1. mapper (인터페이스) -> JDBCConnect
+
+2. 데이터베이스 쿼리문 작성
+@
+xml 파일 사용 
+
+VO가 DTO 역할
+3. service (인터페이스) -> DAO
+
+4. controller -> 서블릿
+
+
+
+

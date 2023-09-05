@@ -1,0 +1,201 @@
+
+변수 선언 
+var
+let, const
+
+함수선언문 
+function 함수명() {
+	실행문
+}
+함수명(); --- 함수 호출 
+
+함수표현식 
+let fun = function() {
+	실행문
+}
+fun();
+
+DOM
+docement.querySelector("div");
+document.getElementById("menu")
+
+스크롤 
+
+
+배열과 객체 
+
+01. 배열선언
+let 변수명 = ["바나나", "딸기", "앵두"];
+let 변수명 = new array();
+
+02. 배열요소 접근
+인덱스 0번부터 시작 
+마지막 인덱스는 arr.length-1
+( length : 배열 길이 )
+
+( 자바 - 향상된 for문 )
+for of문
+for (let 변수 of 배열변수) {
+
+}
+
+ex> 
+for (let f of fruits) {
+	console.log(f)
+}
+
+03. 배열요소 추가, 제거 
+push() 배열 마지막 요소 뒤에 추가
+pop()  배열 마지막 요소를 제거 
+unshift() 배열 첫번째 요소 앞에 추가
+shift() 배열 첫번째 요소를 제거 
+splice(start, count, 추가할요소) <결합하다> 지정된 위치에서 요소를 제거하거나 추가
+---> count는 추가하기 전에 제거할 갯수 
+---> 추가할요소는 여러개도 가능 
+
+04. 배열요소 검사 
+( 자바 - indexOf )
+
+indexOf("") 배열 안에 요소가 있는지 체크, 
+있으면 인덱스를 리턴, 없으면 -1 리턴
+includes("") 배열 안에 요소가 있으면 true, 없으면 false 리턴 
+
+05. 배열 메소드
+join() 배열을 문자로 리턴 ------ 중요
+let strs ["a", "b", "c", "d", "e"]
+strs.join("*") ---> "abcd" ("*" 같은 원하는 문자 추가 가능)
+
+split("구분 기호") <분리하다,쪼개다> 문자를 배열로 리턴 ----- 중요
+let str = "딸기, 수박, 사과";
+let strarr = str.split(",");
+
+reverse() 배열을 반전해서 리턴 (원본배열까지 반전)
+
+slice(start, end) <나누다> 배열의 일부분을 떼어내서 새로운 배열로 리턴
+(end에 입력된 마지막 배열은 포함하지 않음)
+
+
+객체
+다양한 데이터를 담을 수 있음 
+key : value ---> property (속성)
+key - 문자형
+value - 모든 자료형 
+let obj = { key : value }
+
+01. 객체 생성 
+객체 생성자 문법 
+let user = new Object();
+
+객체 리터럴 문법 
+let user = {};
+
+ex>
+let user = {
+	name: "green",
+	age: 30,
+};
+
+user.name ---> "green"
+user.age ---> 30
+
+02. 프로퍼티 접근, 추가, 삭제
+
+ex>
+let user = {
+	name: "green",
+	age: 30,
+};
+
+1) 값 얻기 
+user.name; ---> "green"
+user.age; ---> 30
+
+user["name"]; ---> "green"
+user["age"]; ---> 30
+
+2) 프로퍼티 추가 
+user.isAdmin = true; ---> 새로운 프로퍼티 하나 추가 
+
+3) 프로퍼티 삭제 
+delete user.age;
+
+4) 객체와 함께 쓰는 for문 
+for ... in문 
+
+for (let key of user1) {
+	console.log(user1[key])
+}
+
+
+( 자바에서 객체 생성하려면 class [붕어빵틀] 필요 )
+자바스크립트에서 객체 생성 시 필요한 것  
+1. 생성자 함수 ---> 함수
+ex1>
+function User(name, age) {
+	// this = {}; ---- 빈 객체를 만든 것 / let user1 = {}; 과 동일 / 생략되있음
+	this.name = name; ---- user1.name = "green"; 과 동일   
+	this.age = age; ---- user1.age = 30; 과 동일
+	this.sayHi = function() {
+		console.log("내 이름은 " + this.name + " 이다.");
+	}
+	// reutrn this; ---- 생략되있음
+}
+let user1 = new User("green", 30);
+let user2 = new User("blue", 20);
+
+(이런식으로 동일한 프로퍼티를 가진 객체 여러개를 생성 가능함
+그리고 new 객체명() 방식으로 호출한다는걸 기억하기)
+
+ex2>
+obj1 = {}
+obj1.name = "green"
+obj1.age = 30
+--------------------------
+obj1
+{name: 'green', age: 30}
+
+-> 빈 객체( {} )를 생성하고, 프로퍼티(name, age)를 추가하면 
+프로퍼티를 담은 객체(obj1)가 만들어짐 (생성자 함수가 하는 역할)
+
+
+# 연습문제 1. 급여의 합계 구하기
+
+let salaries = {
+        John: 100,
+        Ann: 160,
+        Pete: 130
+}
+
+let sum 
+
+# 연습문제 2. 누산기 만들기
+
+생성자 함수 Accumulator() 를 만드세요
+value프로퍼티가 있음
+
+let accumulator = new Accumulator(1);	// 최초값: 1
+accumulator.read(); 	// 사용자가 입력한 값을 더해줌 
+accumulator.read();		// 사용자가 입력한 값을 더해줌 
+
+alert(accumulator.value); 	// 최초값과 시용자가 입력한 모든 값을 더해서 출력
+
+
+화살표 함수 
+단순하고 간결한 문법으로 함수를 만들 수 있음 
+
+1. function 대신 => 를 사용 
+2. (a) 매개변수가 하나일 때 () 생략 가능
+3. 실행문이 한 줄일 때 {} 생력 가능 
+4. 실행문이 한 줄이고 리턴 값이라면 리턴도 생략 가능 
+
+
+let myFun = function(a) {
+	return a;
+}
+
+let myFun = a => { return a; }
+
+let myFun = a => a;  
+
+
+

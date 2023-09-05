@@ -1,0 +1,172 @@
+
+스프링 이란?
+
+프레임워크 
+오픈 소스 
+
+IoC (Inversion of Control) 컨테이너를 가짐 
+- 객체를 생성하고 관리하고 책임지고 의존성을 관리해주는 컨테이너
+
+DI (Dependency Injection, 의존성 주입) 를 지원함 
+- 필요한 곳에 사용하도록 하는 기능
+
+많은 필터를 가짐 
+- 필터의 역할은 검열, web.xml에서 설정 
+
+많은 어노테이션을 가짐 (리플렉션, 컴파일체킹)
+
+MessageConverter를 가짐 
+- 자바 프로그램을 요청하면 자동으로 JSON 형태로 바꿔줌 
+
+
+스프링 객체 생성 
+클래스로 만들어놓은 object를 스캔하여 객체를 힙(메모리)에 띄움
+-> 같은 객체를 공유해서 사용하도록 함 
+
+스프링이 생성한 객체는 내가 원하는 모든 곳(클래스)의 
+메소드에서 사용 가능함 
+
+
+
+
+JPA (Java Persistence API)
+
+자바로 프로그래밍 할 때 영구적으로 데이터를 저장하기 위해 필요한 API
+
+하드디스크에 저장 -> 영구적 저장 
+어떤 하나의 데이터가 영구적으로 저장되는걸 영속성이라고 함
+
+ORM 기술 
+Object Relational Mapping
+object를 데이터베이스에 연결하는 방법론 
+
+반복적인 CRUD 작업을 생략하게 해줌 
+영속성 컨텍스트를 가짐 
+
+컨텍스트 - 모든 정보를 다 가지고 있음 
+자바가 데이터베이스에 저장한 모든 것들을 알고있는 컨텍스트 
+
+DB와 OOP의 불일치성을 해결하기 위해 방법론을 제공함 
+OOP 관점에서 모델링을 할 수 있게 해줌 (상속, 컴포지션)
+
+ex> 
+컴포지션 방식 
+(상속은 아님, 객체 모델링 방식으로 연관 관계 있는 테이블 자동으로 생성됨)
+
+class Car {
+	int id;
+	String name;
+	String color;
+	Engine engine;
+}
+
+class Engine {
+	int id;
+	int power;
+}
+
+
+
+스프링 부트에서 의존성 주입 
+
+스프링 부튼는 애플리케이션 클래스를 검색하고 
+특정한 어노테이션(@Service, @Controller, @Repository)이 
+지정된 클래스를 스프링 빈으로 등록함 
+
+Bean 객체는 @Autowired 어노테이션을 통해서 의존성 주입 가능함 
+
+
+JPA를 이용한 데이터베이스 생성 및 접근 
+
+1) H2 데이터베이스, jpa 사용하기 
+pom.xml에 의존성 추가하기 
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+
+<dependency>
+	<groupId>com.h2database</groupId>
+	<artifactId>h2</artifactId>
+	<scope>runtime</scope>
+</dependency>
+
+
+2) 엔티티 클래스 만들기 
+@Entity 어노테이션을 사용하는 자바 클래스 
+
+표준 자바 빈 규칙 따르기 
+getter, setter를 가지며 필드 접근 제한자는 private으로 설정함 
+
+
+3) application.properties 설정 
+
+server.port=8010
+spring.datasource.url=jdbc:h2:mem:testdb
+
+jpa sql 보여지기 여부
+spring.jpa.show-sql=true
+
+h2 웹 기반 콘솔 사용 여부
+spring.h2.console.enabled=true
+
+h2콘솔의 경로 지정
+spring.h2.console.path=/h2-console
+
+
+4) CRUD 리포지터리 만들기 
+CrudErpository 인터페이스 : 엔티티 클래스에 crud 기능을 제공 
+
+4-1. CarRepository 인터페이스 생성, CrudRepository 인터페이스 상속 
+
+자주 사용되는 메소드 
+count() : 엔티티 수를 반환 
+findAll() : 지정한 형식의 모든 항목을 반환 
+findById(Id id) : 지정한 id의 한 항목을 반환 
+delete(T entity) : 엔티티 삭제 
+deleteAll() : 모든 엔티티 삭제 
+save() : 엔티티 저장 
+saveAll() : 여러 엔티티 저장
+
+4-2. H2 데이터 베이스에 데이터 추가하기 
+
+CommandLineRunner 인터페이스 구현하기 
+애플리케이션이 완전히 시작되기 전에 추가 코드를 실행할 수 있음 
+
+
+테이블 간의 관계 추가 
+owner 테이블 추가하기 
+
+기본 키 지정 ownerid
+first name 
+last name
+
+엔티티 클래스 
+리포지터리 인터페이스
+
+
+일대다 관계 (다대다 관계도 존재) - 하나의 owner에 여러대의 car 존재 
+car테이블 		owner테이블
+
+
+@ManyToOne	 대다관계정의	Car 엔티티 클래스
+@OneToMany	 대일관계정의	Owner 엔티티 클래스 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

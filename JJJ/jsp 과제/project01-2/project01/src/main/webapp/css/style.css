@@ -1,0 +1,74 @@
+* { margin: 0; padding: 0; box-sizing: border-box;}
+a { text-decoration: none; color: inherit;}
+address { font-style: normal;}
+img { vertical-align: middle;}
+h1,h2,h3,h4,h5,h6 {font-weight:  normal;}
+li { list-style: none;}
+.inner {
+    width: 1280px;
+    margin: auto;
+}
+body {
+    width: 100%;
+    margin: auto;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* header 시작 */
+
+#head1 {
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+}
+#login {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#login li {
+    padding-left: 20px;
+}
+#head2 {
+    height: 50px;
+    line-height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#hmenu {
+    display: flex;
+}
+#hmenu li {
+    padding-right: 20px;
+}
+
+/* header 끝 */
+
+
+/* section 시작 */
+#movieDivs {
+    display: flex;
+    overflow: hidden;
+}
+#dramaDivs {
+    display: flex;
+    overflow: hidden;
+}
+#musicDivs {
+    display: flex;
+    overflow: hidden;
+}
+
+/* section 끝 */
+
+/* footer 시작 */
+#footerdiv {
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

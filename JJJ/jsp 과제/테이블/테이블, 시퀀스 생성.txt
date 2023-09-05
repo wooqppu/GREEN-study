@@ -1,0 +1,85 @@
+
+테이블 생성
+
+create table movie(
+- 영화
+idx number primary key,
+제목 title varchar2(50) not null,
+이미지 ofile varchar2(100),
+         sfile varchar2(50),
+평점 rate varchar2(10) not null,
+개봉년도 year varchar2(20) not null,
+상영시간 runtime varchar2(20) not null,
+시청연령 age varchar2(20) not null,
+감독 director varchar2(30) not null,
+출연 cast varchar2(500) not null,
+내용 content varchar2(2000) not null,
+가격 price varchar2(50) not null
+);
+
+
+create table drama(
+- 드라마
+idx number primary key,
+제목 title varchar2(50) not null,
+이미지 ofile varchar2(100),
+         sfile varchar2(50),
+개봉년도 year varchar2(20) not null,
+부작 episode varchar2(20),
+시청연령 age varchar2(20) not null,
+출연진 cast varchar2(500) not null,
+내용 content varchar2(2000) not null,
+소개 info varchar2(2000),
+가격 price varchar2(50) not null
+(1900원)
+);
+
+
+create table music(
+- 노래 
+idx number primary key,
+앨범 album varchar2(200) not null,
+제목 title varchar2(200) not null,
+이미지 ofile varchar2(100),
+         sfile varchar2(50),
+아티스트 artist varchar2(30) not null,
+년도 year varchar2(20) not null,
+재생시간 playtime varchar2(20) not null,
+가사 lyrics varchar2(4000),
+가격 price varchar2(50) not null
+(990원)
+);
+
+
+시퀀스 생성
+
+- 영화
+create sequence seq_table_num
+start with 1
+increment by 1
+minvalue 1
+nomaxvalue
+nocycle
+nocache
+/
+
+
+- 드라마
+create sequence seq_drama_num
+start with 1
+increment by 1
+minvalue 1
+nomaxvalue
+nocycle
+nocache
+/
+
+- 음악 
+create sequence seq_music_num
+start with 1
+increment by 1
+minvalue 1
+nomaxvalue
+nocycle
+nocache
+/

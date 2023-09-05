@@ -1,0 +1,254 @@
+
+복습 
+
+API 도큐먼트 : 자바 표준 모듈에서 제공하는 라이브러리로 
+쉽게 찾아서 사용할 수 있도록 도와줌 
+
+Object 객체
+자바의 모든 클래스는 Object의 자식이거나 자손 클래스이다.
+
+obj1 == obj2
+obj1.equals(obj2)
+
+객체 동등 비교
+hashCode() 리턴값 같음 ---> equals() 리턴값 ---> 동등객체
+
+레코드 선언
+DTO(Data Transfer Object) : 데이터를 전달하기 위한 객체
+(레코드 클래스 선언으로 사용)
+ex> 
+method(String 상품이름, int 상품가격, String 옵션, String주소...) 
+
+DTO 선언 시 반복적으로 사용되는 코드를 줄이기 위해 
+java14버전에서 레코드 추가
+
+ex>
+public record Person(String name, int age) {}
+
+레코드 소스 ---> 컴파일
+private final 필드 생성 
+생성자 
+Getter 메소드
+hashCode(), equals(), toString() 메소드를 재정의한 코드 생성
+
+롬복 라이브러리 
+- DTO 클래스 작성시 용이함
+- 자동코드 라이브러리
+- Getter, Setter, hashCode(), equals(), toString() 메소드 자동생성
+
+다운로드 -> cmd 관리자 모드로 설치 -> 자바 프로젝트 lib폴더 생성
+-> 붙여넣기 -> Build Path 설정 
+
+System 클래스 : 운영체제의 일부 기능을 사용 
+필드 out, err, in
+메소드 exit(int status) - 프로세스 종료 -> 정상종료 : 0, 비정상 종료 : 1 또는 -1
+currentTimeMillis() - 현재 시간을 밀리초 단위로 long타입으로 반환
+(1970년 1월 1일 0시 0초를 기준)
+nanoTime() - 현재 시간을 나노초 단위로 long타입으로 반환
+getProperty() - 운영체제와 사용자 정보를 제공
+getenv() - 운영체제의 환경변수 정보 제공
+
+문자열 클래스 (String) 
+
+문자열을 byte배열로 인코딩
+byte[] bytearr = str.getBytes() ---> byte배열로 반환
+
+byte배열을 문자열로 디코딩
+String str2 = new String(bytearr)
+
+String ---> 수정 불가능
+StringBuilder : 잦은 문자열 변경 시 사용 
+- 내부 버퍼에 문자열을 저장하고 그 안에서 추가, 수정, 삭제하도록 설계됨
+- String처럼 새로운 객체를 만들지 않고 문자열을 조작함
+
+- append(문자열) : 문자열을 끝에 추가
+- insert(위치, 문자열) : 문자열을 지정위치에 추가
+- delete(시작위치, 끝위치) : 문자열 일부를 삭제
+- replace(시작위치, 끝위치, 문자열) : 문자열 일부를 변경
+- toString() : 완성된 문자열을 String타입으로 리턴 
+
+
+컬랙션에 같은 객체 저장할 수 없음 
+객체동등비교
+hashCode() 일치하는지 비교
+equals() 일치하는지 비교
+
+
+포장 클래스 : 포장 객체를 생성하기 위한 클래스 
+박싱 - 기본 타입의 값을 포장 객체로 
+ex>
+Integer obj = 100;
+
+언박싱 - 포장 객체를 기본 타입으로
+ex>
+int value = obj;
+
+포장값 비교
+Integer obj1 = 200;
+Integer obj2 = 200;
+
+obj1 == obj2; ---> false 
+(번지수를 비교하기 때문에 / 
+번지수로 비교 가능한 값의 범위인 -128 ~ 127을 넘김)
+
+obj1.equals(obj2) 를 사용
+(포장 클래스의 equals()메소드는 내부의 값을 비교하도록 재정의 되어있음)
+
+<클래스>
+byte - Byte
+char - Character
+short - Short
+int - Integer
+long - Long
+float - Float
+double - Double
+boolean - Boolean
+
+
+수학 클래스
+모든 메소드가 정적 메소드 
+절대값 - Math.abs()
+올림값 - Math.ceil()
+버림값 - Math.floor()
+반올림값 - Math.round()
+랜덤값 - Math.random()
+최소값 - Math.min()
+최대값 - Math.max()
+
+Random random = new Random() 
+현재 시간을 이용해서 종자값을 자동 설정
+Random random = new Random(long seed)
+주어진 종자값을 사용함
+
+random.nextInt(n)
+0 ~ n-1까지 랜덤값을 출력
+random.nextInt(6)
+0 ~ 6-1까지
+
+1 ~ 8까지
+: random.nextInt(8) +1
+
+
+날짜와 시간 클래스 
+
+java.util 패키지 Date, Calender 클래스 제공
+- 날짜 및 시간을 읽을 때 사용
+java.time 패키지 LocalDateTime 클래스 제공
+- 날짜와 시간을 조작할 때 사용
+
+1. Date 클래스
+날짜 정보를 주고받을 때 사용
+현재 날짜를 읽어 Data객체를 생성
+
+Date date = new Date();
+date.toString() : 현재 날짜를 문자열로 리턴
+
+SimpleDateFormat클래스 : 원하는 형식의 문자열로 리턴해줌
+SimpleDateFormat sdf = new SimpleDateFormat("원하는 형식 지정");
+String strnow =  sdf.format(데이트 객체)
+yyyy 년도 MM 월 dd 일 
+H 시간 m 분 s 초 
+E 요일 a 오전/오후 
+
+2023-05-08
+("yyyy-MM-dd")
+
+
+2. Calendar 클래스 
+달력을 표현하는 추상 클래스
+자식 클래스에서 구현되도록 되어있음 
+
+getInstance()메소드를 사용하여 컴퓨터에 설정된 
+시간대를 기준으로 하위 객체를 리턴
+
+Calendar now = Calendar.getInstance();
+
+int year = now.get(Calendar.YEAR) +1; // 년도를 리턴 
+int month = now.get(Calendar.MONTH) // 월을 리턴
+int day = now.get(Calendar.DAY_OF_MONTH) // 일을 리턴
+int week = now.get(Calendar.DAY_OF_WEEK) // 요일을 리턴
+int amPm = now.get(Calendar.AM_PM) // 오전/오후를 리턴
+int hour = now.get(Calendar.HOUR) // 시를 리턴
+int minute = now.get(Calendar.MINUTE) // 분을 리턴
+int second = now.get(Calendar.SECOND) // 초를 리턴
+
+
+Calendar now = Calendar.getInstance(타임존객체);
+TimeZone timezone =  TimeZone.getTimeZone("미국/로스엔젤레스")
+
+TimeZone.getAvailableDs() : 시간대 ID명을 String배열로 리턴
+String[] availableDs = TimeZone.getAvailableDs();
+
+LocalDateTime클래스
+날짜와 시간을 조작할 수 있음
+
+현재 컴퓨터의 날짜와 시간을 얻기
+LocalDateTime now = LocalDateTime.now();
+LocalDateTime targetDay = LocalDateTime.of(year, month, day, 
+hour, minute, second)
+
+ex>
+LocalDateTime now = LocalDateTime.now();
+LocalDateTime targetDay = LocalDateTime.of(2021,01,06)
+
+메소드 
+minusYears(long) 년도 빼기
+minusMonths(long) 월 빼기
+minusDays(long) 일 빼기
+minusWeeks(long) 주 빼기
+
+plusYears(long) 년도 더하기
+plusMonths(long) 월 더하기
+plusDays(long) 일 더하기
+plusWeeks(long) 주 더하기
+
+
+isAfter()	이후 날짜인지?	boolean
+isBefore()	 이전 날짜인지?	boolean
+isEqual() 	같은 날짜인지?	boolean
+until() 	기간이 얼마인지?	long
+
+LocalDateTime객체1.isAfter(LocalDateTime객체2)
+
+
+형식 클래스 
+SimpleDataFormat : 날짜를 형식화된 문자로 반환
+DecimalFormat : 숫자를 형식화된 문자로 반환 
+
+DecimalFormat
+0 10진수 (빈자리는 0으로 채움)
+# 10진수 (빈자리는 채우지 않음)
+. 소수점
+, 단위 구분
+% %문자
+\u00A4 통화기호
+
+DecimalFormat df = new DecimalFormat("00000.00000")
+df.format(123.789) ---> 00123.78900
+
+
+정규표현식 클래스
+: 문자열이 정해진 형식으로 되어있는지 체크, 검증 
+ex> 이메일 형식, 전화번호, 비밀번호 형식 
+
+[] 한 개의 문자 
+[abc] a,b,c 중에 한개
+[^abc] a,b,c 이외의 문자 한개
+[a-zA-Z] a~z, A~Z 중에 한개 
+\d 한개의 숫자 / [0-9]와 동일
+\s 공백
+\w 한개의 알파벳 또는 한개의 숫자 / [a-zA-Z0-9]와 동일
+\. .
+. 모든 문자 중 한개 
+? 없음 또는 한개  
++ 한개 이상
+* 없음 또는 한개 이상
+{n} 정확히 n개
+{n, } 최소 n개
+{n,m} n개부터 m개까지
+a | b a 또는 b
+() 그룹핑
+
+boolean result = Pattern.matches("정규식", "검증할 문자")
+
+ 
