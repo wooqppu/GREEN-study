@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import CarFront from './components/CarFront';
 import { Route, Routes } from 'react-router-dom';
 import Tour from './components/Tour';
+import Weather from './components/Weather';
 
 
 function App() {
@@ -31,6 +32,8 @@ function App() {
       <Routes>
          <Route path='/' element={<CarFront loginAuth={loginAuth} isAuthenticated={isAuthenticated} logoutAuth={logoutAuth} />} />
          <Route path='/tour' element={<Tour/>} />
+         <Route path='/weather' element={<Weather/>} />
+
       </Routes>      
     </div>
   );

@@ -87,6 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// 로그인 엔드 포인트에 대한 요청은 보호하지 않음 
 		.antMatchers(HttpMethod.POST, "/login").permitAll()
 		.antMatchers(HttpMethod.GET, "/tour/*").permitAll()
+		.antMatchers(HttpMethod.GET, "/weather/*").permitAll()
 		// 다른 요청은 보호됨 
 		.anyRequest().authenticated().and()		
 		// 예외처리 설정
